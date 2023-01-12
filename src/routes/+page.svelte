@@ -19,11 +19,13 @@
 		armStrength: 0,
 		brains: 0
 	};
-
-	$: statusDamage = Math.floor(((statusPower + 250) * 5 * attackLeverage) / 25.5);
-	$: attackDamage = Math.floor(((attackPower + 250) * attackLeverage) / 25.5);
-	$: damage = Math.floor(statusDamage + attackDamage) as number;
 </script>
+
+<svelte:head>
+	<title>元素騎士オンライン ダメージ計算機(α版)</title>
+	<meta name="”description“" content="元素騎士オンラインのダメージを計算できるツールです。" />
+	<meta name="”keywords”" content="元素騎士オンライン,元素騎士,ダメージ計算機,ダメージ" />
+</svelte:head>
 
 <headerr class="bg-slate-900 p-2 block border-box text-white">
 	<div class="font-bold text-md">元素騎士オンライン ダメージ計算機(α版)</div>
@@ -38,7 +40,11 @@
 			<Damage {status} {skill} {level} />
 			<div class="border-2 rounded mx-auto p-2 mt-2 border-red-200 bg-red-50 text-gray-700 md:w-96">
 				現在α版です。計算式を検証中なのでダメージがゲーム内と異なる場合があります。<br />
-				計算結果が違った場合は、<a href="a" class="underline text-blue-500">こちら</a> のフォームで情報の提供をお願いします。
+				計算結果が違った場合は、<a
+					target="_blank"
+					href="https://forms.gle/hjZzLWwRjhbdiRDX7"
+					class="underline text-blue-500">こちら</a
+				> のフォームで情報の提供をお願いします。
 			</div>
 		</div>
 		<div>
