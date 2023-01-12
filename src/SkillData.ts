@@ -11,7 +11,33 @@ export type SkillLevel = 1 | 2 | 3 | 4 | 5;
 
 export type Attack = { power: number, type: string, element: string, condition?: (context: any) => boolean }
 
+let jobs = [
+    'ファイター',
+    'シーフ',
+    'クレリック',
+    'ウィザード',
+    'ガーディアン',
+    'マジックナイト',
+    'ビショップ',
+    'モンク',
+    'アサシン',
+    'ウォーロック'
+];
+
 export default [
+    ...jobs.map(job => {
+        return {
+            name: "通常攻撃",
+            job,
+            lv: {
+                1: [{ power: 100, type: "physics", element: "empty" }],
+                2: [{ power: 100, type: "physics", element: "empty" }],
+                3: [{ power: 100, type: "physics", element: "empty" }],
+                4: [{ power: 100, type: "physics", element: "empty" }],
+                5: [{ power: 100, type: "physics", element: "empty" }],
+            }
+        }
+    }),
     {
         name: "スラッシュ",
         job: "ファイター",

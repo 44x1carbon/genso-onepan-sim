@@ -5,10 +5,8 @@
 	import type { Skill, SkillLevel } from '../SkillData';
 	import type { Status } from '../Status';
 	import Damage from '../components/Damage.svelte';
-
-	let attackPower: number = 1080; // magic攻撃力　or 攻撃力
-	let statusPower: number = 1080; // 知力 or 腕力
-	let attackLeverage: number = 1.13; // 攻撃倍率
+	import { onMount } from 'svelte';
+	import { browser } from '$app/environment';
 
 	let skill: Skill | undefined = undefined;
 	let level: SkillLevel = 5;
@@ -19,6 +17,25 @@
 		armStrength: 0,
 		brains: 0
 	};
+
+	const SAVE_KEY = 'GENSO-ONEPAN-SIM-STATUS';
+	let isInit = false;
+	$: {
+		// @ts-ignore
+		if (status && browser && isInit) {
+			// @ts-ignore
+			localStorage.setItem(SAVE_KEY, JSON.stringify(status));
+		}
+	}
+
+	onMount(() => {
+		// @ts-ignore
+		const json = localStorage.getItem(SAVE_KEY);
+		if (json) {
+			status = JSON.parse(json);
+		}
+		isInit = true;
+	});
 </script>
 
 <svelte:head>
@@ -30,7 +47,15 @@
 <headerr class="bg-slate-900 p-2 block border-box text-white">
 	<div class="font-bold text-md">元素騎士オンライン ダメージ計算機(α版)</div>
 </headerr>
+
 <main class="bg-slate-50 min-h-screen py-2 border-box p-2 pb-24 md:pb-0">
+	<div
+		class="border-2 rounded mx-auto p-2 my-2 border-yellow-200 bg-yellow-50 text-gray-700 md:w-[74rem]"
+	>
+		公式や解析で正しい計算式が出ていない為、使用している計算式は開発者の独自検証によるものです。<br
+		/>
+		ゲーム内と大きく異なる可能性があるのであくまで参考程度としてお使いください。
+	</div>
 	<div class="flex mx-auto w-fit gap-4 flex-col md:flex-row">
 		<div>
 			<SkillSelector bind:skill bind:level />

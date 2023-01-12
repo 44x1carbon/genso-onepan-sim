@@ -2,7 +2,7 @@
 	import type { Status } from '../Status';
 	import type { Skill, SkillLevel } from '../SkillData';
 	import { calcDamage } from '../Calac';
-	import { attackElementLabel, attackTypeLabel } from '../Label';
+	import { elementLabel, typeLabel } from '../Label';
 
 	export let skill: Skill | undefined = undefined;
 	export let level: SkillLevel = 5;
@@ -21,10 +21,8 @@
 				<div class="leading-tight text-gray-700 text-sm last:mb-0">
 					<div class="font-bold ">{i + 1}撃目 ダメージ:{calcDamage(attack, status, {})}</div>
 					<div>
-						<span class={`attack-tag _${attack.element}`}
-							>{attackElementLabel(attack.element)}属性
-						</span>
-						<span class={`attack-tag _${attack.type}`}>{attackTypeLabel(attack.type)}攻撃 </span>
+						<span class={`attack-tag _${attack.element}`}>{elementLabel(attack.element)}属性 </span>
+						<span class={`attack-tag _${attack.type}`}>{typeLabel(attack.type)}攻撃 </span>
 						<span class="attack-tag">威力:{attack.power}</span>
 					</div>
 				</div>

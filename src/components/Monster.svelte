@@ -3,6 +3,7 @@
 	import MonsterData from '../MonsterData';
 	import { calcDamage } from '../Calac';
 	import type { Status } from '../Status';
+	import { elementLabel, typeLabel } from '../Label';
 
 	export let skill: Skill | undefined = undefined;
 	export let level: SkillLevel;
@@ -119,6 +120,14 @@
 					<div>
 						<span class="inline-block w-24">HP:{m.hp}</span>
 						<span>{m.area}</span>
+					</div>
+					<div class="flex w-fit text-sm mt-1">
+						{#each ['physics', 'devil', 'ground', 'water', 'fire', 'wind', 'shine', 'dark'] as key}
+							<div class=" w-4 text-center bg-gray-400 text-white ">
+								{(elementLabel(key) ?? typeLabel(key))?.substring(0, 1)}
+							</div>
+							<div class=" w-4 text-center bg-white bg-opacity-50">{m[key]}</div>
+						{/each}
 					</div>
 				</div>
 			</li>
