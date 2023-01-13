@@ -78,6 +78,12 @@
 			? '攻撃力'
 			: '魔法攻撃力';
 
+	function showOnepanValue(monster: any) {
+		alert(
+			`${monster.name}を1撃で倒すには\n${raisedStatusLabel}があと${onepanValue(monster)}必要です。`
+		);
+	}
+
 	function onepanValue(monster: any) {
 		if (skill === undefined) return 0;
 
@@ -239,13 +245,13 @@
 							<div class="bg-red-500 text-white font-bold px-1 rounded text-xs text-center">
 								{m.damage}ダメ
 							</div>
-							{#if i >= onePunchLine}
-								<div class="text-center mt-1 border rounded-sm overflow-hidden">
-									<div class="text-xs bg-gray-700 text-white font-bold">1撃まで</div>
-									<div class="bg-white leading-none">
-										<div class="text-xs">{raisedStatusLabel}</div>
-										<div class="font-bold">+{onepanValue(m)}</div>
-									</div>
+							{#if i >= onePunchLine && skill}
+								<div
+									class="text-blue-500 bg-gray-50 font-bold p-1 rounded mt-2 cursor-pointer border border-blue-500"
+									style="font-size: 10px;"
+									on:click={() => showOnepanValue(m)}
+								>
+									1撃で倒すには?
 								</div>
 							{/if}
 						</div>
