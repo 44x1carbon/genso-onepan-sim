@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { Skill, SkillLevel } from '../SkillData';
+	import type { Attack, Skill, SkillLevel } from '../SkillData';
 	import MonsterData from '../MonsterData';
 	import { calcDamage } from '../Calac';
 	import type { Status } from '../Status';
@@ -72,6 +72,117 @@
 			? sortedMonsterData.findIndex(({ punchNum }) => punchNum >= 3)
 			: sortedMonsterData.length
 		: onePunchLine;
+
+	$: raisedStatusLabel =
+		skill?.lv[level].sort((a, b) => b.power - a.power)[0].type === 'physics'
+			? '攻撃力'
+			: '魔法攻撃力';
+
+	function onepanValue(monster: any) {
+		if (skill === undefined) return 0;
+
+		const key =
+			skill?.lv[level].sort((a, b) => b.power - a.power)[0].type === 'physics'
+				? 'offensivePower'
+				: 'magicalPower';
+		let plusValue = 0;
+
+		const hp = parseInt(monster.hp);
+
+		if (hp <= monster.damage) return 0;
+
+		while (
+			hp >
+			skill.lv[level]
+				.map((attack) =>
+					calcDamage(
+						attack,
+						{
+							...status,
+							[key]: status[key] + plusValue
+						},
+						monster
+					)
+				)
+				.reduce((p, c) => p + c, 0)
+		) {
+			plusValue += 1000;
+		}
+
+		while (
+			hp <
+			skill.lv[level]
+				.map((attack) =>
+					calcDamage(
+						attack,
+						{
+							...status,
+							[key]: status[key] + plusValue
+						},
+						monster
+					)
+				)
+				.reduce((p, c) => p + c, 0)
+		) {
+			plusValue -= 100;
+		}
+
+		while (
+			hp >
+			skill.lv[level]
+				.map((attack) =>
+					calcDamage(
+						attack,
+						{
+							...status,
+							[key]: status[key] + plusValue
+						},
+						monster
+					)
+				)
+				.reduce((p, c) => p + c, 0)
+		) {
+			plusValue += 10;
+		}
+
+		while (
+			hp <=
+			skill.lv[level]
+				.map((attack) =>
+					calcDamage(
+						attack,
+						{
+							...status,
+							[key]: status[key] + plusValue
+						},
+						monster
+					)
+				)
+				.reduce((p, c) => p + c, 0)
+		) {
+			plusValue -= 1;
+		}
+
+		while (
+			hp >=
+			skill.lv[level]
+				.map((attack) =>
+					calcDamage(
+						attack,
+						{
+							...status,
+							[key]: status[key] + plusValue
+						},
+						monster
+					)
+				)
+				.reduce((p, c) => p + c, 0)
+		) {
+			plusValue += 1;
+		}
+
+		return plusValue;
+	}
 </script>
 
 <div class="border bg-white rounded-sm overflow-hidden md:w-96">
@@ -109,25 +220,35 @@
 					} p-1 px-2 leading-snug text-gray-700 text-sm`}
 				>
 					<div class="flex items-center">
-						<div class="font-bold flex-1">{m.name} L{m.lv}</div>
-						<div>
-							<span class="bg-gray-500 text-white font-bold px-1 rounded text-xs ml-2"
-								>{m.damage}ダメ</span
-							>
-						</div>
-					</div>
-
-					<div>
-						<span class="inline-block w-24">HP:{m.hp}</span>
-						<span>{m.area}</span>
-					</div>
-					<div class="flex w-fit text-sm mt-1">
-						{#each ['physics', 'devil', 'ground', 'water', 'fire', 'wind', 'shine', 'dark'] as key}
-							<div class=" w-4 text-center bg-gray-400 text-white ">
-								{(elementLabel(key) ?? typeLabel(key))?.substring(0, 1)}
+						<div class="flex-1">
+							<div class="font-bold">{m.name} L{m.lv}</div>
+							<div>
+								<span class="inline-block w-24">HP:{m.hp}</span>
+								<span>{m.area}</span>
 							</div>
-							<div class=" w-4 text-center bg-white bg-opacity-50">{m[key]}</div>
-						{/each}
+							<div class="flex w-fit text-xs mt-1">
+								{#each ['physics', 'devil', 'ground', 'water', 'fire', 'wind', 'shine', 'dark'] as key}
+									<div class=" w-4 text-center bg-gray-400 text-white ">
+										{(elementLabel(key) ?? typeLabel(key))?.substring(0, 1)}
+									</div>
+									<div class=" w-4 text-center bg-white bg-opacity-50">{m[key]}</div>
+								{/each}
+							</div>
+						</div>
+						<div>
+							<div class="bg-red-500 text-white font-bold px-1 rounded text-xs text-center">
+								{m.damage}ダメ
+							</div>
+							{#if i >= onePunchLine}
+								<div class="text-center mt-1 border rounded-sm overflow-hidden">
+									<div class="text-xs bg-gray-700 text-white font-bold">1撃まで</div>
+									<div class="bg-white leading-none">
+										<div class="text-xs">{raisedStatusLabel}</div>
+										<div class="font-bold">+{onepanValue(m)}</div>
+									</div>
+								</div>
+							{/if}
+						</div>
 					</div>
 				</div>
 			</li>

@@ -1,4 +1,4 @@
-export const typeLabel = (type: string) => {
+export const typeLabel = (type: string | undefined) => {
     switch (type) {
         case 'physics':
             return '物理';
@@ -8,7 +8,7 @@ export const typeLabel = (type: string) => {
     }
 }
 
-export const elementLabel = (type: string) => {
+export const elementLabel = (type: string | undefined) => {
     switch (type) {
         case "devil": return "魔"
         case "ground": return "土"
