@@ -11,7 +11,7 @@ export type SkillLevel = 1 | 2 | 3 | 4 | 5;
 
 export type Attack = { power: number, type: string, element: string, condition?: (context: any) => boolean }
 
-let jobs = [
+const jobs = [
     'ファイター',
     'シーフ',
     'クレリック',

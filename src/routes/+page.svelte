@@ -16,18 +16,51 @@
 		armStrength: 0,
 		brains: 0
 	};
+
+	let addStatus: Status = {
+		offensivePower: 0,
+		magicalPower: 0,
+		armStrength: 0,
+		brains: 0
+	};
+
 	let isIncludeNomalAttack: boolean = false;
 
-	$: _skill = skill === undefined ? undefined : {
-		...skill,
-		lv: {
-			1: ([] as Attack[]).concat(isIncludeNomalAttack ? [{ power: 100, type: "physics", element: "empty" }] : [], skill.lv[1]),
-			2: ([] as Attack[]).concat(isIncludeNomalAttack ? [{ power: 100, type: "physics", element: "empty" }] : [], skill.lv[2]),
-			3: ([] as Attack[]).concat(isIncludeNomalAttack ? [{ power: 100, type: "physics", element: "empty" }] : [], skill.lv[3]),
-			4: ([] as Attack[]).concat(isIncludeNomalAttack ? [{ power: 100, type: "physics", element: "empty" }] : [], skill.lv[4]),
-			5: ([] as Attack[]).concat(isIncludeNomalAttack ? [{ power: 100, type: "physics", element: "empty" }] : [], skill.lv[5]),
-		}
-	} 
+	$: _skill =
+		skill === undefined
+			? undefined
+			: {
+					...skill,
+					lv: {
+						1: ([] as Attack[]).concat(
+							isIncludeNomalAttack ? [{ power: 100, type: 'physics', element: 'empty' }] : [],
+							skill.lv[1]
+						),
+						2: ([] as Attack[]).concat(
+							isIncludeNomalAttack ? [{ power: 100, type: 'physics', element: 'empty' }] : [],
+							skill.lv[2]
+						),
+						3: ([] as Attack[]).concat(
+							isIncludeNomalAttack ? [{ power: 100, type: 'physics', element: 'empty' }] : [],
+							skill.lv[3]
+						),
+						4: ([] as Attack[]).concat(
+							isIncludeNomalAttack ? [{ power: 100, type: 'physics', element: 'empty' }] : [],
+							skill.lv[4]
+						),
+						5: ([] as Attack[]).concat(
+							isIncludeNomalAttack ? [{ power: 100, type: 'physics', element: 'empty' }] : [],
+							skill.lv[5]
+						)
+					}
+			  };
+
+	$: _status = {
+		offensivePower: status.offensivePower + addStatus.offensivePower,
+		magicalPower: status.magicalPower + addStatus.magicalPower,
+		armStrength: status.armStrength + addStatus.armStrength,
+		brains: status.brains + addStatus.brains
+	};
 
 	// ステータスの入力内容を保存する処理
 	const SAVE_KEY = 'GENSO-ONEPAN-SIM-STATUS';
@@ -72,8 +105,8 @@
 			<SkillSelector bind:skill bind:level bind:isIncludeNomalAttack />
 		</div>
 		<div>
-			<StatusForm bind:status />
-			<Damage {status} skill={_skill} {level} />
+			<StatusForm bind:status bind:addStatus />
+			<Damage status={_status} skill={_skill} {level} />
 			<div class="border-2 rounded mx-auto p-2 mt-2 border-red-200 bg-red-50 text-gray-700 md:w-96">
 				現在α版です。計算式を検証中なのでダメージがゲーム内と異なる場合があります。<br />
 				計算結果が違った場合は、<a
@@ -84,7 +117,7 @@
 			</div>
 		</div>
 		<div>
-			<Monster {status} skill={_skill} {level} />
+			<Monster status={_status} skill={_skill} {level} />
 		</div>
 	</div>
 </main>
