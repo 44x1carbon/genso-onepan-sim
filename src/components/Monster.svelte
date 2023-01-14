@@ -80,7 +80,11 @@
 
 	function showOnepanValue(monster: any) {
 		alert(
-			`${monster.name}を1撃で倒すには\n${raisedStatusLabel}があと${onepanValue(monster)}必要です。`
+			`${monster.name}を1撃で倒すには
+${raisedStatusLabel}があと${onepanValue(monster)}必要です。
+
+2撃で倒すには
+${raisedStatusLabel}があと${twopanValue(monster)}必要です。`
 		);
 	}
 
@@ -94,6 +98,112 @@
 		let plusValue = 0;
 
 		const hp = parseInt(monster.hp);
+
+		if (hp <= monster.damage) return 0;
+
+		while (
+			hp >
+			skill.lv[level]
+				.map((attack) =>
+					calcDamage(
+						attack,
+						{
+							...status,
+							[key]: status[key] + plusValue
+						},
+						monster
+					)
+				)
+				.reduce((p, c) => p + c, 0)
+		) {
+			plusValue += 1000;
+		}
+
+		while (
+			hp <
+			skill.lv[level]
+				.map((attack) =>
+					calcDamage(
+						attack,
+						{
+							...status,
+							[key]: status[key] + plusValue
+						},
+						monster
+					)
+				)
+				.reduce((p, c) => p + c, 0)
+		) {
+			plusValue -= 100;
+		}
+
+		while (
+			hp >
+			skill.lv[level]
+				.map((attack) =>
+					calcDamage(
+						attack,
+						{
+							...status,
+							[key]: status[key] + plusValue
+						},
+						monster
+					)
+				)
+				.reduce((p, c) => p + c, 0)
+		) {
+			plusValue += 10;
+		}
+
+		while (
+			hp <=
+			skill.lv[level]
+				.map((attack) =>
+					calcDamage(
+						attack,
+						{
+							...status,
+							[key]: status[key] + plusValue
+						},
+						monster
+					)
+				)
+				.reduce((p, c) => p + c, 0)
+		) {
+			plusValue -= 1;
+		}
+
+		while (
+			hp >=
+			skill.lv[level]
+				.map((attack) =>
+					calcDamage(
+						attack,
+						{
+							...status,
+							[key]: status[key] + plusValue
+						},
+						monster
+					)
+				)
+				.reduce((p, c) => p + c, 0)
+		) {
+			plusValue += 1;
+		}
+
+		return plusValue;
+	}
+
+	function twopanValue(monster: any) {
+		if (skill === undefined) return 0;
+
+		const key =
+			skill?.lv[level].sort((a, b) => b.power - a.power)[0].type === 'physics'
+				? 'offensivePower'
+				: 'magicalPower';
+		let plusValue = 0;
+
+		let hp = parseInt(monster.hp) / 2;
 
 		if (hp <= monster.damage) return 0;
 
