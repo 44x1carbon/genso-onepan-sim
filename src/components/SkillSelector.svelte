@@ -3,6 +3,7 @@
 
 	export let skill: Skill | undefined = undefined;
 	export let level: SkillLevel | undefined = undefined;
+	export let isIncludeNomalAttack: boolean = false;
 	let selectJobs: string = 'ファイター';
 
 	let jobs = [
@@ -60,6 +61,11 @@
 				</div>
 			{/each}
 		</div>
+	</div>
+	<div class="p-2">
+		<label for="JsIncludeNomalAttack" class="font-bold text-gray-700">
+			<input type="checkbox" id="JsIncludeNomalAttack" bind:checked={isIncludeNomalAttack} /> 通常攻撃も含める
+		</label>
 	</div>
 </div>
 

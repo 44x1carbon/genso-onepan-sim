@@ -2,7 +2,7 @@
 	import Monster from '../components/Monster.svelte';
 	import StatusForm from '..//components/StatusForm.svelte';
 	import SkillSelector from '../components/SkillSelector.svelte';
-	import type { Skill, SkillLevel } from '../SkillData';
+	import type { Attack, Skill, SkillLevel } from '../SkillData';
 	import type { Status } from '../Status';
 	import Damage from '../components/Damage.svelte';
 	import { onMount } from 'svelte';
@@ -10,14 +10,26 @@
 
 	let skill: Skill | undefined = undefined;
 	let level: SkillLevel = 5;
-
 	let status: Status = {
 		offensivePower: 0,
 		magicalPower: 0,
 		armStrength: 0,
 		brains: 0
 	};
+	let isIncludeNomalAttack: boolean = false;
 
+	$: _skill = skill === undefined ? undefined : {
+		...skill,
+		lv: {
+			1: ([] as Attack[]).concat(isIncludeNomalAttack ? [{ power: 100, type: "physics", element: "empty" }] : [], skill.lv[1]),
+			2: ([] as Attack[]).concat(isIncludeNomalAttack ? [{ power: 100, type: "physics", element: "empty" }] : [], skill.lv[2]),
+			3: ([] as Attack[]).concat(isIncludeNomalAttack ? [{ power: 100, type: "physics", element: "empty" }] : [], skill.lv[3]),
+			4: ([] as Attack[]).concat(isIncludeNomalAttack ? [{ power: 100, type: "physics", element: "empty" }] : [], skill.lv[4]),
+			5: ([] as Attack[]).concat(isIncludeNomalAttack ? [{ power: 100, type: "physics", element: "empty" }] : [], skill.lv[5]),
+		}
+	} 
+
+	// ステータスの入力内容を保存する処理
 	const SAVE_KEY = 'GENSO-ONEPAN-SIM-STATUS';
 	let isInit = false;
 	$: {
@@ -27,7 +39,6 @@
 			localStorage.setItem(SAVE_KEY, JSON.stringify(status));
 		}
 	}
-
 	onMount(() => {
 		// @ts-ignore
 		const json = localStorage.getItem(SAVE_KEY);
@@ -58,11 +69,11 @@
 	</div>
 	<div class="flex mx-auto w-fit gap-4 flex-col md:flex-row">
 		<div>
-			<SkillSelector bind:skill bind:level />
+			<SkillSelector bind:skill bind:level bind:isIncludeNomalAttack />
 		</div>
 		<div>
 			<StatusForm bind:status />
-			<Damage {status} {skill} {level} />
+			<Damage {status} skill={_skill} {level} />
 			<div class="border-2 rounded mx-auto p-2 mt-2 border-red-200 bg-red-50 text-gray-700 md:w-96">
 				現在α版です。計算式を検証中なのでダメージがゲーム内と異なる場合があります。<br />
 				計算結果が違った場合は、<a
@@ -73,7 +84,7 @@
 			</div>
 		</div>
 		<div>
-			<Monster {status} {skill} {level} />
+			<Monster {status} skill={_skill} {level} />
 		</div>
 	</div>
 </main>
