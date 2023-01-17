@@ -34,7 +34,7 @@
 				<input type="number" bind:value={status.offensivePower} class="bg-gray-50" />
 			</td>
 			<td>
-				<span class="mx-2 text-gray-700">+</span>
+				<span class="text-gray-700 font-bold">+</span>
 			</td>
 			<td>
 				<div class="flex items-center">
@@ -52,7 +52,7 @@
 				<input type="number" bind:value={status.armStrength} class="bg-gray-50" />
 			</td>
 			<td>
-				<span class="mx-2 text-gray-700">+</span>
+				<span class="text-gray-700 font-bold">+</span>
 			</td>
 			<td>
 				<div class="flex items-center">
@@ -71,7 +71,7 @@
 				<input type="number" bind:value={status.magicalPower} class="bg-gray-50" />
 			</td>
 			<td>
-				<span class="mx-2 text-gray-700">+</span>
+				<span class="text-gray-700 font-bold">+</span>
 			</td>
 			<td>
 				<div class="flex items-center">
@@ -90,7 +90,7 @@
 				<input type="number" bind:value={status.brains} class="bg-gray-50" />
 			</td>
 			<td>
-				<span class="mx-2 text-gray-700">+</span>
+				<span class="text-gray-700 font-bold">+</span>
 			</td>
 			<td>
 				<div class="flex items-center">
@@ -112,7 +112,7 @@
 	}
 
 	.status-form td {
-		@apply text-center py-1;
+		@apply text-center py-1 px-2;
 	}
 
 	.status-form tr {
@@ -131,6 +131,6 @@
 	}
 
 	input {
-		@apply border indent-1 w-24;
+		@apply border indent-1 w-full;
 	}
 </style>

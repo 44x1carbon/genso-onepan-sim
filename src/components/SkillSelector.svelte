@@ -1,8 +1,8 @@
 <script lang="ts">
 	import SkillData, { type Skill, type SkillLevel } from '../SkillData';
 
-	export let skill: Skill | undefined = undefined;
-	export let level: SkillLevel | undefined = undefined;
+	export let skills: Skill[] = [];
+	export let level: SkillLevel = 5;
 	export let isIncludeNomalAttack: boolean = false;
 	let selectJobs: string = 'ファイター';
 
@@ -20,6 +20,16 @@
 	];
 
 	$: filterdSkillData = SkillData.filter((s) => selectJobs == s.job);
+
+	function clickSkill(skill: Skill) {
+		const index = skills.findIndex((s) => s.name === skill.name);
+
+		if (index === -1) {
+			skills = [...skills, skill];
+		} else {
+			skills = [...skills.filter((_, i) => i !== index)];
+		}
+	}
 </script>
 
 <div class="border bg-white rounded-sm overflow-hidden md:w-96">
@@ -40,8 +50,8 @@
 			<li class="border w-1/2">
 				<div
 					class="cursor-pointer w-full text-sm p-1 text-gray-700 font-bold"
-					class:selected={s.name === skill?.name}
-					on:click={() => (skill = s)}
+					class:selected={skills.some((skill) => s.name === skill.name)}
+					on:click={() => clickSkill(s)}
 				>
 					{s.name}
 				</div>
@@ -62,14 +72,14 @@
 			{/each}
 		</div>
 	</div>
-	<div class="p-2">
+	<!-- <div class="p-2">
 		<label for="JsIncludeNomalAttack" class="font-bold text-gray-700">
 			<input type="checkbox" id="JsIncludeNomalAttack" bind:checked={isIncludeNomalAttack} /> 通常攻撃も含める
 		</label>
-	</div>
+	</div> -->
 </div>
 
-{#if skill && skill.pending && skill.pending.includes(level)}
+{#if skills.some((skill) => skill.pending && skill.pending.includes(level))}
 	<div class="border-2 rounded mx-auto p-2 mt-2 border-red-200 bg-red-50 text-gray-700 md:w-96">
 		機能が未実装の部分がある為、正しいダメージを計算できません。
 	</div>

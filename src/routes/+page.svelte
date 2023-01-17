@@ -8,7 +8,7 @@
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 
-	let skill: Skill | undefined = undefined;
+	let skills: Skill[] = [];
 	let level: SkillLevel = 5;
 	let status: Status = {
 		offensivePower: 0,
@@ -26,34 +26,7 @@
 
 	let isIncludeNomalAttack: boolean = false;
 
-	$: _skill =
-		skill === undefined
-			? undefined
-			: {
-					...skill,
-					lv: {
-						1: ([] as Attack[]).concat(
-							isIncludeNomalAttack ? [{ power: 100, type: 'physics', element: 'empty' }] : [],
-							skill.lv[1]
-						),
-						2: ([] as Attack[]).concat(
-							isIncludeNomalAttack ? [{ power: 100, type: 'physics', element: 'empty' }] : [],
-							skill.lv[2]
-						),
-						3: ([] as Attack[]).concat(
-							isIncludeNomalAttack ? [{ power: 100, type: 'physics', element: 'empty' }] : [],
-							skill.lv[3]
-						),
-						4: ([] as Attack[]).concat(
-							isIncludeNomalAttack ? [{ power: 100, type: 'physics', element: 'empty' }] : [],
-							skill.lv[4]
-						),
-						5: ([] as Attack[]).concat(
-							isIncludeNomalAttack ? [{ power: 100, type: 'physics', element: 'empty' }] : [],
-							skill.lv[5]
-						)
-					}
-			  };
+	$: _skills = [...skills];
 
 	$: _status = {
 		offensivePower: status.offensivePower + addStatus.offensivePower,
@@ -102,11 +75,11 @@
 	</div>
 	<div class="flex mx-auto w-fit gap-4 flex-col md:flex-row">
 		<div>
-			<SkillSelector bind:skill bind:level bind:isIncludeNomalAttack />
+			<SkillSelector bind:skills bind:level bind:isIncludeNomalAttack />
 		</div>
 		<div>
 			<StatusForm bind:status bind:addStatus />
-			<Damage status={_status} skill={_skill} {level} />
+			<Damage status={_status} skills={_skills} {level} />
 			<div class="border-2 rounded mx-auto p-2 mt-2 border-red-200 bg-red-50 text-gray-700 md:w-96">
 				現在α版です。計算式を検証中なのでダメージがゲーム内と異なる場合があります。<br />
 				計算結果が違った場合は、<a
@@ -117,7 +90,7 @@
 			</div>
 		</div>
 		<div>
-			<Monster status={_status} skill={_skill} {level} />
+			<Monster status={_status} skills={_skills} {level} />
 		</div>
 	</div>
 </main>

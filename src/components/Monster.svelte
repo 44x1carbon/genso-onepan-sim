@@ -5,7 +5,7 @@
 	import type { Status } from '../Status';
 	import { elementLabel, typeLabel } from '../Label';
 
-	export let skill: Skill | undefined = undefined;
+	export let skills: Skill[] = [];
 	export let level: SkillLevel;
 	export let status: Status;
 
@@ -13,11 +13,8 @@
 		selectArea ? monster.area === selectArea : true
 	)
 		.map((monster) => {
-			const damage = skill
-				? skill.lv[level]
-						.map((attack) => calcDamage(attack, status, monster))
-						.reduce((p, c) => p + c, 0)
-				: 0;
+			const damage = calcTotalDamage(skills, status, monster);
+
 			return {
 				...monster,
 				damage,
@@ -73,226 +70,116 @@
 			: sortedMonsterData.length
 		: onePunchLine;
 
-	$: raisedStatusLabel =
-		skill?.lv[level].sort((a, b) => b.power - a.power)[0].type === 'physics'
-			? '攻撃力'
-			: '魔法攻撃力';
+	$: raisedStatusLabel = Object.entries(
+		skills.reduce(
+			(p, c) => {
+				return c.lv[level].reduce((p2, c2) => {
+					p2[c2.type] += c2.power;
+
+					return p2;
+				}, p);
+			},
+			{ physics: 0, magic: 0 } as { [key: string]: number }
+		)
+	).sort((a, b) => b[1] - a[1])[0][0];
+
+	function calcTotalDamage(skills: Skill[], status: Status, monster: any) {
+		return skills
+			.map((skill) =>
+				skill.lv[level]
+					.map((attack) => calcDamage(attack, status, monster))
+					.reduce((p, c) => p + c, 0)
+			)
+			.reduce((p, c) => p + c, 0);
+	}
 
 	function showOnepanValue(monster: any) {
 		alert(
 			`${monster.name}を1撃で倒すには
-${raisedStatusLabel}があと${onepanValue(monster)}必要です。
+${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${panValue(monster, 1)}必要です。
 
+${ monster.punchNum === 2 ? "" : `
 2撃で倒すには
-${raisedStatusLabel}があと${twopanValue(monster)}必要です。`
+${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${panValue(monster, 2)}必要です。
+`.trim() }
+`
 		);
 	}
 
-	function onepanValue(monster: any) {
-		if (skill === undefined) return 0;
-
-		const key =
-			skill?.lv[level].sort((a, b) => b.power - a.power)[0].type === 'physics'
-				? 'offensivePower'
-				: 'magicalPower';
+	function panValue(monster: any, num: number) {
+		const key = raisedStatusLabel === 'physics' ? 'offensivePower' : 'magicalPower';
 		let plusValue = 0;
 
-		const hp = parseInt(monster.hp);
+		const hp = parseInt(monster.hp) / num;
 
 		if (hp <= monster.damage) return 0;
 
 		while (
 			hp >
-			skill.lv[level]
-				.map((attack) =>
-					calcDamage(
-						attack,
-						{
-							...status,
-							[key]: status[key] + plusValue
-						},
-						monster
-					)
-				)
-				.reduce((p, c) => p + c, 0)
+			calcTotalDamage(
+				skills, 
+				{
+					...status,
+					[key]: status[key] + plusValue
+				},
+				monster
+			)
 		) {
 			plusValue += 1000;
 		}
 
 		while (
 			hp <
-			skill.lv[level]
-				.map((attack) =>
-					calcDamage(
-						attack,
-						{
-							...status,
-							[key]: status[key] + plusValue
-						},
-						monster
-					)
-				)
-				.reduce((p, c) => p + c, 0)
+			calcTotalDamage(
+				skills, 
+				{
+					...status,
+					[key]: status[key] + plusValue
+				},
+				monster
+			)
 		) {
 			plusValue -= 100;
 		}
 
 		while (
 			hp >
-			skill.lv[level]
-				.map((attack) =>
-					calcDamage(
-						attack,
-						{
-							...status,
-							[key]: status[key] + plusValue
-						},
-						monster
-					)
-				)
-				.reduce((p, c) => p + c, 0)
+			calcTotalDamage(
+				skills, 
+				{
+					...status,
+					[key]: status[key] + plusValue
+				},
+				monster
+			)
 		) {
 			plusValue += 10;
 		}
 
 		while (
 			hp <=
-			skill.lv[level]
-				.map((attack) =>
-					calcDamage(
-						attack,
-						{
-							...status,
-							[key]: status[key] + plusValue
-						},
-						monster
-					)
-				)
-				.reduce((p, c) => p + c, 0)
+			calcTotalDamage(
+				skills, 
+				{
+					...status,
+					[key]: status[key] + plusValue
+				},
+				monster
+			)
 		) {
 			plusValue -= 1;
 		}
 
 		while (
 			hp >=
-			skill.lv[level]
-				.map((attack) =>
-					calcDamage(
-						attack,
-						{
-							...status,
-							[key]: status[key] + plusValue
-						},
-						monster
-					)
-				)
-				.reduce((p, c) => p + c, 0)
-		) {
-			plusValue += 1;
-		}
-
-		return plusValue;
-	}
-
-	function twopanValue(monster: any) {
-		if (skill === undefined) return 0;
-
-		const key =
-			skill?.lv[level].sort((a, b) => b.power - a.power)[0].type === 'physics'
-				? 'offensivePower'
-				: 'magicalPower';
-		let plusValue = 0;
-
-		let hp = parseInt(monster.hp) / 2;
-
-		if (hp <= monster.damage) return 0;
-
-		while (
-			hp >
-			skill.lv[level]
-				.map((attack) =>
-					calcDamage(
-						attack,
-						{
-							...status,
-							[key]: status[key] + plusValue
-						},
-						monster
-					)
-				)
-				.reduce((p, c) => p + c, 0)
-		) {
-			plusValue += 1000;
-		}
-
-		while (
-			hp <
-			skill.lv[level]
-				.map((attack) =>
-					calcDamage(
-						attack,
-						{
-							...status,
-							[key]: status[key] + plusValue
-						},
-						monster
-					)
-				)
-				.reduce((p, c) => p + c, 0)
-		) {
-			plusValue -= 100;
-		}
-
-		while (
-			hp >
-			skill.lv[level]
-				.map((attack) =>
-					calcDamage(
-						attack,
-						{
-							...status,
-							[key]: status[key] + plusValue
-						},
-						monster
-					)
-				)
-				.reduce((p, c) => p + c, 0)
-		) {
-			plusValue += 10;
-		}
-
-		while (
-			hp <=
-			skill.lv[level]
-				.map((attack) =>
-					calcDamage(
-						attack,
-						{
-							...status,
-							[key]: status[key] + plusValue
-						},
-						monster
-					)
-				)
-				.reduce((p, c) => p + c, 0)
-		) {
-			plusValue -= 1;
-		}
-
-		while (
-			hp >=
-			skill.lv[level]
-				.map((attack) =>
-					calcDamage(
-						attack,
-						{
-							...status,
-							[key]: status[key] + plusValue
-						},
-						monster
-					)
-				)
-				.reduce((p, c) => p + c, 0)
+			calcTotalDamage(
+				skills, 
+				{
+					...status,
+					[key]: status[key] + plusValue
+				},
+				monster
+			)
 		) {
 			plusValue += 1;
 		}
@@ -355,7 +242,7 @@ ${raisedStatusLabel}があと${twopanValue(monster)}必要です。`
 							<div class="bg-red-500 text-white font-bold px-1 rounded text-xs text-center">
 								{m.damage}ダメ
 							</div>
-							{#if i >= onePunchLine && skill}
+							{#if i >= onePunchLine && skills.length}
 								<div
 									class="text-blue-500 bg-gray-50 font-bold p-1 rounded mt-2 cursor-pointer border border-blue-500"
 									style="font-size: 10px;"
