@@ -113,24 +113,5 @@
 
 	.status-form td {
 		@apply text-center py-1 px-2;
-	}
-
-	.status-form tr {
-		@apply border;
-	}
-	.form-label {
-		@apply bg-gray-500 text-white font-bold p-1 text-sm;
-	}
-
-	.form-controll {
-		@apply p-1 flex;
-	}
-
-	.form-row {
-		@apply border -mt-px flex;
-	}
-
-	input {
-		@apply border indent-1 w-full;
-	}
+	}	
 </style>
