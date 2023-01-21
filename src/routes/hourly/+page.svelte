@@ -58,8 +58,8 @@
 		},
 		meal: new Array(5).fill(null).map(() => {
 			return {
-				itemName: 'チーズの欠片',
-				num: 10
+				itemName: 'なし',
+				num: 0
 			};
 		}),
 		mR: 0,
@@ -246,8 +246,10 @@
 		}, 0);
 
 	$: mealCost = usedMealNum
-		.map(
-			({ itemName, num }) => MealData[itemName] * num * funClubCardList[initialState.funClubCard]
+		.map(({ itemName, num }) =>
+			MealData[itemName] !== 'なし'
+				? MealData[itemName] * num * funClubCardList[initialState.funClubCard]
+				: 0
 		)
 		.reduce((p, c) => p + c, 0);
 
@@ -427,9 +429,11 @@
 									<div class="form-label w-14">食事{i + 1}</div>
 									<div class="form-controll flex flex-1 gap-4">
 										<div class="flex items-center">
-											<div class="text-xs flex-1">メニュー:</div>
 											<select class="ml-2 px-1" bind:value={initialState.meal[i].itemName}>
-												<option value="チーズの欠片">チーズの欠片</option>
+												<option value="なし">なし</option>
+												{#each Object.keys(MealData) as meal}
+													<option value={meal}>{meal}</option>
+												{/each}
 											</select>
 										</div>
 										<div class="flex  items-center">
@@ -450,7 +454,7 @@
 						<div class="heading2">現在の所持金を入力してください</div>
 						<div>
 							<div class="form-row">
-								<div class="form-label">所持 mR</div>
+								<div class="form-label w-40">所持 mR</div>
 								<div class="form-controll">
 									<input type="number" class="border" bind:value={initialState.mR} />
 								</div>
@@ -458,7 +462,7 @@
 						</div>
 						<div>
 							<div class="form-row">
-								<div class="form-label">ファンクラブ会員権</div>
+								<div class="form-label w-40">ファンクラブ会員権</div>
 								<div class="form-controll">
 									<select bind:value={initialState.funClubCard}>
 										<option value="なし">なし</option>
