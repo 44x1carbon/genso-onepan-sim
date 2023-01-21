@@ -123,10 +123,10 @@
 
 	let otherInfo = {
 		baseEquipment: {
-			右手: { condition: 0, cost: 1000 },
-			左手: { condition: 0, cost: 1000 },
-			胴: { condition: 0, cost: 1000 },
-			足: { condition: 0, cost: 1000 },
+			右手: { condition: 0, cost: 0 },
+			左手: { condition: 0, cost: 0 },
+			胴: { condition: 0, cost: 0 },
+			足: { condition: 0, cost: 0 },
 			頭: { condition: 0, cost: 1000 },
 			背中: { condition: 0, cost: 1000 },
 			肩: { condition: 0, cost: 1000 },
