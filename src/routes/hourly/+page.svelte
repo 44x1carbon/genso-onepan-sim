@@ -705,7 +705,11 @@
 			<div class="h-[20rem]">
 				<Step step={step3} bind:maxStep={maxStep3}>
 					<section>
-						<div class="heading2">ベース装備の修理費を入力してください</div>
+						<div class="heading2">
+							ベース装備の修理費を入力してください<br /><span class="text-xs"
+								>狩り後に修理屋で表示されている金額を入力してください</span
+							>
+						</div>
 						<div>
 							{#each ['右手', '左手', '胴', '足', '頭', '背中', '肩', '指輪'] as pos}
 								<div class="form-row">
@@ -731,7 +735,11 @@
 					</section>
 
 					<section>
-						<div class="heading2">おしゃれ装備の修理費を入力してください</div>
+						<div class="heading2">
+							おしゃれ装備の修理費を入力してください<br /><span class="text-xs"
+								>狩り後に修理屋で表示されている金額を入力してください</span
+							>
+						</div>
 						<div>
 							{#each ['右手', '左手', '胴', '足', '頭', '背中', '肩'] as pos}
 								<div class="form-row">
