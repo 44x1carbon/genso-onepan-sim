@@ -106,14 +106,14 @@
 		},
 		meal: new Array(5).fill(null).map(() => {
 			return {
-				num: 5
+				num: 0
 			};
 		}),
 		spring: {
-			cost: 5000,
-			num: 4
+			cost: 0,
+			num: 0
 		},
-		mR: 500000,
+		mR: 0,
 		workPlace: '',
 		workingMinute: 60
 	};
@@ -246,10 +246,8 @@
 		}, 0);
 
 	$: mealCost = usedMealNum
-		.map(({ itemName, num }) =>
-			MealData[itemName] !== 'なし'
-				? MealData[itemName] * num * funClubCardList[initialState.funClubCard]
-				: 0
+		.map(
+			({ itemName, num }) => MealData[itemName] * num * funClubCardList[initialState.funClubCard]
 		)
 		.reduce((p, c) => p + c, 0);
 
@@ -430,7 +428,6 @@
 									<div class="form-controll flex flex-1 gap-4">
 										<div class="flex items-center">
 											<select class="ml-2 px-1" bind:value={initialState.meal[i].itemName}>
-												<option value="なし">なし</option>
 												{#each Object.keys(MealData) as meal}
 													<option value={meal}>{meal}</option>
 												{/each}
@@ -833,7 +830,9 @@
 
 		<div class="flex justify-between mt-2 border-t-2 pt-1">
 			<div>収支</div>
-			<div>{total === 0 ? '±' : total > 0 ? '+' : '-'}{total}mR</div>
+			<div class={total === 0 ? '' : total > 0 ? 'text-green-500' : 'text-red-500'}>
+				{total === 0 ? '±' : total > 0 ? '+' : '-'}{total}mR
+			</div>
 		</div>
 		<div class="flex justify-between mt-2">
 			<div>時給</div>
