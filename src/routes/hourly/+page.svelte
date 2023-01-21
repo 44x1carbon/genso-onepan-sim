@@ -127,19 +127,19 @@
 			左手: { condition: 0, cost: 0 },
 			胴: { condition: 0, cost: 0 },
 			足: { condition: 0, cost: 0 },
-			頭: { condition: 0, cost: 1000 },
-			背中: { condition: 0, cost: 1000 },
-			肩: { condition: 0, cost: 1000 },
-			指輪: { condition: 0, cost: 1000 }
+			頭: { condition: 0, cost: 0 },
+			背中: { condition: 0, cost: 0 },
+			肩: { condition: 0, cost: 0 },
+			指輪: { condition: 0, cost: 0 }
 		},
 		cosplayEquipment: {
-			右手: { condition: 0, cost: 1000 },
-			左手: { condition: 0, cost: 1000 },
-			胴: { condition: 0, cost: 1000 },
-			足: { condition: 0, cost: 1000 },
-			頭: { condition: 0, cost: 1000 },
-			背中: { condition: 0, cost: 1000 },
-			肩: { condition: 0, cost: 1000 }
+			右手: { condition: 0, cost: 0 },
+			左手: { condition: 0, cost: 0 },
+			胴: { condition: 0, cost: 0 },
+			足: { condition: 0, cost: 0 },
+			頭: { condition: 0, cost: 0 },
+			背中: { condition: 0, cost: 0 },
+			肩: { condition: 0, cost: 0 }
 		},
 		rate: {
 			'MV-mMV': 0.1631,
@@ -823,7 +823,7 @@
 		画像をダウンロードしてツイートしよう！<br />
 		<span class="text-xs">スマホは画像長押し、PCは右クリックでダウンロードできます。</span>
 	</div>
-	<a
+	<!-- <a
 		class="bg-blue-400 text-white font-bold w-full text-center rounded-md p-2 mt-2 block md:w-96 md:mx-auto"
 		href={`https://twitter.com/intent/tweet?text=${encodeURI(`
 元素騎士オンライン今日の時給は${hourlyPay}円！!
@@ -831,15 +831,19 @@
 ↓時給計算はこちらから`).trim()}&url=https://genso-onepan-sim.vercel.app/hourly&hashtags=元素騎士`}
 	>
 		ツイートする
-	</a>
+	</a> -->
 
 	<div
 		class="bg-orange-900 text-white result font-bold border-4 border-amber-400 rounded p-2 fixed top-0 left-0 w-full -z-50 md:w-96"
 		id="result"
 	>
 		<div class="flex justify-between">
+			<div>労働時間</div>
+			<div class="">{currentState.workingMinute}分</div>
+		</div>
+		<div class="flex justify-between mt-2">
 			<div>収入</div>
-			<div class="text-green-500">+{income}mR</div>
+			<div class="text-green-500">+{Math.floor(income)}mR</div>
 		</div>
 		<div class="flex justify-between mt-2">
 			<div>ベース装備修理費</div>
@@ -848,38 +852,40 @@
 		<div class="flex justify-between">
 			<div>おしゃれ装備修理費</div>
 			<div class="text-right text-red-500">
-				-{mMVTomR(cosplayEquipmentRepairCost)}mR<br />(-{cosplayEquipmentRepairCost}mMV)
+				-{Math.floor(mMVTomR(cosplayEquipmentRepairCost))}mR<br />(-{Math.floor(
+					cosplayEquipmentRepairCost
+				)}mMV)
 			</div>
 		</div>
 
 		<div class="flex justify-between mt-2">
 			<div>お薬代</div>
-			<div class="text-red-500">-{portionCost}mR</div>
+			<div class="text-red-500">-{Math.floor(portionCost)}mR</div>
 		</div>
 
 		<div class="flex justify-between mt-2">
 			<div>お食事代</div>
-			<div class="text-red-500">-{mealCost}mR</div>
+			<div class="text-red-500">-{Math.floor(mealCost)}mR</div>
 		</div>
 
 		<div class="flex justify-between mt-2">
 			<div>泉代</div>
-			<div class="text-red-500">-{springCost}mR</div>
+			<div class="text-red-500">-{Math.floor(springCost)}mR</div>
 		</div>
 
 		<div class="flex justify-between mt-2 border-t-2 pt-1">
 			<div>収支</div>
 			<div class={total === 0 ? '' : total > 0 ? 'text-green-500' : 'text-red-500'}>
-				{total === 0 ? '±' : total > 0 ? '+' : ''}{total}mR
+				{total === 0 ? '±' : total > 0 ? '+' : ''}{Math.floor(total)}mR
 			</div>
 		</div>
 		<div class="flex justify-between mt-2">
 			<div>円換算</div>
-			<div>{mRToJpy(total)}円</div>
+			<div>{Math.floor(mRToJpy(total))}円</div>
 		</div>
 		<div class="flex justify-between mt-2">
 			<div>時給</div>
-			<div>{hourlyPay}円</div>
+			<div>{Math.floor(hourlyPay)}円</div>
 		</div>
 		<div class="flex justify-between">
 			<div />
