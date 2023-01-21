@@ -98,10 +98,14 @@
 			`${monster.name}を1撃で倒すには
 ${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${panValue(monster, 1)}必要です。
 
-${ monster.punchNum === 2 ? "" : `
+${
+	monster.punchNum === 2
+		? ''
+		: `
 2撃で倒すには
 ${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${panValue(monster, 2)}必要です。
-`.trim() }
+`.trim()
+}
 `
 		);
 	}
@@ -117,7 +121,7 @@ ${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${p
 		while (
 			hp >
 			calcTotalDamage(
-				skills, 
+				skills,
 				{
 					...status,
 					[key]: status[key] + plusValue
@@ -131,7 +135,7 @@ ${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${p
 		while (
 			hp <
 			calcTotalDamage(
-				skills, 
+				skills,
 				{
 					...status,
 					[key]: status[key] + plusValue
@@ -145,7 +149,7 @@ ${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${p
 		while (
 			hp >
 			calcTotalDamage(
-				skills, 
+				skills,
 				{
 					...status,
 					[key]: status[key] + plusValue
@@ -159,7 +163,7 @@ ${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${p
 		while (
 			hp <=
 			calcTotalDamage(
-				skills, 
+				skills,
 				{
 					...status,
 					[key]: status[key] + plusValue
@@ -173,7 +177,7 @@ ${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${p
 		while (
 			hp >=
 			calcTotalDamage(
-				skills, 
+				skills,
 				{
 					...status,
 					[key]: status[key] + plusValue
@@ -236,6 +240,12 @@ ${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${p
 									</div>
 									<div class=" w-4 text-center bg-white bg-opacity-50">{m[key]}</div>
 								{/each}
+							</div>
+							<div class="text-sm mt-1">
+								{m.drop
+									.split(',')
+									.filter((s) => s.includes('晶石') || s.includes('垢石'))
+									.join(',')}
 							</div>
 						</div>
 						<div>
