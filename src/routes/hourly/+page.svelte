@@ -779,7 +779,7 @@
 
 <div class="md:w-[74rem] md:mx-auto">
 	<div class="bg-slate-700 text-white font-bold p-1 mt-4">収支</div>
-	<img src="" id="result-img" class="mt-1 md:mx-auto" />
+	<img src="" id="result-img" class="mt-1 md:mx-auto md:w-96" />
 	<div class="text-center leading-tight p-1 bg-gray-900 text-white md:w-96 md:mx-auto">
 		画像をダウンロードしてツイートしよう！<br />
 		<span class="text-xs">スマホは画像長押し、PCは右クリックでダウンロードできます。</span>
