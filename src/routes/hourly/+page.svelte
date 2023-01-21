@@ -40,20 +40,20 @@
 		},
 		portion: {
 			hp: {
-				1: 99,
-				2: 99,
-				3: 99,
-				4: 99,
-				5: 99,
-				6: 99
+				1: 0,
+				2: 0,
+				3: 0,
+				4: 0,
+				5: 0,
+				6: 0
 			},
 			mp: {
-				1: 99,
-				2: 99,
-				3: 99,
-				4: 99,
-				5: 99,
-				6: 99
+				1: 0,
+				2: 0,
+				3: 0,
+				4: 0,
+				5: 0,
+				6: 0
 			}
 		},
 		meal: new Array(5).fill(null).map(() => {
@@ -62,29 +62,29 @@
 				num: 10
 			};
 		}),
-		mR: 100000,
+		mR: 0,
 		funClubCard: 'なし'
 	};
 
 	let currentState = {
 		baseEquipment: {
-			右手: { condition: 50 },
-			左手: { condition: 50 },
-			胴: { condition: 50 },
-			足: { condition: 50 },
-			頭: { condition: 50 },
-			背中: { condition: 50 },
-			肩: { condition: 50 },
-			指輪: { condition: 50 }
+			右手: { condition: 100 },
+			左手: { condition: 100 },
+			胴: { condition: 100 },
+			足: { condition: 100 },
+			頭: { condition: 100 },
+			背中: { condition: 100 },
+			肩: { condition: 100 },
+			指輪: { condition: 100 }
 		},
 		cosplayEquipment: {
-			右手: { condition: 50 },
-			左手: { condition: 50 },
-			胴: { condition: 50 },
-			足: { condition: 50 },
-			頭: { condition: 50 },
-			背中: { condition: 50 },
-			肩: { condition: 50 }
+			右手: { condition: 100 },
+			左手: { condition: 100 },
+			胴: { condition: 100 },
+			足: { condition: 100 },
+			頭: { condition: 100 },
+			背中: { condition: 100 },
+			肩: { condition: 100 }
 		},
 		portion: {
 			hp: {
