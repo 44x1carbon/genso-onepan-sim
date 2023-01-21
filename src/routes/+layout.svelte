@@ -10,7 +10,7 @@
 	</div>
 </header>
 
-<main class="bg-slate-50 min-h-screen py-2 border-box p-2 pb-24 md:pb-0">
+<main class="bg-slate-50 min-h-screen py-2 border-box p-2 pb-24">
 	<slot />
 </main>
 

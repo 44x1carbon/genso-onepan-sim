@@ -4,6 +4,9 @@
 	import PortionData from '../../PortionData';
 	import { toPng } from 'html-to-image';
 	import { browser } from '$app/environment';
+	import { onMount } from 'svelte';
+
+	const SAVE_KEY = 'GENSO-HOULY-DATA';
 
 	let step: number = 0;
 	let maxStep: number = 0;
@@ -227,13 +230,15 @@
 		return p + cost;
 	}, 0);
 
-	$: cosplayEquipmentRepairCost = Object.entries(cosplayEquipmentDiffCnd).reduce((p, c) => {
-		const [pos, cnd] = c;
-		const cost = initialState.cosplayEquipment[pos].isUnEquipped
-			? 0
-			: cosplayEquipmentRepairCosts[pos] * cnd;
-		return p + cost;
-	}, 0);
+	$: cosplayEquipmentRepairCost = Math.floor(
+		Object.entries(cosplayEquipmentDiffCnd).reduce((p, c) => {
+			const [pos, cnd] = c;
+			const cost = initialState.cosplayEquipment[pos].isUnEquipped
+				? 0
+				: cosplayEquipmentRepairCosts[pos] * cnd;
+			return p + cost;
+		}, 0)
+	);
 
 	$: portionCost =
 		Object.entries(usedPortionNum.hp).reduce((p, c) => {
@@ -255,13 +260,14 @@
 
 	$: income = currentState.mR - initialState.mR;
 
-	$: total =
+	$: total = Math.floor(
 		income -
-		baseEquipmentRepairCost -
-		cosplayEquipmentRepairCost -
-		portionCost -
-		mealCost -
-		springCost;
+			baseEquipmentRepairCost -
+			cosplayEquipmentRepairCost -
+			portionCost -
+			mealCost -
+			springCost
+	);
 
 	$: hourlyPay = mRToJpy(total) / (currentState.workingMinute / 60);
 
@@ -276,6 +282,31 @@
 			}
 		}
 	}, 100);
+
+	setInterval(() => {
+		if (browser) {
+			localStorage.setItem(
+				SAVE_KEY,
+				JSON.stringify({
+					initialState,
+					currentState,
+					otherInfo
+				})
+			);
+		}
+	}, 1000);
+
+	onMount(() => {
+		if (browser) {
+			const json = localStorage.getItem(SAVE_KEY);
+			if (json) {
+				const data = JSON.parse(json);
+				initialState = data.initialState;
+				currentState = data.currentState;
+				otherInfo = data.otherInfo;
+			}
+		}
+	});
 
 	function mRToJpy(mR: number) {
 		const ROND = mR / (otherInfo.rate['ROND-mRond'] * 10000);
@@ -831,8 +862,12 @@
 		<div class="flex justify-between mt-2 border-t-2 pt-1">
 			<div>収支</div>
 			<div class={total === 0 ? '' : total > 0 ? 'text-green-500' : 'text-red-500'}>
-				{total === 0 ? '±' : total > 0 ? '+' : '-'}{total}mR
+				{total === 0 ? '±' : total > 0 ? '+' : ''}{total}mR
 			</div>
+		</div>
+		<div class="flex justify-between mt-2">
+			<div>円換算</div>
+			<div>{mRToJpy(total)}円</div>
 		</div>
 		<div class="flex justify-between mt-2">
 			<div>時給</div>
