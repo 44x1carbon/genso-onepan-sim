@@ -273,7 +273,6 @@
 
 	function baseEquipmentRepairCost() {
 		const _baseEquipmentRepairCosts = baseEquipmentRepairCosts();
-		console.log(_baseEquipmentRepairCosts);
 		return Math.floor(
 			Object.entries(baseEquipmentDiffCnd()).reduce((p, c) => {
 				const [pos, cnd] = c;
@@ -923,14 +922,15 @@
 	on:click={showResult}>時給を計算する</button
 >
 
-<div class="md:w-[74rem] md:mx-auto">
-	<div class="bg-slate-700 text-white font-bold p-1 mt-4">収支</div>
-	<img src="" id="result-img" class="mt-1 md:mx-auto md:w-96" />
-	<div class="text-center leading-tight p-1 bg-gray-900 text-white md:w-96 md:mx-auto">
-		画像をダウンロードしてツイートしよう！<br />
-		<span class="text-xs">スマホは画像長押し、PCは右クリックでダウンロードできます。</span>
-	</div>
-	<!-- <a
+{#if isShowResult}
+	<div class="md:w-[74rem] md:mx-auto">
+		<div class="bg-slate-700 text-white font-bold p-1 mt-4">収支</div>
+		<img src="" id="result-img" class="mt-1 md:mx-auto md:w-96" />
+		<div class="text-center leading-tight p-1 bg-gray-900 text-white md:w-96 md:mx-auto">
+			画像をダウンロードしてツイートしよう！<br />
+			<span class="text-xs">スマホは画像長押し、PCは右クリックでダウンロードできます。</span>
+		</div>
+		<!-- <a
 		class="bg-blue-400 text-white font-bold w-full text-center rounded-md p-2 mt-2 block md:w-96 md:mx-auto"
 		href={`https://twitter.com/intent/tweet?text=${encodeURI(`
 元素騎士オンライン今日の時給は${hourlyPay}円！!
@@ -939,64 +939,65 @@
 	>
 		ツイートする
 	</a> -->
+	</div>
+{/if}
 
-	<div
-		class="bg-orange-900 text-white result font-bold border-4 border-amber-400 rounded p-2 fixed top-0 left-0 w-full -z-50 md:w-96"
-		id="result"
-	>
-		<div class="flex justify-between">
-			<div>労働時間</div>
-			<div class="">{currentState.workingMinute}分</div>
+<div
+	class="bg-orange-900 text-white result font-bold border-4 border-amber-400 rounded p-2 fixed top-0 left-0 w-full -z-50 md:w-96"
+	id="result"
+>
+	<div class="flex justify-between">
+		<div>労働時間</div>
+		<div class="">{currentState.workingMinute}分</div>
+	</div>
+	<div class="flex justify-between mt-2">
+		<div>収入</div>
+		<div class="text-green-500">+{result.income}mR</div>
+	</div>
+	<div class="flex justify-between mt-2">
+		<div>ベース装備修理費</div>
+		<div class="text-red-500">-{result.baseEquipmentRepairCost}mR</div>
+	</div>
+	<div class="flex justify-between">
+		<div>おしゃれ装備修理費</div>
+		<div class="text-right text-red-500">
+			-{result.cosplayEquipmentRepairCost}mR<br />(-{result.cosplayEquipmentRepairCost}mMV)
 		</div>
-		<div class="flex justify-between mt-2">
-			<div>収入</div>
-			<div class="text-green-500">+{result.income}mR</div>
-		</div>
-		<div class="flex justify-between mt-2">
-			<div>ベース装備修理費</div>
-			<div class="text-red-500">-{result.baseEquipmentRepairCost}mR</div>
-		</div>
-		<div class="flex justify-between">
-			<div>おしゃれ装備修理費</div>
-			<div class="text-right text-red-500">
-				-{result.cosplayEquipmentRepairCost}mR<br />(-{result.cosplayEquipmentRepairCost}mMV)
-			</div>
-		</div>
+	</div>
 
-		<div class="flex justify-between mt-2">
-			<div>お薬代</div>
-			<div class="text-red-500">-{result.portionCost}mR</div>
-		</div>
+	<div class="flex justify-between mt-2">
+		<div>お薬代</div>
+		<div class="text-red-500">-{result.portionCost}mR</div>
+	</div>
 
-		<div class="flex justify-between mt-2">
-			<div>お食事代</div>
-			<div class="text-red-500">-{result.mealCost}mR</div>
-		</div>
+	<div class="flex justify-between mt-2">
+		<div>お食事代</div>
+		<div class="text-red-500">-{result.mealCost}mR</div>
+	</div>
 
-		<div class="flex justify-between mt-2">
-			<div>泉代</div>
-			<div class="text-red-500">-{result.springCost}mR</div>
-		</div>
+	<div class="flex justify-between mt-2">
+		<div>泉代</div>
+		<div class="text-red-500">-{result.springCost}mR</div>
+	</div>
 
-		<div class="flex justify-between mt-2 border-t-2 pt-1">
-			<div>収支</div>
-			<div class={result.total === 0 ? '' : result.total > 0 ? 'text-green-500' : 'text-red-500'}>
-				{result.total === 0 ? '±' : result.total > 0 ? '+' : ''}{result.total}mR
-			</div>
+	<div class="flex justify-between mt-2 border-t-2 pt-1">
+		<div>収支</div>
+		<div class={result.total === 0 ? '' : result.total > 0 ? 'text-green-500' : 'text-red-500'}>
+			{result.total === 0 ? '±' : result.total > 0 ? '+' : ''}{result.total}mR
 		</div>
-		<div class="flex justify-between mt-2">
-			<div>円換算</div>
-			<div>{result.jpy}円</div>
-		</div>
-		<div class="flex justify-between mt-2">
-			<div>時給</div>
-			<div>{result.hourlyPay}円</div>
-		</div>
-		<div class="flex justify-between">
-			<div />
-			<div class="text-sm">
-				({result.famchick}ファミチキ)
-			</div>
+	</div>
+	<div class="flex justify-between mt-2">
+		<div>円換算</div>
+		<div>{result.jpy}円</div>
+	</div>
+	<div class="flex justify-between mt-2">
+		<div>時給</div>
+		<div>{result.hourlyPay}円</div>
+	</div>
+	<div class="flex justify-between">
+		<div />
+		<div class="text-sm">
+			({result.famchick}ファミチキ)
 		</div>
 	</div>
 </div>
