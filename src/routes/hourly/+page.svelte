@@ -151,137 +151,247 @@
 		}
 	};
 
-	$: baseEquipmentDiffCnd = {
-		右手: initialState.baseEquipment.右手.condition - currentState.baseEquipment.右手.condition,
-		左手: initialState.baseEquipment.左手.condition - currentState.baseEquipment.左手.condition,
-		胴: initialState.baseEquipment.胴.condition - currentState.baseEquipment.胴.condition,
-		足: initialState.baseEquipment.足.condition - currentState.baseEquipment.足.condition,
-		頭: initialState.baseEquipment.頭.condition - currentState.baseEquipment.頭.condition,
-		背中: initialState.baseEquipment.背中.condition - currentState.baseEquipment.背中.condition,
-		肩: initialState.baseEquipment.肩.condition - currentState.baseEquipment.肩.condition,
-		指輪: initialState.baseEquipment.右手.condition - currentState.baseEquipment.指輪.condition
-	};
-
-	$: cosplayEquipmentDiffCnd = {
-		右手:
-			initialState.cosplayEquipment.右手.condition - currentState.cosplayEquipment.右手.condition,
-		左手:
-			initialState.cosplayEquipment.左手.condition - currentState.cosplayEquipment.左手.condition,
-		胴: initialState.cosplayEquipment.胴.condition - currentState.cosplayEquipment.胴.condition,
-		足: initialState.cosplayEquipment.足.condition - currentState.cosplayEquipment.足.condition,
-		頭: initialState.cosplayEquipment.頭.condition - currentState.cosplayEquipment.頭.condition,
-		背中:
-			initialState.cosplayEquipment.背中.condition - currentState.cosplayEquipment.背中.condition,
-		肩: initialState.cosplayEquipment.肩.condition - currentState.cosplayEquipment.肩.condition
-	};
-
-	$: usedPortionNum = {
-		hp: {
-			1: initialState.portion.hp[1] - currentState.portion.hp[1],
-			2: initialState.portion.hp[2] - currentState.portion.hp[2],
-			3: initialState.portion.hp[3] - currentState.portion.hp[3],
-			4: initialState.portion.hp[4] - currentState.portion.hp[4],
-			5: initialState.portion.hp[5] - currentState.portion.hp[5],
-			6: initialState.portion.hp[6] - currentState.portion.hp[6]
-		},
-		mp: {
-			1: initialState.portion.mp[1] - currentState.portion.mp[1],
-			2: initialState.portion.mp[2] - currentState.portion.mp[2],
-			3: initialState.portion.mp[3] - currentState.portion.mp[3],
-			4: initialState.portion.mp[4] - currentState.portion.mp[4],
-			5: initialState.portion.mp[5] - currentState.portion.mp[5],
-			6: initialState.portion.mp[6] - currentState.portion.mp[6]
-		}
-	};
-
-	$: usedMealNum = initialState.meal.map((initialMeal, i) => {
+	function baseEquipmentDiffCnd() {
 		return {
-			...initialMeal,
-			num: initialMeal.num - currentState.meal[i].num
+			右手: initialState.baseEquipment.右手.condition - currentState.baseEquipment.右手.condition,
+			左手: initialState.baseEquipment.左手.condition - currentState.baseEquipment.左手.condition,
+			胴: initialState.baseEquipment.胴.condition - currentState.baseEquipment.胴.condition,
+			足: initialState.baseEquipment.足.condition - currentState.baseEquipment.足.condition,
+			頭: initialState.baseEquipment.頭.condition - currentState.baseEquipment.頭.condition,
+			背中: initialState.baseEquipment.背中.condition - currentState.baseEquipment.背中.condition,
+			肩: initialState.baseEquipment.肩.condition - currentState.baseEquipment.肩.condition,
+			指輪: initialState.baseEquipment.右手.condition - currentState.baseEquipment.指輪.condition
 		};
-	});
+	}
 
-	$: baseEquipmentRepairCosts = {
-		右手: otherInfo.baseEquipment.右手.cost / (100 - otherInfo.baseEquipment.右手.condition),
-		左手: otherInfo.baseEquipment.左手.cost / (100 - otherInfo.baseEquipment.左手.condition),
-		胴: otherInfo.baseEquipment.胴.cost / (100 - otherInfo.baseEquipment.胴.condition),
-		足: otherInfo.baseEquipment.足.cost / (100 - otherInfo.baseEquipment.足.condition),
-		頭: otherInfo.baseEquipment.頭.cost / (100 - otherInfo.baseEquipment.頭.condition),
-		背中: otherInfo.baseEquipment.背中.cost / (100 - otherInfo.baseEquipment.背中.condition),
-		肩: otherInfo.baseEquipment.肩.cost / (100 - otherInfo.baseEquipment.肩.condition),
-		指輪: otherInfo.baseEquipment.指輪.cost / (100 - otherInfo.baseEquipment.指輪.condition)
-	};
+	function cosplayEquipmentDiffCnd() {
+		return {
+			右手:
+				initialState.cosplayEquipment.右手.condition - currentState.cosplayEquipment.右手.condition,
+			左手:
+				initialState.cosplayEquipment.左手.condition - currentState.cosplayEquipment.左手.condition,
+			胴: initialState.cosplayEquipment.胴.condition - currentState.cosplayEquipment.胴.condition,
+			足: initialState.cosplayEquipment.足.condition - currentState.cosplayEquipment.足.condition,
+			頭: initialState.cosplayEquipment.頭.condition - currentState.cosplayEquipment.頭.condition,
+			背中:
+				initialState.cosplayEquipment.背中.condition - currentState.cosplayEquipment.背中.condition,
+			肩: initialState.cosplayEquipment.肩.condition - currentState.cosplayEquipment.肩.condition
+		};
+	}
 
-	$: cosplayEquipmentRepairCosts = {
-		右手: otherInfo.cosplayEquipment.右手.cost / (100 - otherInfo.cosplayEquipment.右手.condition),
-		左手: otherInfo.cosplayEquipment.左手.cost / (100 - otherInfo.cosplayEquipment.左手.condition),
-		胴: otherInfo.cosplayEquipment.胴.cost / (100 - otherInfo.cosplayEquipment.胴.condition),
-		足: otherInfo.cosplayEquipment.足.cost / (100 - otherInfo.cosplayEquipment.足.condition),
-		頭: otherInfo.cosplayEquipment.頭.cost / (100 - otherInfo.cosplayEquipment.頭.condition),
-		背中: otherInfo.cosplayEquipment.背中.cost / (100 - otherInfo.cosplayEquipment.背中.condition),
-		肩: otherInfo.cosplayEquipment.肩.cost / (100 - otherInfo.cosplayEquipment.肩.condition)
-	};
-
-	$: baseEquipmentRepairCost = Object.entries(baseEquipmentDiffCnd).reduce((p, c) => {
-		const [pos, cnd] = c;
-		const cost = initialState.baseEquipment[pos].isUnEquipped
-			? 0
-			: baseEquipmentRepairCosts[pos] * cnd;
-		return p + cost;
-	}, 0);
-
-	$: cosplayEquipmentRepairCost = Math.floor(
-		Object.entries(cosplayEquipmentDiffCnd).reduce((p, c) => {
-			const [pos, cnd] = c;
-			const cost = initialState.cosplayEquipment[pos].isUnEquipped
-				? 0
-				: cosplayEquipmentRepairCosts[pos] * cnd;
-			return p + cost;
-		}, 0)
-	);
-
-	$: portionCost =
-		Object.entries(usedPortionNum.hp).reduce((p, c) => {
-			const [lv, num] = c;
-			return p + PortionData.hp[lv] * num * funClubCardList[initialState.funClubCard];
-		}, 0) +
-		Object.entries(usedPortionNum.mp).reduce((p, c) => {
-			const [lv, num] = c;
-			return p + PortionData.mp[lv] * num * funClubCardList[initialState.funClubCard];
-		}, 0);
-
-	$: mealCost = usedMealNum
-		.map(
-			({ itemName, num }) => MealData[itemName] * num * funClubCardList[initialState.funClubCard]
-		)
-		.reduce((p, c) => p + c, 0);
-
-	$: springCost = currentState.spring.cost * currentState.spring.num;
-
-	$: income = currentState.mR - initialState.mR;
-
-	$: total = Math.floor(
-		income -
-			baseEquipmentRepairCost -
-			cosplayEquipmentRepairCost -
-			portionCost -
-			mealCost -
-			springCost
-	);
-
-	$: hourlyPay = mRToJpy(total) / (currentState.workingMinute / 60);
-
-	setInterval(() => {
-		if (browser) {
-			const node = document.getElementById('result');
-			if (node !== null) {
-				toPng(node).then((dataUrl) => {
-					const img = document.getElementById('result-img') as HTMLImageElement;
-					img.src = dataUrl;
-				});
+	function usedPortionNum() {
+		return {
+			hp: {
+				1: initialState.portion.hp[1] - currentState.portion.hp[1],
+				2: initialState.portion.hp[2] - currentState.portion.hp[2],
+				3: initialState.portion.hp[3] - currentState.portion.hp[3],
+				4: initialState.portion.hp[4] - currentState.portion.hp[4],
+				5: initialState.portion.hp[5] - currentState.portion.hp[5],
+				6: initialState.portion.hp[6] - currentState.portion.hp[6]
+			},
+			mp: {
+				1: initialState.portion.mp[1] - currentState.portion.mp[1],
+				2: initialState.portion.mp[2] - currentState.portion.mp[2],
+				3: initialState.portion.mp[3] - currentState.portion.mp[3],
+				4: initialState.portion.mp[4] - currentState.portion.mp[4],
+				5: initialState.portion.mp[5] - currentState.portion.mp[5],
+				6: initialState.portion.mp[6] - currentState.portion.mp[6]
 			}
+		};
+	}
+
+	function usedMealNum() {
+		return initialState.meal.map((initialMeal, i) => {
+			return {
+				...initialMeal,
+				num: initialMeal.num - currentState.meal[i].num
+			};
+		});
+	}
+
+	function baseEquipmentRepairCosts() {
+		return Object.fromEntries(
+			Object.entries({
+				右手: Math.floor(
+					otherInfo.baseEquipment.右手.cost / (100 - currentState.baseEquipment.右手.condition)
+				),
+				左手: Math.floor(
+					otherInfo.baseEquipment.左手.cost / (100 - currentState.baseEquipment.左手.condition)
+				),
+				胴: Math.floor(
+					otherInfo.baseEquipment.胴.cost / (100 - currentState.baseEquipment.胴.condition)
+				),
+				足: Math.floor(
+					otherInfo.baseEquipment.足.cost / (100 - currentState.baseEquipment.足.condition)
+				),
+				頭: Math.floor(
+					otherInfo.baseEquipment.頭.cost / (100 - currentState.baseEquipment.頭.condition)
+				),
+				背中: Math.floor(
+					otherInfo.baseEquipment.背中.cost / (100 - currentState.baseEquipment.背中.condition)
+				),
+				肩: Math.floor(
+					otherInfo.baseEquipment.肩.cost / (100 - currentState.baseEquipment.肩.condition)
+				),
+				指輪: Math.floor(
+					otherInfo.baseEquipment.指輪.cost / (100 - currentState.baseEquipment.指輪.condition)
+				)
+			}).map(([k, v]) => [k, v === Infinity ? 0 : v])
+		);
+	}
+
+	function cosplayEquipmentRepairCosts() {
+		return Object.fromEntries(
+			Object.entries({
+				右手: Math.floor(
+					otherInfo.cosplayEquipment.右手.cost /
+						(100 - currentState.cosplayEquipment.右手.condition)
+				),
+				左手: Math.floor(
+					otherInfo.cosplayEquipment.左手.cost /
+						(100 - currentState.cosplayEquipment.左手.condition)
+				),
+				胴: Math.floor(
+					otherInfo.cosplayEquipment.胴.cost / (100 - currentState.cosplayEquipment.胴.condition)
+				),
+				足: Math.floor(
+					otherInfo.cosplayEquipment.足.cost / (100 - currentState.cosplayEquipment.足.condition)
+				),
+				頭: Math.floor(
+					otherInfo.cosplayEquipment.頭.cost / (100 - currentState.cosplayEquipment.頭.condition)
+				),
+				背中: Math.floor(
+					otherInfo.cosplayEquipment.背中.cost /
+						(100 - currentState.cosplayEquipment.背中.condition)
+				),
+				肩: Math.floor(
+					otherInfo.cosplayEquipment.肩.cost / (100 - currentState.cosplayEquipment.肩.condition)
+				)
+			}).map(([k, v]) => [k, v === Infinity ? 0 : v])
+		);
+	}
+
+	function baseEquipmentRepairCost() {
+		const _baseEquipmentRepairCosts = baseEquipmentRepairCosts();
+		console.log(_baseEquipmentRepairCosts);
+		return Math.floor(
+			Object.entries(baseEquipmentDiffCnd()).reduce((p, c) => {
+				const [pos, cnd] = c;
+				const cost = initialState.baseEquipment[pos].isUnEquipped
+					? 0
+					: _baseEquipmentRepairCosts[pos] * cnd;
+				return p + cost;
+			}, 0)
+		);
+	}
+
+	function cosplayEquipmentRepairCost() {
+		const _cosplayEquipmentRepairCosts = cosplayEquipmentRepairCosts();
+		return Math.floor(
+			Object.entries(cosplayEquipmentDiffCnd()).reduce((p, c) => {
+				const [pos, cnd] = c;
+				const cost = initialState.cosplayEquipment[pos].isUnEquipped
+					? 0
+					: _cosplayEquipmentRepairCosts[pos] * cnd;
+				return p + cost;
+			}, 0)
+		);
+	}
+
+	function portionCost() {
+		const _usedPortionNum = usedPortionNum();
+		return Math.floor(
+			Object.entries(_usedPortionNum.hp).reduce((p, c) => {
+				const [lv, num] = c;
+				return p + PortionData.hp[lv] * num * funClubCardList[initialState.funClubCard];
+			}, 0) +
+				Object.entries(_usedPortionNum.mp).reduce((p, c) => {
+					const [lv, num] = c;
+					return p + PortionData.mp[lv] * num * funClubCardList[initialState.funClubCard];
+				}, 0)
+		);
+	}
+
+	function mealCost() {
+		const _usedMealNum = usedMealNum();
+		return Math.floor(
+			_usedMealNum
+				.map(
+					({ itemName, num }) =>
+						MealData[itemName] * num * funClubCardList[initialState.funClubCard]
+				)
+				.reduce((p, c) => p + c, 0)
+		);
+	}
+
+	function springCost() {
+		return Math.floor(currentState.spring.cost * currentState.spring.num);
+	}
+
+	function income() {
+		return Math.floor(currentState.mR - initialState.mR);
+	}
+
+	function total() {
+		return Math.floor(
+			income() -
+				baseEquipmentRepairCost() -
+				cosplayEquipmentRepairCost() -
+				portionCost() -
+				mealCost() -
+				springCost()
+		);
+	}
+
+	function hourlyPay() {
+		return Math.floor(mRToJpy(total()) / (currentState.workingMinute / 60));
+	}
+
+	function famchick() {
+		return Math.floor(hourlyPay() / otherInfo.rate['ファミチキ-JPY']);
+	}
+
+	let result = {
+		baseEquipmentRepairCost: 0,
+		cosplayEquipmentRepairCost: 0,
+		mealCost: 0,
+		portionCost: 0,
+		springCost: 0,
+		income: 0,
+		jpy: 0,
+		hourlyPay: 0,
+		total: 0,
+		famchick: 0
+	};
+	let isShowResult = false;
+
+	function showResult() {
+		result.baseEquipmentRepairCost = baseEquipmentRepairCost();
+		result.cosplayEquipmentRepairCost = cosplayEquipmentRepairCost();
+		result.mealCost = mealCost();
+		result.portionCost = portionCost();
+		result.springCost = springCost();
+		result.income = income();
+		result.jpy = mRToJpy(total());
+		result.hourlyPay = hourlyPay();
+		result.total = total();
+		result.famchick = famchick();
+
+		setTimeout(() => {
+			resultToImage();
+			isShowResult = true;
+		}, 100);
+	}
+
+	function resultToImage() {
+		const node = document.getElementById('result');
+		if (node !== null) {
+			toPng(node).then((dataUrl) => {
+				const img = document.getElementById('result-img') as HTMLImageElement;
+				img.src = dataUrl;
+			});
 		}
-	}, 100);
+	}
 
 	setInterval(() => {
 		if (browser) {
@@ -323,14 +433,6 @@
 		const mR = ROND * otherInfo.rate['ROND-mRond'] * 10000;
 
 		return Math.floor(mR);
-	}
-
-	function mMVToJpy(mMV: number) {
-		const MV = (mMV / otherInfo.rate['MV-mMV']) * 10000;
-		const USD = MV * otherInfo.rate['MV-USD'];
-		const JPY = USD * otherInfo.rate['USD-JPY'];
-
-		return JPY;
 	}
 </script>
 
@@ -816,6 +918,11 @@
 	</div>
 </div>
 
+<button
+	class="border rounded p-1 w-20 bg-gray-200 border-gray-400 w-full md:w-48 md:mx-auto block mt-4"
+	on:click={showResult}>時給を計算する</button
+>
+
 <div class="md:w-[74rem] md:mx-auto">
 	<div class="bg-slate-700 text-white font-bold p-1 mt-4">収支</div>
 	<img src="" id="result-img" class="mt-1 md:mx-auto md:w-96" />
@@ -843,54 +950,52 @@
 		</div>
 		<div class="flex justify-between mt-2">
 			<div>収入</div>
-			<div class="text-green-500">+{Math.floor(income)}mR</div>
+			<div class="text-green-500">+{result.income}mR</div>
 		</div>
 		<div class="flex justify-between mt-2">
 			<div>ベース装備修理費</div>
-			<div class="text-red-500">-{baseEquipmentRepairCost}mR</div>
+			<div class="text-red-500">-{result.baseEquipmentRepairCost}mR</div>
 		</div>
 		<div class="flex justify-between">
 			<div>おしゃれ装備修理費</div>
 			<div class="text-right text-red-500">
-				-{Math.floor(mMVTomR(cosplayEquipmentRepairCost))}mR<br />(-{Math.floor(
-					cosplayEquipmentRepairCost
-				)}mMV)
+				-{result.cosplayEquipmentRepairCost}mR<br />(-{result.cosplayEquipmentRepairCost}mMV)
 			</div>
 		</div>
 
 		<div class="flex justify-between mt-2">
 			<div>お薬代</div>
-			<div class="text-red-500">-{Math.floor(portionCost)}mR</div>
+			<div class="text-red-500">-{result.portionCost}mR</div>
 		</div>
 
 		<div class="flex justify-between mt-2">
 			<div>お食事代</div>
-			<div class="text-red-500">-{Math.floor(mealCost)}mR</div>
+			<div class="text-red-500">-{result.mealCost}mR</div>
 		</div>
 
 		<div class="flex justify-between mt-2">
 			<div>泉代</div>
-			<div class="text-red-500">-{Math.floor(springCost)}mR</div>
+			<div class="text-red-500">-{result.springCost}mR</div>
 		</div>
 
 		<div class="flex justify-between mt-2 border-t-2 pt-1">
 			<div>収支</div>
-			<div class={total === 0 ? '' : total > 0 ? 'text-green-500' : 'text-red-500'}>
-				{total === 0 ? '±' : total > 0 ? '+' : ''}{Math.floor(total)}mR
+			<div class={result.total === 0 ? '' : result.total > 0 ? 'text-green-500' : 'text-red-500'}>
+				{result.total === 0 ? '±' : result.total > 0 ? '+' : ''}{result.total}mR
 			</div>
 		</div>
 		<div class="flex justify-between mt-2">
 			<div>円換算</div>
-			<div>{Math.floor(mRToJpy(total))}円</div>
+			<div>{result.jpy}円</div>
 		</div>
 		<div class="flex justify-between mt-2">
 			<div>時給</div>
-			<div>{Math.floor(hourlyPay)}円</div>
+			<div>{result.hourlyPay}円</div>
 		</div>
 		<div class="flex justify-between">
 			<div />
 			<div class="text-sm">
-				({Math.floor(hourlyPay / otherInfo.rate['ファミチキ-JPY'])}ファミチキ)
+				({result.famchick}ファミチキ)
 			</div>
 		</div>
 	</div>
