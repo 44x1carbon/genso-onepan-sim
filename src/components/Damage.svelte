@@ -16,7 +16,7 @@
 </script>
 
 {#if skills.length}
-	<div class="border bg-white rounded-sm overflow-hidden mt-4 md:w-96">
+	<div class="border bg-chocolate-900 border-chocolate-900 rounded-sm overflow-hidden mt-4 md:w-96">
 		<div class="heading">ダメージ</div>
 		<div class="">
 			{#each skills as skill}

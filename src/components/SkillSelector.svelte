@@ -32,7 +32,7 @@
 	}
 </script>
 
-<div class="border bg-white rounded-sm overflow-hidden md:w-96">
+<div class="border bg-chocolate-900 border-chocolate-900 rounded-sm overflow-hidden md:w-96">
 	<div class="heading">スキル選択</div>
 	<div class="text-xs flex gap-1 flex-wrap flex-between p-2">
 		{#each jobs as j}

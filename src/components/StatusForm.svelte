@@ -12,7 +12,7 @@
 	}
 </script>
 
-<div class="bg-white rounded-sm overflow-hidden md:w-96">
+<div class=" rounded-sm overflow-hidden md:w-96 bg-chocolate-900 border-chocolate-900">
 	<div class="heading">ステータス入力</div>
 	<table class="status-form text-gray-700">
 		<tr class="text-xs">
@@ -113,5 +113,5 @@
 
 	.status-form td {
 		@apply text-center py-1 px-2;
-	}	
+	}
 </style>

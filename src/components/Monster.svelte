@@ -192,7 +192,7 @@ ${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${p
 	}
 </script>
 
-<div class="border bg-white rounded-sm overflow-hidden md:w-96">
+<div class="border bg-chocolate-900 border-chocolate-900 rounded-sm overflow-hidden md:w-96">
 	<div class="heading">モンスター別ダメージ表</div>
 	<div class="p-2">
 		<select class="border w-full bg-gray-50" bind:value={selectArea}>

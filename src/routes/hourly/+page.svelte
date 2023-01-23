@@ -425,13 +425,20 @@
 		return Math.floor(JPY);
 	}
 
-	function mMVTomR(mMV: number) {
-		const MV = mMV / (otherInfo.rate['MV-mMV'] * 10000);
-		const USD = MV * otherInfo.rate['MV-USD'];
-		const ROND = USD / otherInfo.rate['ROND-USD'];
-		const mR = ROND * otherInfo.rate['ROND-mRond'] * 10000;
-
-		return Math.floor(mR);
+	function exportData() {
+		let element = document.createElement('a');
+		element.href =
+			'data:text/json;charset=utf-8,' +
+			encodeURIComponent(
+				JSON.stringify({
+					initialState,
+					currentState,
+					otherInfo
+				})
+			);
+		element.download = 'data.txt';
+		element.target = '_blank';
+		element.click();
 	}
 </script>
 
@@ -440,12 +447,15 @@
 	<meta name="”description“" content="元素騎士オンラインの時給を計算できるツールです。" />
 	<meta name="”keywords”" content="元素騎士オンライン,元素騎士,時給計算機,時給" />
 </svelte:head>
+<div class="md:w-[74rem] mx-auto">
+	<div class="text-2xl font-bold">時給計算機</div>
+</div>
 
-<div class="md:flex md:gap-4 md:mx-auto md:w-fit">
+<div class="md:flex md:gap-4 md:mx-auto md:w-fit mt-4">
 	<div class="md:w-96">
-		<div class="bg-slate-700 text-white font-bold p-1 px-2 mt-4">狩り前に入力してください。</div>
-		<div class="border shadow">
-			<div class="h-[20rem]">
+		<div class="heading mt-4 md:mt-0">狩り前に入力してください。</div>
+		<div class="border shadow border-well-read-700 bg-chocolate-900 panel">
+			<div class="h-[22rem]">
 				<Step {step} bind:maxStep>
 					<section>
 						<div class="heading2">ベース装備の情報を入力してください</div>
@@ -606,24 +616,18 @@
 				</Step>
 			</div>
 			<div class="flex justify-between p-2">
-				<button
-					class="border rounded p-1 w-20 bg-gray-200 border-gray-400"
-					on:click={() => (step -= 1)}>戻る</button
-				>
+				<button class="btn w-20" on:click={() => (step -= 1)}>戻る</button>
 				<div>
 					{step + 1}/{maxStep}
 				</div>
-				<button
-					class="border rounded p-1 w-20 bg-gray-200 border-gray-400"
-					on:click={() => (step += 1)}>次へ</button
-				>
+				<button class="btn w-20" on:click={() => (step += 1)}>次へ</button>
 			</div>
 		</div>
 	</div>
 	<div class="md:w-96">
-		<div class="bg-slate-700 text-white font-bold p-1 px-2 mt-4">狩り後に入力してください。</div>
-		<div class="border shadow">
-			<div class="h-[20rem]">
+		<div class="heading mt-4 md:mt-0">狩り後に入力してください。</div>
+		<div class="border shadow border-well-read-700 bg-chocolate-900 panel">
+			<div class="h-[22rem]">
 				<Step step={step2} bind:maxStep={maxStep2}>
 					<section>
 						<div class="heading2">ベース装備の情報を入力してください</div>
@@ -652,7 +656,7 @@
 							{#each ['右手', '左手', '胴', '足', '頭', '背中', '肩'] as pos}
 								<div class="form-row w-1/2">
 									<div class="form-label w-12">{pos}</div>
-									<div class="form-controll flex flex-1 gap-4 border-r">
+									<div class="form-controll flex flex-1 gap-4 border-r border-well-read-900">
 										<div class="flex items-center">
 											<div class="text-xs flex-1">CND:</div>
 											<input
@@ -743,7 +747,7 @@
 												class="border w-20"
 												bind:value={currentState.spring.cost}
 											/>
-											<span class="bg-gray-200 px-1 border">mR</span>
+											<span class="bg-gray-900 px-1 border border-gray-900">mR</span>
 										</div>
 									</div>
 								</div>
@@ -769,7 +773,7 @@
 							<div class="form-label w-36">働いた時間</div>
 							<div class="form-controll flex items-center">
 								<input type="number" class="border" bind:value={currentState.workingMinute} /><span
-									class="bg-gray-200 px-1 border">分</span
+									class="bg-gray-900 px-1 border border-gray-900">分</span
 								>
 							</div>
 						</div>
@@ -778,7 +782,7 @@
 							<div class="form-label w-36">現在の所持 mR</div>
 							<div class="form-controll flex items-center">
 								<input type="number" class="border" bind:value={currentState.mR} /><span
-									class="bg-gray-200 px-1 border">mR</span
+									class="bg-gray-900 px-1 border border-gray-900">mR</span
 								>
 							</div>
 						</div>
@@ -786,24 +790,18 @@
 				</Step>
 			</div>
 			<div class="flex justify-between p-2">
-				<button
-					class="border rounded p-1 w-20 bg-gray-200 border-gray-400"
-					on:click={() => (step2 -= 1)}>戻る</button
-				>
+				<button class="btn w-20" on:click={() => (step2 -= 1)}>戻る</button>
 				<div>
 					{step2 + 1}/{maxStep2}
 				</div>
-				<button
-					class="border rounded p-1 w-20 bg-gray-200 border-gray-400"
-					on:click={() => (step2 += 1)}>次へ</button
-				>
+				<button class="btn w-20" on:click={() => (step2 += 1)}>次へ</button>
 			</div>
 		</div>
 	</div>
 	<div class="md:w-96">
-		<div class="bg-slate-700 text-white font-bold p-1 px-2 mt-4">装備の修理費やレートを入力。</div>
-		<div class="border shadow">
-			<div class="h-[20rem]">
+		<div class="heading mt-4 md:mt-0">装備の修理費やレートを入力。</div>
+		<div class="border shadow border-well-read-700 bg-chocolate-900 panel">
+			<div class="h-[22rem]">
 				<Step step={step3} bind:maxStep={maxStep3}>
 					<section>
 						<div class="heading2">
@@ -827,7 +825,7 @@
 												type="number"
 												class="border w-20 ml-2"
 												bind:value={otherInfo.baseEquipment[pos].cost}
-											/><span class="bg-gray-200 px-1 border">mR</span>
+											/><span class="bg-gray-900 px-1 border border-gray-900">mR</span>
 										</div>
 									</div>
 								</div>
@@ -857,7 +855,7 @@
 												type="number"
 												class="border w-20 ml-2"
 												bind:value={otherInfo.cosplayEquipment[pos].cost}
-											/><span class="bg-gray-200 px-1 border">mMV</span>
+											/><span class="bg-gray-900 px-1 border border-gray-900">mMV</span>
 										</div>
 									</div>
 								</div>
@@ -870,7 +868,7 @@
 							<div class="form-row">
 								<div class="form-label w-24">1ROND</div>
 								<div class="form-controll flex flex-1">
-									<span class="bg-gray-200 px-1 border">$</span>
+									<span class="bg-gray-900 px-1 border border-gray-900">$</span>
 									<input
 										type="number"
 										class="border w-20"
@@ -881,7 +879,7 @@
 							<div class="form-row">
 								<div class="form-label w-24">1MV</div>
 								<div class="form-controll flex flex-1">
-									<span class="bg-gray-200 px-1 border">$</span>
+									<span class="bg-gray-900 px-1 border border-gray-900">$</span>
 									<input type="number" class="border w-20 " bind:value={otherInfo.rate['MV-mMV']} />
 								</div>
 							</div>
@@ -893,7 +891,7 @@
 										class="border w-20 "
 										bind:value={otherInfo.rate['USD-JPY']}
 									/>
-									<span class="bg-gray-200 px-1 border">円</span>
+									<span class="bg-gray-900 px-1 border border-gray-900">円</span>
 								</div>
 							</div>
 						</div>
@@ -901,35 +899,32 @@
 				</Step>
 			</div>
 			<div class="flex justify-between p-2">
-				<button
-					class="border rounded p-1 w-20 bg-gray-200 border-gray-400"
-					on:click={() => (step3 -= 1)}>戻る</button
-				>
+				<button class="btn w-20" on:click={() => (step3 -= 1)}>戻る</button>
 				<div>
 					{step3 + 1}/{maxStep3}
 				</div>
-				<button
-					class="border rounded p-1 w-20 bg-gray-200 border-gray-400"
-					on:click={() => (step3 += 1)}>次へ</button
-				>
+				<button class="btn w-20" on:click={() => (step3 += 1)}>次へ</button>
 			</div>
 		</div>
 	</div>
 </div>
 
-<button
-	class="border rounded p-1 w-20 bg-gray-200 border-gray-400 w-full md:w-48 md:mx-auto block mt-4"
-	on:click={showResult}>時給を計算する</button
+<button class="btn w-full md:w-96 md:mx-auto block mt-4" on:click={showResult}
+	>時給を計算する</button
 >
 
 {#if isShowResult}
 	<div class="md:w-[74rem] md:mx-auto">
-		<div class="bg-slate-700 text-white font-bold p-1 mt-4">収支</div>
+		<div class="heading mt-4">収支</div>
 		<img src="" id="result-img" class="mt-1 md:mx-auto md:w-96" />
-		<div class="text-center leading-tight p-1 bg-gray-900 text-white md:w-96 md:mx-auto">
+		<div class="text-center leading-tight p-1 bg-mai-tai-900 text-white md:w-96 md:mx-auto">
 			画像をダウンロードしてツイートしよう！<br />
 			<span class="text-xs">スマホは画像長押し、PCは右クリックでダウンロードできます。</span>
 		</div>
+
+		<button class="btn mt-4 md:w-96 md:mx-auto w-full" on:click={exportData}
+			>入力内容をダウンロード</button
+		>
 		<!-- <a
 		class="bg-blue-400 text-white font-bold w-full text-center rounded-md p-2 mt-2 block md:w-96 md:mx-auto"
 		href={`https://twitter.com/intent/tweet?text=${encodeURI(`
@@ -1003,16 +998,8 @@
 </div>
 
 <style>
-	:global(.heading) {
-		@apply bg-gray-700 text-white font-bold px-2;
-	}
-
 	.heading2 {
-		@apply bg-blue-400 text-white px-2 text-sm  py-1;
-	}
-
-	select {
-		@apply bg-white border;
+		@apply bg-mai-tai-700 text-white px-2 text-sm  py-1;
 	}
 
 	.result * {
