@@ -273,7 +273,6 @@
 
 	function baseEquipmentRepairCost() {
 		const _baseEquipmentRepairCosts = baseEquipmentRepairCosts();
-		console.log(_baseEquipmentRepairCosts);
 		return Math.floor(
 			Object.entries(baseEquipmentDiffCnd()).reduce((p, c) => {
 				const [pos, cnd] = c;
