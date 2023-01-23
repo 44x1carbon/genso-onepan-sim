@@ -344,11 +344,11 @@
 
 	function hourlyPay() {
 		if (currentState.workingMinute === 0) return 0;
-		return Math.floor(mRToJpy(total()) / (currentState.workingMinute / 60));
+		return Math.floor((total() / 10000 / (currentState.workingMinute / 60)) * 10000) / 10000;
 	}
 
 	function famchick() {
-		return Math.floor(hourlyPay() / otherInfo.rate['ファミチキ-JPY']);
+		return Math.floor(hourlyPay() / 2);
 	}
 
 	let result = {
@@ -358,7 +358,7 @@
 		portionCost: 0,
 		springCost: 0,
 		income: 0,
-		jpy: 0,
+		usd: 0,
 		hourlyPay: 0,
 		total: 0,
 		famchick: 0
@@ -372,7 +372,7 @@
 		result.portionCost = portionCost();
 		result.springCost = springCost();
 		result.income = income();
-		result.jpy = mRToJpy(total());
+		result.usd = total() / 10000;
 		result.hourlyPay = hourlyPay();
 		result.total = total();
 		result.famchick = famchick();
@@ -408,7 +408,7 @@
 
 	onMount(() => {
 		if (browser) {
-			const json = localStorage.getItem(SAVE_KEY);
+			const json = `{"initialState":{"baseEquipment":{"右手":{"isUnEquipped":false,"condition":100},"左手":{"isUnEquipped":false,"condition":100},"胴":{"isUnEquipped":false,"condition":100},"足":{"isUnEquipped":false,"condition":100},"頭":{"isUnEquipped":false,"condition":100},"背中":{"isUnEquipped":false,"condition":100},"肩":{"isUnEquipped":false,"condition":100},"指輪":{"isUnEquipped":false,"condition":100}},"cosplayEquipment":{"右手":{"isUnEquipped":false,"condition":100},"左手":{"isUnEquipped":false,"condition":100},"胴":{"isUnEquipped":false,"condition":100},"足":{"isUnEquipped":false,"condition":100},"頭":{"isUnEquipped":false,"condition":100},"背中":{"isUnEquipped":false,"condition":100},"肩":{"isUnEquipped":false,"condition":100}},"portion":{"hp":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0},"mp":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0}},"meal":[{"itemName":"サーモン","num":10},{"itemName":"なし","num":0},{"itemName":"なし","num":0},{"itemName":"なし","num":0},{"itemName":"なし","num":0}],"mR":1102111,"funClubCard":"レベル3"},"currentState":{"baseEquipment":{"右手":{"condition":80},"左手":{"condition":98},"胴":{"condition":98},"足":{"condition":98},"頭":{"condition":98},"背中":{"condition":99},"肩":{"condition":98},"指輪":{"condition":100}},"cosplayEquipment":{"右手":{"condition":81},"左手":{"condition":98},"胴":{"condition":98},"足":{"condition":97},"頭":{"condition":98},"背中":{"condition":98},"肩":{"condition":98}},"portion":{"hp":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0},"mp":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0}},"meal":[{"num":8},{"num":0},{"num":0},{"num":0},{"num":0}],"spring":{"cost":null,"num":0},"mR":1182009,"workPlace":"","workingMinute":35},"otherInfo":{"baseEquipment":{"右手":{"condition":0,"cost":271},"左手":{"condition":0,"cost":26},"胴":{"condition":0,"cost":11},"足":{"condition":0,"cost":10},"頭":{"condition":0,"cost":26},"背中":{"condition":0,"cost":13},"肩":{"condition":0,"cost":25},"指輪":{"condition":0,"cost":0}},"cosplayEquipment":{"右手":{"condition":0,"cost":1114},"左手":{"condition":0,"cost":1512},"胴":{"condition":0,"cost":99},"足":{"condition":0,"cost":141},"頭":{"condition":0,"cost":1271},"背中":{"condition":0,"cost":77},"肩":{"condition":0,"cost":1271}},"rate":{"MV-mMV":0.1631,"ROND-mRond":0.0135,"MV-USD":0.1631,"ROND-USD":0.0135,"USD-JPY":129.58,"ファミチキ-JPY":220}}}`; //localStorage.getItem(SAVE_KEY);
 			if (json) {
 				const data = JSON.parse(json);
 				initialState = data.initialState;
@@ -418,10 +418,36 @@
 		}
 	});
 
-	function mRToJpy(mR: number) {
-		const ROND = mR / (otherInfo.rate['ROND-mRond'] * 10000);
-		const USD = ROND * otherInfo.rate['ROND-USD'];
-		const JPY = USD * otherInfo.rate['USD-JPY'];
+	function copyCurrentToInitial() {
+		Object.entries(currentState.baseEquipment).forEach(([pos, { condition }]) => {
+			initialState.baseEquipment[pos].condition = condition;
+		});
+
+		Object.entries(currentState.cosplayEquipment).forEach(([pos, { condition }]) => {
+			initialState.cosplayEquipment[pos].condition = condition;
+		});
+
+		initialState.portion = JSON.parse(JSON.stringify(currentState.portion));
+
+		currentState.meal.forEach(({ num }, i) => {
+			initialState.meal[i].num = num;
+		});
+
+		initialState.mR = currentState.mR;
+	}
+
+	function repairEquipment() {
+		Object.keys(initialState.baseEquipment).forEach((pos) => {
+			initialState.baseEquipment[pos].condition = 100;
+		});
+
+		Object.keys(initialState.cosplayEquipment).forEach((pos) => {
+			initialState.cosplayEquipment[pos].condition = 100;
+		});
+	}
+
+	function USD2JPY(USD: number) {
+		const JPY = USD * 130;
 
 		return Math.floor(JPY);
 	}
@@ -441,6 +467,10 @@
 		element.target = '_blank';
 		element.click();
 	}
+
+	function changePortion() {
+		currentState.portion = JSON.parse(JSON.stringify(initialState.portion));
+	}
 </script>
 
 <svelte:head>
@@ -452,11 +482,11 @@
 	<div class="text-2xl font-bold">時給計算機</div>
 </div>
 
-<div class="md:flex md:gap-4 md:mx-auto md:w-fit mt-4">
+<div class="md:flex md:gap-4 md:mx-auto md:w-fit mt-4 items-start">
 	<div class="md:w-96">
 		<div class="heading mt-4 md:mt-0">狩り前に入力してください。</div>
 		<div class="border shadow border-well-read-700 bg-chocolate-900 panel">
-			<div class="h-[22rem]">
+			<div class="h-[24rem]">
 				<Step {step} bind:maxStep>
 					<section>
 						<div class="heading2">ベース装備の情報を入力してください</div>
@@ -538,6 +568,7 @@
 												type="number"
 												class="border w-20 ml-2"
 												bind:value={initialState.portion.hp[lv]}
+												on:change={changePortion}
 											/>
 										</div>
 									</div>
@@ -624,51 +655,97 @@
 				<button class="btn w-20" on:click={() => (step += 1)}>次へ</button>
 			</div>
 		</div>
+
+		<div class="mt-2">
+			<button class="btn w-full block" on:click={copyCurrentToInitial}
+				>狩り後のデータをコピー</button
+			>
+
+			<button class="btn w-full block mt-2" on:click={repairEquipment}
+				>ベース・おしゃれをCND100に設定</button
+			>
+		</div>
 	</div>
 	<div class="md:w-96">
 		<div class="heading mt-4 md:mt-0">狩り後に入力してください。</div>
 		<div class="border shadow border-well-read-700 bg-chocolate-900 panel">
-			<div class="h-[22rem]">
+			<div class="h-[24rem]">
 				<Step step={step2} bind:maxStep={maxStep2}>
 					<section>
-						<div class="heading2">ベース装備の情報を入力してください</div>
-						<div class="flex flex-wrap">
+						<div class="heading2">
+							ベース装備の情報を入力してください<br /><span class="text-xs"
+								>狩り後に修理屋で表示されている金額を入力してください</span
+							>
+						</div>
+						<div>
 							{#each ['右手', '左手', '胴', '足', '頭', '背中', '肩', '指輪'] as pos}
-								<div class="form-row w-1/2">
+								<div class="form-row">
 									<div class="form-label w-12">{pos}</div>
 									<div class="form-controll flex flex-1 gap-4">
 										<div class="flex  items-center">
-											<div class="text-xs flex-1">CND:</div>
+											<div class="text-xs flex-1">修理費:</div>
 											<input
 												type="number"
 												class="border w-20 ml-2"
-												bind:value={currentState.baseEquipment[pos].condition}
-											/>
+												bind:value={otherInfo.baseEquipment[pos].cost}
+											/><span class="bg-gray-900 px-1 border border-gray-900">mR</span>
 										</div>
+										{#if initialState.baseEquipment[pos].condition !== 100}
+											<div class="flex  items-center">
+												<div class="text-xs flex-1">CND:</div>
+												<input
+													type="number"
+													class="border w-20 ml-2"
+													bind:value={currentState.baseEquipment[pos].condition}
+												/>
+											</div>
+										{/if}
 									</div>
 								</div>
 							{/each}
+
+							<div class="text-xs p-2">
+								※CNDは今回の狩りでかかった費用を計算する為に使用しています。
+							</div>
 						</div>
 					</section>
 
 					<section>
-						<div class="heading2">おしゃれ装備の情報を入力してください</div>
-						<div class="flex flex-wrap">
+						<div class="heading2">
+							おしゃれ装備の情報を入力してください<br /><span class="text-xs"
+								>狩り後に修理屋で表示されている金額を入力してください</span
+							>
+						</div>
+						<div class="">
 							{#each ['右手', '左手', '胴', '足', '頭', '背中', '肩'] as pos}
-								<div class="form-row w-1/2">
+								<div class="form-row">
 									<div class="form-label w-12">{pos}</div>
 									<div class="form-controll flex flex-1 gap-4 border-r border-well-read-900">
-										<div class="flex items-center">
-											<div class="text-xs flex-1">CND:</div>
+										<div class="flex  items-center">
+											<div class="text-xs flex-1">修理費:</div>
 											<input
 												type="number"
 												class="border w-20 ml-2"
-												bind:value={currentState.cosplayEquipment[pos].condition}
-											/>
+												bind:value={otherInfo.cosplayEquipment[pos].cost}
+											/><span class="bg-gray-900 px-1 border border-gray-900">mR</span>
 										</div>
+										{#if initialState.cosplayEquipment[pos].condition !== 100}
+											<div class="flex items-center">
+												<div class="text-xs flex-1">CND:</div>
+												<input
+													type="number"
+													class="border w-20 ml-2"
+													bind:value={currentState.cosplayEquipment[pos].condition}
+												/>
+											</div>
+										{/if}
 									</div>
 								</div>
 							{/each}
+
+							<div class="text-xs p-2">
+								※CNDは今回の狩りでかかった費用を計算する為に使用しています。
+							</div>
 						</div>
 					</section>
 
@@ -715,8 +792,7 @@
 								<div class="form-row">
 									<div class="form-label w-14">食事{i + 1}</div>
 									<div class="form-controll flex flex-1 gap-4">
-										<div class="flex items-center">
-											<div class="text-xs flex-1">メニュー:</div>
+										<div class="flex items-center flex-1">
 											<div class="px-1">{initialState.meal[i].itemName}</div>
 										</div>
 										<div class="flex  items-center">
@@ -799,7 +875,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="md:w-96">
+	<!-- <div class="md:w-96">
 		<div class="heading mt-4 md:mt-0">装備の修理費やレートを入力。</div>
 		<div class="border shadow border-well-read-700 bg-chocolate-900 panel">
 			<div class="h-[22rem]">
@@ -907,26 +983,25 @@
 				<button class="btn w-20" on:click={() => (step3 += 1)}>次へ</button>
 			</div>
 		</div>
-	</div>
-</div>
+	</div> -->
+	<div class="md:w-96 md:mx-auto panel mt-4 md:mt-0 border border-well-read-700">
+		<div class="heading">収支</div>
+		<div class="p-4">
+			{#if isShowResult}
+				<img src="" id="result-img" class="mt-1 md:mx-auto md:w-96" />
+				<div class="text-center leading-tight p-1 bg-mai-tai-900 text-white w-full ">
+					画像をダウンロードしてツイートしよう！<br />
+					<span class="text-xs">スマホは画像長押しPCは右クリックでダウンロードできます</span>
+				</div>
 
-<button class="btn w-full md:w-96 md:mx-auto block mt-4" on:click={showResult}
-	>時給を計算する</button
->
+				<div class="px-2 text-xs">
+					※USD-JPYのレートや装備修理費など正確に計算できない部分がある為、この数値は参考程度にお使いください。
+				</div>
 
-{#if isShowResult}
-	<div class="md:w-[74rem] md:mx-auto">
-		<div class="heading mt-4">収支</div>
-		<img src="" id="result-img" class="mt-1 md:mx-auto md:w-96" />
-		<div class="text-center leading-tight p-1 bg-mai-tai-900 text-white md:w-96 md:mx-auto">
-			画像をダウンロードしてツイートしよう！<br />
-			<span class="text-xs">スマホは画像長押し、PCは右クリックでダウンロードできます。</span>
-		</div>
-
-		<button class="btn mt-4 md:w-96 md:mx-auto w-full" on:click={exportData}
-			>入力内容をダウンロード</button
-		>
-		<!-- <a
+				<button class="btn mt-4 mb-4  md:mx-auto w-full" on:click={exportData}
+					>入力内容をダウンロード</button
+				>
+				<!-- <a
 		class="bg-blue-400 text-white font-bold w-full text-center rounded-md p-2 mt-2 block md:w-96 md:mx-auto"
 		href={`https://twitter.com/intent/tweet?text=${encodeURI(`
 元素騎士オンライン今日の時給は${hourlyPay}円！!
@@ -935,8 +1010,11 @@
 	>
 		ツイートする
 	</a> -->
+			{/if}
+			<button class="btn w-full block" on:click={showResult}>時給を計算する</button>
+		</div>
 	</div>
-{/if}
+</div>
 
 <div
 	class="bg-orange-900 text-white result font-bold border-4 border-amber-400 rounded p-2 fixed top-0 left-0 w-full -z-50 md:w-96"
@@ -983,12 +1061,16 @@
 		</div>
 	</div>
 	<div class="flex justify-between mt-2">
-		<div>円換算</div>
-		<div>{result.jpy}円</div>
+		<div>USD換算</div>
+		<div>${result.usd}</div>
+	</div>
+	<div class="flex justify-between mt-2">
+		<div>円換算(1$ = 130円)</div>
+		<div>{USD2JPY(result.usd)}円</div>
 	</div>
 	<div class="flex justify-between mt-2">
 		<div>時給</div>
-		<div>{result.hourlyPay}円</div>
+		<div>${result.hourlyPay}({USD2JPY(result.hourlyPay)}円)</div>
 	</div>
 	<div class="flex justify-between">
 		<div />

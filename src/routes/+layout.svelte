@@ -1,3 +1,7 @@
+<script>
+	import { page } from '$app/stores';
+</script>
+
 <header class="block border-box text-white header">
 	<div class="p-2 flex items-center">
 		<a href="https://twitter.com/IGNISgenso">
@@ -10,11 +14,19 @@
 			</div>
 		</div>
 	</div>
-	<div class="flex gap-2 text-sm bg-mai-tai-700 w-full p-2 py-1">
-		<div>
+	<div class="flex text-sm bg-mai-tai-700 w-full">
+		<div
+			class="border border-mai-tai-900 p-2 py-1"
+			class:bg-mai-tai-400={$page['route'].id === '/'}
+			class:text-black={$page['route'].id === '/'}
+		>
 			<a href="/">ダメージ計算機</a>
 		</div>
-		<div>
+		<div
+			class="border border-mai-tai-900 p-2 py-1"
+			class:bg-mai-tai-400={$page['route'].id === '/hourly'}
+			class:text-black={$page['route'].id === '/hourly'}
+		>
 			<a href="/hourly">時給計算機</a>
 		</div>
 	</div>
@@ -22,6 +34,9 @@
 
 <main class="bg-gray-900 min-h-screen border-box p-4 pb-24">
 	<slot />
+	<div class="border-2 rounded mx-auto p-2 my-2 border-gray-900 bg-gray-700  md:w-[74rem]">
+		後々これらのツールを有料化する予定です。1ツール月額100円ぐらいで考えています。
+	</div>
 </main>
 
 <footer class="bg-chocolate-900 p-4 fixed w-full bottom-0 text-white text-xs panel">

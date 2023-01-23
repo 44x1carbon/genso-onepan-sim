@@ -64,7 +64,9 @@
 <div class="md:w-[74rem] mx-auto">
 	<div class="text-2xl font-bold">ダメージ計算機</div>
 </div>
-<div class="border-2 rounded mx-auto p-2 my-2 border-yellow-700 bg-yellow-500  md:w-[74rem]">
+<div
+	class="border-2 rounded mx-auto p-2 my-2 border-yellow-700 bg-yellow-500 text-black md:w-[74rem]"
+>
 	公式や解析で正しい計算式が出ていない為、使用している計算式は開発者の独自検証によるものです。<br />
 	ゲーム内と大きく異なる可能性があるのであくまで参考程度としてお使いください。
 </div>
