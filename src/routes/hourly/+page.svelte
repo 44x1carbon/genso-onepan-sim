@@ -236,7 +236,7 @@
 				指輪: Math.floor(
 					otherInfo.baseEquipment.指輪.cost / (100 - currentState.baseEquipment.指輪.condition)
 				)
-			}).map(([k, v]) => [k, v === Infinity ? 0 : v])
+			}).map(([k, v]) => [k, Number.isNaN(v) ? 0 : v])
 		);
 	}
 
@@ -267,7 +267,7 @@
 				肩: Math.floor(
 					otherInfo.cosplayEquipment.肩.cost / (100 - currentState.cosplayEquipment.肩.condition)
 				)
-			}).map(([k, v]) => [k, v === Infinity ? 0 : v])
+			}).map(([k, v]) => [k, Number.isNaN(v) ? 0 : v])
 		);
 	}
 
@@ -343,6 +343,7 @@
 	}
 
 	function hourlyPay() {
+		if (currentState.workingMinute === 0) return 0;
 		return Math.floor(mRToJpy(total()) / (currentState.workingMinute / 60));
 	}
 
@@ -407,7 +408,7 @@
 
 	onMount(() => {
 		if (browser) {
-			const json = localStorage.getItem(SAVE_KEY);
+			const json = `{"initialState":{"baseEquipment":{"右手":{"isUnEquipped":false,"condition":100},"左手":{"isUnEquipped":false,"condition":100},"胴":{"isUnEquipped":false,"condition":100},"足":{"isUnEquipped":false,"condition":100},"頭":{"isUnEquipped":false,"condition":100},"背中":{"isUnEquipped":false,"condition":100},"肩":{"isUnEquipped":false,"condition":100},"指輪":{"isUnEquipped":false,"condition":100}},"cosplayEquipment":{"右手":{"isUnEquipped":false,"condition":100},"左手":{"isUnEquipped":false,"condition":100},"胴":{"isUnEquipped":false,"condition":100},"足":{"isUnEquipped":false,"condition":100},"頭":{"isUnEquipped":false,"condition":100},"背中":{"isUnEquipped":false,"condition":100},"肩":{"isUnEquipped":false,"condition":100}},"portion":{"hp":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0},"mp":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0}},"meal":[{"itemName":"サーモン","num":10},{"itemName":"なし","num":0},{"itemName":"なし","num":0},{"itemName":"なし","num":0},{"itemName":"なし","num":0}],"mR":1102111,"funClubCard":"レベル3"},"currentState":{"baseEquipment":{"右手":{"condition":80},"左手":{"condition":98},"胴":{"condition":98},"足":{"condition":98},"頭":{"condition":98},"背中":{"condition":99},"肩":{"condition":98},"指輪":{"condition":100}},"cosplayEquipment":{"右手":{"condition":81},"左手":{"condition":98},"胴":{"condition":98},"足":{"condition":97},"頭":{"condition":98},"背中":{"condition":98},"肩":{"condition":98}},"portion":{"hp":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0},"mp":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0}},"meal":[{"num":8},{"num":0},{"num":0},{"num":0},{"num":0}],"spring":{"cost":null,"num":0},"mR":1182009,"workPlace":"","workingMinute":35},"otherInfo":{"baseEquipment":{"右手":{"condition":0,"cost":271},"左手":{"condition":0,"cost":26},"胴":{"condition":0,"cost":11},"足":{"condition":0,"cost":10},"頭":{"condition":0,"cost":26},"背中":{"condition":0,"cost":13},"肩":{"condition":0,"cost":25},"指輪":{"condition":0,"cost":0}},"cosplayEquipment":{"右手":{"condition":0,"cost":1114},"左手":{"condition":0,"cost":1512},"胴":{"condition":0,"cost":99},"足":{"condition":0,"cost":141},"頭":{"condition":0,"cost":1271},"背中":{"condition":0,"cost":77},"肩":{"condition":0,"cost":1271}},"rate":{"MV-mMV":0.1631,"ROND-mRond":0.0135,"MV-USD":0.1631,"ROND-USD":0.0135,"USD-JPY":129.58,"ファミチキ-JPY":220}}}`; //localStorage.getItem(SAVE_KEY);
 			if (json) {
 				const data = JSON.parse(json);
 				initialState = data.initialState;
@@ -443,7 +444,7 @@
 </script>
 
 <svelte:head>
-	<title>元素騎士オンライン 時給計算機(α版)</title>
+	<title>IGNIS TOOLS - 時給計算機(α版)</title>
 	<meta name="”description“" content="元素騎士オンラインの時給を計算できるツールです。" />
 	<meta name="”keywords”" content="元素騎士オンライン,元素騎士,時給計算機,時給" />
 </svelte:head>
