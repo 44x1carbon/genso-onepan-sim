@@ -12,9 +12,9 @@
 	}
 </script>
 
-<div class=" rounded-sm overflow-hidden md:w-96 bg-chocolate-900 border-chocolate-900">
+<div class=" rounded-sm overflow-hidden md:w-96 panel border-chocolate-900">
 	<div class="heading">ステータス入力</div>
-	<table class="status-form text-gray-700">
+	<table class="status-form">
 		<tr class="text-xs">
 			<td />
 			<td>基礎能力</td>
@@ -28,13 +28,13 @@
 				>
 			</td>
 		</tr>
-		<tr>
-			<th class="form-label">攻撃力</th>
+		<tr class="border border-well-read-900">
+			<th class="form-label tc">攻撃力</th>
 			<td>
 				<input type="number" bind:value={status.offensivePower} class="bg-gray-50" />
 			</td>
 			<td>
-				<span class="text-gray-700 font-bold">+</span>
+				<span class="font-bold">+</span>
 			</td>
 			<td>
 				<div class="flex items-center">
@@ -46,13 +46,13 @@
 				</div>
 			</td>
 		</tr>
-		<tr>
-			<th class="form-label">腕力</th>
+		<tr class="border border-well-read-900">
+			<th class="form-label tc">腕力</th>
 			<td>
 				<input type="number" bind:value={status.armStrength} class="bg-gray-50" />
 			</td>
 			<td>
-				<span class="text-gray-700 font-bold">+</span>
+				<span class="font-bold">+</span>
 			</td>
 			<td>
 				<div class="flex items-center">
@@ -65,13 +65,13 @@
 				</div>
 			</td>
 		</tr>
-		<tr>
-			<th class="form-label">魔法攻撃力</th>
+		<tr class="border border-well-read-900">
+			<th class="form-label xs g-px-0 tc w-20">魔法攻撃力</th>
 			<td>
 				<input type="number" bind:value={status.magicalPower} class="bg-gray-50" />
 			</td>
 			<td>
-				<span class="text-gray-700 font-bold">+</span>
+				<span class="font-bold">+</span>
 			</td>
 			<td>
 				<div class="flex items-center">
@@ -84,13 +84,13 @@
 				</div>
 			</td>
 		</tr>
-		<tr>
-			<th class="form-label">知力</th>
+		<tr class="border border-well-read-900">
+			<th class="form-label tc">知力</th>
 			<td>
 				<input type="number" bind:value={status.brains} class="bg-gray-50" />
 			</td>
 			<td>
-				<span class="text-gray-700 font-bold">+</span>
+				<span class="font-bold">+</span>
 			</td>
 			<td>
 				<div class="flex items-center">

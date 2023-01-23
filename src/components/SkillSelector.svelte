@@ -32,12 +32,12 @@
 	}
 </script>
 
-<div class="border bg-chocolate-900 border-chocolate-900 rounded-sm overflow-hidden md:w-96">
+<div class="border border-chocolate-900 panel rounded-sm overflow-hidden md:w-96">
 	<div class="heading">スキル選択</div>
 	<div class="text-xs flex gap-1 flex-wrap flex-between p-2">
 		{#each jobs as j}
 			<div
-				class="border font-bold inline-block p-1 rounded bg-gray-200 text-white cursor-pointer"
+				class="border font-bold inline-block p-1 rounded bg-chocolate-100 border-chocolate-200 text-white cursor-pointer text-gray-400"
 				class:selected={selectJobs.includes(j)}
 				on:click={() => (selectJobs = j)}
 			>
@@ -47,9 +47,9 @@
 	</div>
 	<ul class="flex flex-wrap">
 		{#each filterdSkillData as s}
-			<li class="border w-1/2">
+			<li class="border w-1/2 border-well-read-900 bg-well-read-700">
 				<div
-					class="cursor-pointer w-full text-sm p-1 text-gray-700 font-bold"
+					class="cursor-pointer w-full text-sm p-1 font-bold"
 					class:selected={skills.some((skill) => s.name === skill.name)}
 					on:click={() => clickSkill(s)}
 				>
@@ -58,12 +58,12 @@
 			</li>
 		{/each}
 	</ul>
-	<div class="border p-2 flex items-center">
+	<div class="border p-2 flex items-center border-well-read-900 ">
 		<div class="font-bold text-sm flex-1">スキルLv</div>
 		<div class="flex gap-2">
 			{#each new Array(5).fill(null) as _, i}
 				<div
-					class="w-8 h-8 flex justify-center items-center border cursor-pointer bg-gray-50"
+					class="w-8 h-8 flex justify-center items-center border cursor-pointer bg-chocolate-100 border-chocolate-200 text-gray-400"
 					class:selected={i + 1 === level}
 					on:click={() => (level = i + 1)}
 				>
@@ -87,6 +87,6 @@
 
 <style>
 	.selected {
-		@apply bg-blue-500 text-white font-bold;
+		@apply bg-mai-tai-500 border-mai-tai-700 text-black font-bold;
 	}
 </style>

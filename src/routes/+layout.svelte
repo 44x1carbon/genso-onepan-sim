@@ -71,6 +71,18 @@
 		@apply bg-well-read-700 text-white font-bold p-1 px-2 text-sm flex items-center;
 	}
 
+	:global(.form-label.tc) {
+		@apply table-cell;
+	}
+
+	:global(.form-label.g-px-0) {
+		@apply px-0;
+	}
+
+	:global(.form-label.xs) {
+		@apply text-xs;
+	}
+
 	:global(.form-controll) {
 		@apply p-1 flex;
 	}

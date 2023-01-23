@@ -64,9 +64,7 @@
 <div class="md:w-[74rem] mx-auto">
 	<div class="text-2xl font-bold">ダメージ計算機</div>
 </div>
-<div
-	class="border-2 rounded mx-auto p-2 my-2 border-yellow-200 bg-yellow-50 text-gray-700 md:w-[74rem]"
->
+<div class="border-2 rounded mx-auto p-2 my-2 border-yellow-700 bg-yellow-500  md:w-[74rem]">
 	公式や解析で正しい計算式が出ていない為、使用している計算式は開発者の独自検証によるものです。<br />
 	ゲーム内と大きく異なる可能性があるのであくまで参考程度としてお使いください。
 </div>
@@ -77,12 +75,12 @@
 	<div>
 		<StatusForm bind:status bind:addStatus />
 		<Damage status={_status} skills={_skills} {level} />
-		<div class="border-2 rounded mx-auto p-2 mt-2 border-red-200 bg-red-50 text-gray-700 md:w-96">
+		<div class="border-2 rounded mx-auto p-2 mt-2 border-red-700 bg-red-500  md:w-96">
 			現在α版です。計算式を検証中なのでダメージがゲーム内と異なる場合があります。<br />
 			計算結果が違った場合は、<a
 				target="_blank"
 				href="https://forms.gle/hjZzLWwRjhbdiRDX7"
-				class="underline text-blue-500">こちら</a
+				class="underline text-blue-300">こちら</a
 			> のフォームで情報の提供をお願いします。
 		</div>
 	</div>

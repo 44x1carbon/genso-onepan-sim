@@ -192,7 +192,7 @@ ${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${p
 	}
 </script>
 
-<div class="border bg-chocolate-900 border-chocolate-900 rounded-sm overflow-hidden md:w-96">
+<div class="border panel border-chocolate-900 rounded-sm overflow-hidden md:w-96">
 	<div class="heading">モンスター別ダメージ表</div>
 	<div class="p-2">
 		<select class="border w-full bg-gray-50" bind:value={selectArea}>
@@ -202,7 +202,7 @@ ${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${p
 			{/each}
 		</select>
 	</div>
-	<ul class="max-h-96 overflow-y-scroll border">
+	<ul class="max-h-96 overflow-y-scroll border border-chocolate-900">
 		{#each sortedMonsterData as m, i}
 			{#if onePunchNum !== 0 && i === 0}
 				<li>
@@ -224,7 +224,7 @@ ${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${p
 				<div
 					class={`${i < onePunchLine ? ' one-panch' : ''}${
 						i >= onePunchLine && i < twoPunchLine ? ' two-panch' : ''
-					} p-1 px-2 leading-snug text-gray-700 text-sm`}
+					} p-1 px-2 leading-snug text-sm bg-white bg-opacity-20`}
 				>
 					<div class="flex items-center">
 						<div class="flex-1">
@@ -233,12 +233,12 @@ ${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${p
 								<span class="inline-block w-24">HP:{m.hp}</span>
 								<span>{m.area}</span>
 							</div>
-							<div class="flex w-fit text-xs mt-1">
+							<div class="flex w-fit text-xs mt-1 border">
 								{#each ['physics', 'devil', 'ground', 'water', 'fire', 'wind', 'shine', 'dark'] as key}
 									<div class=" w-4 text-center bg-gray-400 text-white ">
 										{(elementLabel(key) ?? typeLabel(key))?.substring(0, 1)}
 									</div>
-									<div class=" w-4 text-center bg-white bg-opacity-50">{m[key]}</div>
+									<div class=" w-4 text-center ">{m[key]}</div>
 								{/each}
 							</div>
 							<div class="text-sm mt-1">
@@ -271,11 +271,11 @@ ${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${p
 
 <style>
 	.one-panch {
-		@apply bg-red-50;
+		@apply bg-red-50 text-gray-700;
 	}
 
 	.two-panch {
-		@apply bg-yellow-50;
+		@apply bg-yellow-50 text-gray-700;
 	}
 
 	.one-panch-line {

@@ -16,14 +16,14 @@
 </script>
 
 {#if skills.length}
-	<div class="border bg-chocolate-900 border-chocolate-900 rounded-sm overflow-hidden mt-4 md:w-96">
+	<div class="border panel border-chocolate-900 rounded-sm overflow-hidden mt-4 md:w-96">
 		<div class="heading">ダメージ</div>
 		<div class="">
 			{#each skills as skill}
-				<div class="bg-gray-200 px-2 text-gray-700 font-bold text-sm">{skill.name}</div>
-				<div class="p-2">
+				<div class="bg-mai-tai-700 px-2 font-bold text-sm">{skill.name}</div>
+				<div class="p-2 bg-white bg-opacity-20">
 					{#each skill.lv[level] as attack, i}
-						<div class="leading-tight text-gray-700 text-sm last:mb-0">
+						<div class="leading-tight text-sm last:mb-0">
 							<div class="font-bold ">{i + 1}撃目 ダメージ:{calcDamage(attack, status, {})}</div>
 							<div>
 								<span class={`attack-tag _${attack.element}`}
@@ -40,7 +40,7 @@
 				</div>
 			{/each}
 		</div>
-		<div class="flex text-xl border bg-gray-50 items-center text-gray-700">
+		<div class="flex text-xl border bg-mai-tai-500 border-mai-tai-700 items-center text-black">
 			<div class="font-bold text-2xl p-2">Total:</div>
 			<div class="font-bold p-2 flex-1 text-center">{totalDamage}ダメージ</div>
 		</div>
