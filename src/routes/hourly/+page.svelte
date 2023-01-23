@@ -236,7 +236,7 @@
 				指輪: Math.floor(
 					otherInfo.baseEquipment.指輪.cost / (100 - currentState.baseEquipment.指輪.condition)
 				)
-			}).map(([k, v]) => [k, Number.isNaN(v) ? 0 : v])
+			}).map(([k, v]) => [k, Number.isNaN(v) || v === Infinity ? 0 : v])
 		);
 	}
 
@@ -267,12 +267,13 @@
 				肩: Math.floor(
 					otherInfo.cosplayEquipment.肩.cost / (100 - currentState.cosplayEquipment.肩.condition)
 				)
-			}).map(([k, v]) => [k, Number.isNaN(v) ? 0 : v])
+			}).map(([k, v]) => [k, Number.isNaN(v) || v === Infinity ? 0 : v])
 		);
 	}
 
 	function baseEquipmentRepairCost() {
 		const _baseEquipmentRepairCosts = baseEquipmentRepairCosts();
+		console.log(_baseEquipmentRepairCosts);
 		return Math.floor(
 			Object.entries(baseEquipmentDiffCnd()).reduce((p, c) => {
 				const [pos, cnd] = c;
@@ -408,7 +409,8 @@
 
 	onMount(() => {
 		if (browser) {
-			const json = localStorage.getItem(SAVE_KEY);
+			const json = `{"initialState":{"baseEquipment":{"右手":{"isUnEquipped":false,"condition":100},"左手":{"isUnEquipped":false,"condition":100},"胴":{"isUnEquipped":false,"condition":100},"足":{"isUnEquipped":false,"condition":100},"頭":{"isUnEquipped":false,"condition":100},"背中":{"isUnEquipped":false,"condition":100},"肩":{"isUnEquipped":false,"condition":100},"指輪":{"isUnEquipped":false,"condition":100}},"cosplayEquipment":{"右手":{"isUnEquipped":false,"condition":100},"左手":{"isUnEquipped":false,"condition":100},"胴":{"isUnEquipped":false,"condition":100},"足":{"isUnEquipped":false,"condition":100},"頭":{"isUnEquipped":false,"condition":100},"背中":{"isUnEquipped":false,"condition":100},"肩":{"isUnEquipped":false,"condition":100}},"portion":{"hp":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0},"mp":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0}},"meal":[{"itemName":"なし","num":0},{"itemName":"なし","num":0},{"itemName":"なし","num":0},{"itemName":"なし","num":0},{"itemName":"なし","num":0}],"mR":0,"funClubCard":"なし"},"currentState":{"baseEquipment":{"右手":{"condition":100},"左手":{"condition":100},"胴":{"condition":100},"足":{"condition":100},"頭":{"condition":100},"背中":{"condition":100},"肩":{"condition":100},"指輪":{"condition":100}},"cosplayEquipment":{"右手":{"condition":100},"左手":{"condition":100},"胴":{"condition":100},"足":{"condition":100},"頭":{"condition":100},"背中":{"condition":100},"肩":{"condition":100}},"portion":{"hp":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0},"mp":{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0}},"meal":[{"num":0},{"num":0},{"num":0},{"num":0},{"num":0}],"spring":{"cost":0,"num":0},"mR":0,"workPlace":"","workingMinute":60},"otherInfo":{"baseEquipment":{"右手":{"condition":0,"cost":1000},"左手":{"condition":0,"cost":1000},"胴":{"condition":0,"cost":1000},"足":{"condition":0,"cost":1000},"頭":{"condition":0,"cost":1000},"背中":{"condition":0,"cost":1000},"肩":{"condition":0,"cost":1000},"指輪":{"condition":0,"cost":1000}},"cosplayEquipment":{"右手":{"condition":0,"cost":1000},"左手":{"condition":0,"cost":1000},"胴":{"condition":0,"cost":1000},"足":{"condition":0,"cost":1000},"頭":{"condition":0,"cost":1000},"背中":{"condition":0,"cost":1000},"肩":{"condition":0,"cost":1000}},"rate":{"MV-mMV":0.1631,"ROND-mRond":0.0135,"MV-USD":0.1631,"ROND-USD":0.0135,"USD-JPY":129.56,"ファミチキ-JPY":220}}}`;
+			localStorage.getItem(SAVE_KEY);
 			if (json) {
 				const data = JSON.parse(json);
 				initialState = data.initialState;
