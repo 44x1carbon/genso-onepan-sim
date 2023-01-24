@@ -21,6 +21,56 @@
 		レベル3: 0.9
 	};
 
+	const defaultInitialState = {
+		baseEquipment: {
+			右手: { isUnEquipped: false, condition: 100 },
+			左手: { isUnEquipped: false, condition: 100 },
+			胴: { isUnEquipped: false, condition: 100 },
+			足: { isUnEquipped: false, condition: 100 },
+			頭: { isUnEquipped: false, condition: 100 },
+			背中: { isUnEquipped: false, condition: 100 },
+			肩: { isUnEquipped: false, condition: 100 },
+			指輪: { isUnEquipped: false, condition: 100 }
+		},
+		cosplayEquipment: {
+			右手: { isUnEquipped: false, condition: 100 },
+			左手: { isUnEquipped: false, condition: 100 },
+			胴: { isUnEquipped: false, condition: 100 },
+			足: { isUnEquipped: false, condition: 100 },
+			頭: { isUnEquipped: false, condition: 100 },
+			背中: { isUnEquipped: false, condition: 100 },
+			肩: { isUnEquipped: false, condition: 100 }
+		},
+		portion: {
+			hp: {
+				1: 0,
+				2: 0,
+				3: 0,
+				4: 0,
+				5: 0,
+				6: 0
+			},
+			mp: {
+				1: 0,
+				2: 0,
+				3: 0,
+				4: 0,
+				5: 0,
+				6: 0
+			}
+		},
+		meal: new Array(5).fill(null).map(() => {
+			return {
+				itemName: 'なし',
+				num: 0
+			};
+		}),
+		mR: 0,
+		funClubCard: 'なし',
+		exp: 0,
+		skillExp: 0
+	};
+
 	let initialState = {
 		baseEquipment: {
 			右手: { isUnEquipped: false, condition: 100 },
@@ -66,7 +116,63 @@
 			};
 		}),
 		mR: 0,
-		funClubCard: 'なし'
+		funClubCard: 'なし',
+		exp: 0,
+		skillExp: 0
+	};
+
+	const defaultCurrentState = {
+		baseEquipment: {
+			右手: { condition: 100 },
+			左手: { condition: 100 },
+			胴: { condition: 100 },
+			足: { condition: 100 },
+			頭: { condition: 100 },
+			背中: { condition: 100 },
+			肩: { condition: 100 },
+			指輪: { condition: 100 }
+		},
+		cosplayEquipment: {
+			右手: { condition: 100 },
+			左手: { condition: 100 },
+			胴: { condition: 100 },
+			足: { condition: 100 },
+			頭: { condition: 100 },
+			背中: { condition: 100 },
+			肩: { condition: 100 }
+		},
+		portion: {
+			hp: {
+				1: 0,
+				2: 0,
+				3: 0,
+				4: 0,
+				5: 0,
+				6: 0
+			},
+			mp: {
+				1: 0,
+				2: 0,
+				3: 0,
+				4: 0,
+				5: 0,
+				6: 0
+			}
+		},
+		meal: new Array(5).fill(null).map(() => {
+			return {
+				num: 0
+			};
+		}),
+		spring: {
+			cost: 0,
+			num: 0
+		},
+		mR: 0,
+		workPlace: '',
+		workingMinute: 60,
+		exp: 0,
+		skillExp: 0
 	};
 
 	let currentState = {
@@ -118,7 +224,9 @@
 		},
 		mR: 0,
 		workPlace: '',
-		workingMinute: 60
+		workingMinute: 60,
+		exp: 0,
+		skillExp: 0
 	};
 
 	let otherInfo = {
@@ -622,10 +730,26 @@
 					</section>
 
 					<section>
-						<div class="heading2">現在の所持金を入力してください</div>
+						<div class="heading2">現在の所持金・EXP・スキルEXPを入力してください</div>
 						<div>
 							<div class="form-row">
 								<div class="form-label w-40">所持 mR</div>
+								<div class="form-controll">
+									<input type="number" class="border" bind:value={initialState.mR} />
+								</div>
+							</div>
+						</div>
+						<div>
+							<div class="form-row">
+								<div class="form-label w-40">EXP</div>
+								<div class="form-controll">
+									<input type="number" class="border" bind:value={initialState.mR} />
+								</div>
+							</div>
+						</div>
+						<div>
+							<div class="form-row">
+								<div class="form-label w-40">スキルEXP</div>
 								<div class="form-controll">
 									<input type="number" class="border" bind:value={initialState.mR} />
 								</div>
@@ -998,18 +1122,19 @@
 					※USD-JPYのレートや装備修理費など正確に計算できない部分がある為、この数値は参考程度にお使いください。
 				</div>
 
-				<button class="btn mt-4 mb-4  md:mx-auto w-full" on:click={exportData}
+				<!-- <button class="btn mt-4 mb-4  md:mx-auto w-full" on:click={exportData}
 					>入力内容をダウンロード</button
+				> -->
+				<a
+					class="bg-blue-400 text-white font-bold w-full text-center rounded p-2 mt-2 mb-2 block"
+					target="_blunk"
+					href={`https://twitter.com/intent/tweet?text=${encodeURI(`
+元素騎士オンライン今日の時給は${USD2JPY(result.hourlyPay)}円！!
+{時給の画像を貼り付けて、ここにコメントを入れよう！}
+↓時給計算はこちらから\n`).trim()}&url=https://genso-onepan-sim.vercel.app/hourly&hashtags=元素騎士,元素騎士ファミチキチャレンジ`}
 				>
-				<!-- <a
-		class="bg-blue-400 text-white font-bold w-full text-center rounded-md p-2 mt-2 block md:w-96 md:mx-auto"
-		href={`https://twitter.com/intent/tweet?text=${encodeURI(`
-元素騎士オンライン今日の時給は${hourlyPay}円！!
-
-↓時給計算はこちらから`).trim()}&url=https://genso-onepan-sim.vercel.app/hourly&hashtags=元素騎士`}
-	>
-		ツイートする
-	</a> -->
+					ツイートする
+				</a>
 			{/if}
 			<button class="btn w-full block" on:click={showResult}>時給を計算する</button>
 		</div>
