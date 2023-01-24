@@ -9,7 +9,7 @@
 	import { browser } from '$app/environment';
 
 	let skills: Skill[] = [];
-	let level: SkillLevel = 5;
+	let levels: { [skillName: string]: SkillLevel  } = {};
 	let status: Status = {
 		offensivePower: 0,
 		magicalPower: 0,
@@ -72,11 +72,11 @@
 </div>
 <div class="flex mx-auto w-fit gap-4 flex-col md:flex-row">
 	<div>
-		<SkillSelector bind:skills bind:level bind:isIncludeNomalAttack />
+		<SkillSelector bind:skills bind:levels bind:isIncludeNomalAttack />
 	</div>
 	<div>
 		<StatusForm bind:status bind:addStatus />
-		<Damage status={_status} skills={_skills} {level} />
+		<Damage status={_status} skills={_skills} {levels} />
 		<div class="border-2 rounded mx-auto p-2 mt-2 border-red-700 bg-red-500  md:w-96">
 			現在α版です。計算式を検証中なのでダメージがゲーム内と異なる場合があります。<br />
 			計算結果が違った場合は、<a
@@ -87,6 +87,6 @@
 		</div>
 	</div>
 	<div>
-		<Monster status={_status} skills={_skills} {level} />
+		<Monster status={_status} skills={_skills} {levels} />
 	</div>
 </div>

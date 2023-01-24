@@ -5,12 +5,14 @@
 	import { elementLabel, typeLabel } from '../Label';
 
 	export let skills: Skill[] = [];
-	export let level: SkillLevel = 5;
+	export let levels: { [skillName: string]: SkillLevel } = {};
 	export let status: Status;
 
 	$: totalDamage = skills
 		.map((skill) =>
-			skill.lv[level].map((attack) => calcDamage(attack, status, {})).reduce((p, c) => p + c, 0)
+			skill.lv[levels[skill.name]]
+				.map((attack) => calcDamage(attack, status, {}))
+				.reduce((p, c) => p + c, 0)
 		)
 		.reduce((p, c) => p + c, 0);
 </script>
@@ -20,9 +22,9 @@
 		<div class="heading">ダメージ</div>
 		<div class="">
 			{#each skills as skill}
-				<div class="bg-mai-tai-700 px-2 font-bold text-sm">{skill.name}</div>
-				<div class="p-2 bg-white bg-opacity-20">
-					{#each skill.lv[level] as attack, i}
+				<div class="bg-mai-tai-700 px-2 font-bold text-sm">{skill.name} Lv{levels[skill.name]}</div>
+				<div class="p-2">
+					{#each skill.lv[levels[skill.name]] as attack, i}
 						<div class="leading-tight text-sm last:mb-0">
 							<div class="font-bold ">{i + 1}撃目 ダメージ:{calcDamage(attack, status, {})}</div>
 							<div>
@@ -33,7 +35,7 @@
 								<span class="attack-tag">威力:{attack.power}</span>
 							</div>
 						</div>
-						{#if i + 1 !== skill.lv[level].length}
+						{#if i + 1 !== skill.lv[levels[skill.name]].length}
 							<hr class="my-1" />
 						{/if}
 					{/each}

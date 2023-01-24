@@ -1,8 +1,8 @@
 <script lang="ts">
 	import type { Skill } from '../SkillData';
 
-	export let skill: Skill | undefined;
-	export let level: number = 5;
+	export let skills: Skill[];
+	export let levels: { [skillName: string]: SkillLevel  } = {};
 </script>
 
 {#if skill}

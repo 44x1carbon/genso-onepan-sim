@@ -6,14 +6,14 @@
 	import { elementLabel, typeLabel } from '../Label';
 
 	export let skills: Skill[] = [];
-	export let level: SkillLevel;
+	export let levels: { [skillName: string]: SkillLevel } = {};
 	export let status: Status;
 
 	$: sortedMonsterData = MonsterData.filter((monster) =>
 		selectArea ? monster.area === selectArea : true
 	)
 		.map((monster) => {
-			const damage = calcTotalDamage(skills, status, monster);
+			const damage = calcTotalDamage(skills, status, monster, levels);
 
 			return {
 				...monster,
@@ -73,7 +73,7 @@
 	$: raisedStatusLabel = Object.entries(
 		skills.reduce(
 			(p, c) => {
-				return c.lv[level].reduce((p2, c2) => {
+				return c.lv[levels[c.name]].reduce((p2, c2) => {
 					p2[c2.type] += c2.power;
 
 					return p2;
@@ -83,10 +83,15 @@
 		)
 	).sort((a, b) => b[1] - a[1])[0][0];
 
-	function calcTotalDamage(skills: Skill[], status: Status, monster: any) {
+	function calcTotalDamage(
+		skills: Skill[],
+		status: Status,
+		monster: any,
+		levels: { [skillName: string]: SkillLevel }
+	) {
 		return skills
 			.map((skill) =>
-				skill.lv[level]
+				skill.lv[levels[skill.name]]
 					.map((attack) => calcDamage(attack, status, monster))
 					.reduce((p, c) => p + c, 0)
 			)
@@ -126,7 +131,8 @@ ${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${p
 					...status,
 					[key]: status[key] + plusValue
 				},
-				monster
+				monster,
+				levels
 			)
 		) {
 			plusValue += 1000;
@@ -140,7 +146,8 @@ ${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${p
 					...status,
 					[key]: status[key] + plusValue
 				},
-				monster
+				monster,
+				levels
 			)
 		) {
 			plusValue -= 100;
@@ -154,7 +161,8 @@ ${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${p
 					...status,
 					[key]: status[key] + plusValue
 				},
-				monster
+				monster,
+				levels
 			)
 		) {
 			plusValue += 10;
@@ -168,7 +176,8 @@ ${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${p
 					...status,
 					[key]: status[key] + plusValue
 				},
-				monster
+				monster,
+				levels
 			)
 		) {
 			plusValue -= 1;
@@ -182,7 +191,8 @@ ${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${p
 					...status,
 					[key]: status[key] + plusValue
 				},
-				monster
+				monster,
+				levels
 			)
 		) {
 			plusValue += 1;
@@ -224,7 +234,7 @@ ${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${p
 				<div
 					class={`${i < onePunchLine ? ' one-panch' : ''}${
 						i >= onePunchLine && i < twoPunchLine ? ' two-panch' : ''
-					} p-1 px-2 leading-snug text-sm bg-white bg-opacity-20`}
+					} p-1 px-2 leading-snug text-sm bg-gray-50 text-gray-700`}
 				>
 					<div class="flex items-center">
 						<div class="flex-1">

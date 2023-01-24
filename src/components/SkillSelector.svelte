@@ -2,7 +2,7 @@
 	import SkillData, { type Skill, type SkillLevel } from '../SkillData';
 
 	export let skills: Skill[] = [];
-	export let level: SkillLevel = 5;
+	export let levels: { [skillName: string]: SkillLevel } = {};
 	export let isIncludeNomalAttack: boolean = false;
 	let selectJobs: string = 'ファイター';
 
@@ -25,8 +25,10 @@
 		const index = skills.findIndex((s) => s.name === skill.name);
 
 		if (index === -1) {
+			levels[skill.name] = 5;
 			skills = [...skills, skill];
 		} else {
+			delete levels[skill.name];
 			skills = [...skills.filter((_, i) => i !== index)];
 		}
 	}
@@ -58,19 +60,26 @@
 			</li>
 		{/each}
 	</ul>
-	<div class="border p-2 flex items-center border-well-read-900 ">
-		<div class="font-bold text-sm flex-1">スキルLv</div>
-		<div class="flex gap-2">
-			{#each new Array(5).fill(null) as _, i}
-				<div
-					class="w-8 h-8 flex justify-center items-center border cursor-pointer bg-chocolate-100 border-chocolate-200 text-gray-400"
-					class:selected={i + 1 === level}
-					on:click={() => (level = i + 1)}
-				>
-					{i + 1}
+	<div class="border items-center border-well-read-900 ">
+		<div class="heading">スキルLv</div>
+		{#each skills as skill}
+			<div
+				class="flex justify-between items-center p-2 border-b last:border-b-0 border-well-read-900"
+			>
+				<div class="font-bold">{skill.name}</div>
+				<div class="flex gap-2">
+					{#each new Array(5).fill(null) as _, i}
+						<div
+							class="w-8 h-8 flex justify-center items-center border cursor-pointer bg-chocolate-100 border-chocolate-200 text-gray-400"
+							class:selected={levels[skill.name] === i + 1}
+							on:click={() => (levels[skill.name] = i + 1)}
+						>
+							{i + 1}
+						</div>
+					{/each}
 				</div>
-			{/each}
-		</div>
+			</div>
+		{/each}
 	</div>
 	<!-- <div class="p-2">
 		<label for="JsIncludeNomalAttack" class="font-bold text-gray-700">
