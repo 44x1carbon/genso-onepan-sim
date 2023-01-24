@@ -88,8 +88,8 @@
 	</div> -->
 </div>
 
-{#if skills.some((skill) => skill.pending && skill.pending.includes(level))}
-	<div class="border-2 rounded mx-auto p-2 mt-2 border-red-200 bg-red-50 text-gray-700 md:w-96">
+{#if skills.some((skill) => skill.pending && skill.pending.includes(levels[skill.name]))}
+	<div class="border-2 rounded mx-auto p-2 mt-2 border-red-700 bg-red-500  md:w-96">
 		機能が未実装の部分がある為、正しいダメージを計算できません。
 	</div>
 {/if}
