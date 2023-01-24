@@ -1131,7 +1131,7 @@
 					href={`https://twitter.com/intent/tweet?text=${encodeURI(`
 元素騎士オンライン今日の時給は${USD2JPY(result.hourlyPay)}円！!
 {時給の画像を貼り付けて、ここにコメントを入れよう！}
-↓時給計算はこちらから\n`).trim()}&url=https://genso-onepan-sim.vercel.app/hourly&hashtags=元素騎士,元素騎士ファミチキチャレンジ`}
+↓時給計算はこちらから\n`).trim()}&url=https://ignis-tools.vercel.app/hourly&hashtags=元素騎士,元素騎士ファミチキチャレンジ`}
 				>
 					ツイートする
 				</a>
