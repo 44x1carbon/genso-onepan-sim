@@ -676,7 +676,7 @@
 						<div class="flex flex-wrap">
 							{#each [1, 2, 3, 4, 5, 6] as lv}
 								<div class="form-row w-1/2">
-									<div class="form-label w-20">HP Lv{lv}</div>
+									<div class="form-label w-20 xs">HP Lv{lv}</div>
 									<div class="form-controll flex flex-1 gap-4">
 										<div class="flex  items-center">
 											<input
@@ -693,7 +693,7 @@
 						<div class="flex flex-wrap mt-4">
 							{#each [1, 2, 3, 4, 5, 6] as lv}
 								<div class="form-row  w-1/2">
-									<div class="form-label w-20">MP Lv{lv}</div>
+									<div class="form-label w-20 xs">MP Lv{lv}</div>
 									<div class="form-controll flex flex-1 gap-4">
 										<div class="flex  items-center">
 											<input
@@ -716,7 +716,7 @@
 									<div class="form-label w-14">食事{i + 1}</div>
 									<div class="form-controll flex flex-1 gap-4">
 										<div class="flex items-center">
-											<select class="ml-2 px-1" bind:value={initialState.meal[i].itemName}>
+											<select class="ml-2 px-1 text-xs" bind:value={initialState.meal[i].itemName}>
 												{#each Object.keys(MealData) as meal}
 													<option value={meal}>{meal}</option>
 												{/each}
@@ -726,7 +726,7 @@
 											<div class="text-xs flex-1">個数:</div>
 											<input
 												type="number"
-												class="border w-20 ml-2"
+												class="border w-10 ml-2 text-xs"
 												bind:value={initialState.meal[i].num}
 											/>
 										</div>
@@ -743,7 +743,9 @@
 							<div class="form-row">
 								<div class="form-label w-40">所持 mR</div>
 								<div class="form-controll">
-									<input type="number" class="border" bind:value={initialState.mR} />
+									<input type="number" class="border w-24" bind:value={initialState.mR} /><span
+										class="bg-gray-900 px-1 border border-gray-900">mR</span
+									>
 								</div>
 							</div>
 						</div>
@@ -805,17 +807,16 @@
 				<Step step={step2} bind:maxStep={maxStep2}>
 					<section>
 						<div class="heading2">
-							ベース装備の情報を入力してください<br /><span class="text-xs"
-								>狩り後に修理屋で表示されている金額を入力してください</span
+							ベース装備の修理費を入力してください<br /><span class="text-xs"
+								>修理屋で表示されている金額を入力してください</span
 							>
 						</div>
 						<div>
 							{#each ['右手', '左手', '胴', '足', '頭', '背中', '肩', '指輪'] as pos}
 								<div class="form-row">
-									<div class="form-label w-12">{pos}</div>
+									<div class="form-label w-12 xs">{pos}</div>
 									<div class="form-controll flex flex-1 gap-4">
 										<div class="flex  items-center">
-											<div class="text-xs flex-1">修理費:</div>
 											<input
 												type="number"
 												class="border w-20 ml-2"
@@ -844,17 +845,16 @@
 
 					<section>
 						<div class="heading2">
-							おしゃれ装備の情報を入力してください<br /><span class="text-xs"
-								>狩り後に修理屋で表示されている金額を入力してください</span
+							おしゃれ装備の修理費を入力してください<br /><span class="text-xs"
+								>修理屋で表示されている金額を入力してください</span
 							>
 						</div>
 						<div class="">
 							{#each ['右手', '左手', '胴', '足', '頭', '背中', '肩'] as pos}
 								<div class="form-row">
-									<div class="form-label w-12">{pos}</div>
+									<div class="form-label w-12 xs">{pos}</div>
 									<div class="form-controll flex flex-1 gap-4 border-r border-well-read-900">
 										<div class="flex  items-center">
-											<div class="text-xs flex-1">修理費:</div>
 											<input
 												type="number"
 												class="border w-20 ml-2"
@@ -885,8 +885,8 @@
 						<div class="heading2">現在持っているポーションの個数を入力してください</div>
 						<div class="flex flex-wrap">
 							{#each [1, 2, 3, 4, 5, 6] as lv}
-								<div class="form-row w-1/2">
-									<div class="form-label w-20">HP Lv{lv}</div>
+								<div class="form-row w-1/2 ">
+									<div class="form-label w-20 xs">HP Lv{lv}</div>
 									<div class="form-controll flex flex-1 gap-4">
 										<div class="flex  items-center">
 											<input
@@ -902,7 +902,7 @@
 						<div class="flex flex-wrap mt-4">
 							{#each [1, 2, 3, 4, 5, 6] as lv}
 								<div class="form-row  w-1/2">
-									<div class="form-label w-20">MP Lv{lv}</div>
+									<div class="form-label w-20 xs">MP Lv{lv}</div>
 									<div class="form-controll flex flex-1 gap-4">
 										<div class="flex  items-center">
 											<input
@@ -981,16 +981,18 @@
 						<div class="form-row">
 							<div class="form-label w-36">働いた時間</div>
 							<div class="form-controll flex items-center">
-								<input type="number" class="border" bind:value={currentState.workingMinute} /><span
-									class="bg-gray-900 px-1 border border-gray-900">分</span
-								>
+								<input
+									type="number"
+									class="border w-24"
+									bind:value={currentState.workingMinute}
+								/><span class="bg-gray-900 px-1 border border-gray-900">分</span>
 							</div>
 						</div>
 
 						<div class="form-row">
 							<div class="form-label w-36">現在の所持 mR</div>
 							<div class="form-controll flex items-center">
-								<input type="number" class="border" bind:value={currentState.mR} /><span
+								<input type="number" class="border w-24" bind:value={currentState.mR} /><span
 									class="bg-gray-900 px-1 border border-gray-900">mR</span
 								>
 							</div>
@@ -1121,9 +1123,11 @@
 		<div class="p-4">
 			{#if isShowResult}
 				<img src="" id="result-img" class="mt-1 md:mx-auto md:w-96" />
-				<div class="text-center leading-tight p-1 bg-mai-tai-900 text-white w-full ">
+				<div class="text-center leading-tight p-1 bg-mai-tai-900 text-white w-full text-sm">
 					画像をダウンロードしてツイートしよう！<br />
-					<span class="text-xs">スマホは画像長押しPCは右クリックでダウンロードできます</span>
+					<span class="text-xs leading-tight"
+						>スマホは画像長押し<br />PCは右クリックでダウンロードできます</span
+					>
 				</div>
 
 				<div class="px-2 text-xs">
