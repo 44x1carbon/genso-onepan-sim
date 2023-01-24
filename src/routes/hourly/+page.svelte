@@ -1019,7 +1019,11 @@
 				<button class="btn w-20" on:click={() => (step2 += 1)}>次へ</button>
 			</div>
 		</div>
+
+		<button class="btn w-full block mt-2" on:click={reset}>入力をリセット</button>
+		<div class="text-xs mt-1">結果がおかしい場合は一度入力をリセットして再度試して下さい。</div>
 	</div>
+
 	<!-- <div class="md:w-96">
 		<div class="heading mt-4 md:mt-0">装備の修理費やレートを入力。</div>
 		<div class="border shadow border-well-read-700 bg-chocolate-900 panel">
@@ -1161,8 +1165,6 @@
 				>
 					ツイートする
 				</a>
-				<button class="btn w-full block mt-4" on:click={reset}>入力をリセット</button>
-				<div class="text-xs">結果がおかしい場合は一度入力をリセットして再度試して下さい。</div>
 			{:else}
 				<button class="btn w-full block" on:click={showResult}>時給を計算する</button>
 			{/if}
