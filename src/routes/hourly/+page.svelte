@@ -503,6 +503,11 @@
 
 	setInterval(() => {
 		if (browser) {
+			console.log('SAVE', {
+				initialState,
+				currentState,
+				otherInfo
+			});
 			localStorage.setItem(
 				SAVE_KEY,
 				JSON.stringify({
@@ -519,6 +524,7 @@
 			const json = localStorage.getItem(SAVE_KEY);
 			if (json) {
 				const data = JSON.parse(json);
+				console.log(data);
 				initialState = data.initialState;
 				currentState = data.currentState;
 				otherInfo = data.otherInfo;
@@ -574,6 +580,11 @@
 		element.download = 'data.txt';
 		element.target = '_blank';
 		element.click();
+	}
+
+	function reset() {
+		localStorage.removeItem(SAVE_KEY);
+		location.reload();
 	}
 
 	function changePortion() {
@@ -1150,8 +1161,11 @@
 				>
 					ツイートする
 				</a>
+				<button class="btn w-full block mt-4" on:click={reset}>入力をリセット</button>
+				<div class="text-xs">結果がおかしい場合は一度入力をリセットして再度試して下さい。</div>
+			{:else}
+				<button class="btn w-full block" on:click={showResult}>時給を計算する</button>
 			{/if}
-			<button class="btn w-full block" on:click={showResult}>時給を計算する</button>
 		</div>
 	</div>
 </div>
