@@ -588,7 +588,10 @@
 
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content="https://ignis-tools.vercel.app/hourly" />
-	<meta property="og:image" content="https://pbs.twimg.com/media/FnNZYswaEAEfNCo?format=jpg&name=900x900">
+	<meta
+		property="og:image"
+		content="https://pbs.twimg.com/media/FnNZYswaEAEfNCo?format=jpg&name=900x900"
+	/>
 </svelte:head>
 <div class="md:w-[74rem] mx-auto">
 	<div class="text-2xl font-bold">時給計算機</div>
@@ -744,7 +747,7 @@
 								</div>
 							</div>
 						</div>
-						<div>
+						<!-- <div>
 							<div class="form-row">
 								<div class="form-label w-40">EXP</div>
 								<div class="form-controll">
@@ -759,7 +762,7 @@
 									<input type="number" class="border" bind:value={initialState.mR} />
 								</div>
 							</div>
-						</div>
+						</div> -->
 						<div>
 							<div class="form-row">
 								<div class="form-label w-40">ファンクラブ会員権</div>
