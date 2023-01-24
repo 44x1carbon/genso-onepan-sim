@@ -734,7 +734,8 @@
 					</section>
 
 					<section>
-						<div class="heading2">現在の所持金・EXP・スキルEXPを入力してください</div>
+						<!-- <div class="heading2">現在の所持金・EXP・スキルEXPを入力してください</div> -->
+						<div class="heading2">現在の所持金を入力してください</div>
 						<div>
 							<div class="form-row">
 								<div class="form-label w-40">所持 mR</div>
