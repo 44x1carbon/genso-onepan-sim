@@ -583,8 +583,12 @@
 
 <svelte:head>
 	<title>IGNIS TOOLS - 時給計算機(α版)</title>
-	<meta name="”description“" content="元素騎士オンラインの時給を計算できるツールです。" />
-	<meta name="”keywords”" content="元素騎士オンライン,元素騎士,時給計算機,時給" />
+	<meta name="description" content="元素騎士オンラインの時給を計算できるツールです。" />
+	<meta name="keywords" content="元素騎士オンライン,元素騎士,時給計算機,時給" />
+
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://ignis-tools.vercel.app/hourly" />
+	<meta property="og:image" content="https://pbs.twimg.com/media/FnNZYswaEAEfNCo?format=jpg&name=900x900">
 </svelte:head>
 <div class="md:w-[74rem] mx-auto">
 	<div class="text-2xl font-bold">時給計算機</div>

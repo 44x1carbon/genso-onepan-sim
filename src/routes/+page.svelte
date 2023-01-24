@@ -57,8 +57,8 @@
 
 <svelte:head>
 	<title>IGNIS TOOLS - ダメージ計算機(α版)</title>
-	<meta name="”description“" content="元素騎士オンラインのダメージを計算できるツールです。" />
-	<meta name="”keywords”" content="元素騎士オンライン,元素騎士,ダメージ計算機,ダメージ" />
+	<meta name="description" content="元素騎士オンラインのダメージを計算できるツールです。" />
+	<meta name="keywords" content="元素騎士オンライン,元素騎士,ダメージ計算機,ダメージ" />
 </svelte:head>
 
 <div class="md:w-[74rem] mx-auto">
