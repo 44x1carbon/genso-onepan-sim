@@ -484,8 +484,7 @@
 				baseEquipmentRepairCost() -
 				cosplayEquipmentRepairCost() -
 				portionCost() -
-				mealCost() -
-				springCost()
+				mealCost()
 		);
 	}
 
