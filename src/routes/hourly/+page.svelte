@@ -5,6 +5,7 @@
 	import { toPng } from 'html-to-image';
 	import { browser } from '$app/environment';
 	import { onMount } from 'svelte';
+	import tourSetup from '../../lib/houly/Tour';
 
 	const SAVE_KEY = 'GENSO-HOULY-DATA';
 
@@ -647,7 +648,7 @@
 </div>
 
 <div class="md:flex md:gap-4 md:mx-auto md:w-fit mt-4 items-start">
-	<div class="md:w-96">
+	<div class="md:w-96" id="InitialStateInput">
 		<div class="heading mt-4 md:mt-0">狩り前に入力してください。</div>
 		<div class="border shadow border-well-read-700 bg-chocolate-900 panel">
 			<div class="h-[24rem]">
@@ -857,8 +858,8 @@
 					<section>
 						<div class="heading2">
 							ベース装備の修理費を入力してください<br /><span class="text-xs"
-								>修理屋で表示されている金額を入力してください</span
-							>
+								>・修理屋で表示されている金額を入力してください</span
+							><br /><span class="text-xs">・時給計算前に修理はしないでください</span>
 						</div>
 						<div>
 							{#each ['右手', '左手', '胴', '足', '頭', '背中', '肩', '指輪'] as pos}
@@ -895,8 +896,8 @@
 					<section>
 						<div class="heading2">
 							おしゃれ装備の修理費を入力してください<br /><span class="text-xs"
-								>修理屋で表示されている金額を入力してください</span
-							>
+								>・修理屋で表示されている金額を入力してください</span
+							><br /><span class="text-xs">・時給計算前に修理はしないでください</span>
 						</div>
 						<div class="">
 							{#each ['右手', '左手', '胴', '足', '頭', '背中', '肩'] as pos}
