@@ -866,23 +866,23 @@
 								<div class="form-row">
 									<div class="form-label w-12 xs">{pos}</div>
 									<div class="form-controll flex flex-1 gap-4">
-										<div class="flex  items-center">
+										<div class="flex  items-center flex-1">
+											{#if initialState.baseEquipment[pos].condition !== 100}
+												<div class="text-xs">CND:</div>
+												<input
+													type="number"
+													class="border w-20 ml-2"
+													bind:value={currentState.baseEquipment[pos].condition}
+												/>
+											{/if}
+										</div>
+										<div class="flex  items-center flex-1">
 											<input
 												type="number"
 												class="border w-20 ml-2"
 												bind:value={otherInfo.baseEquipment[pos].cost}
 											/><span class="bg-gray-900 px-1 border border-gray-900">mR</span>
 										</div>
-										{#if initialState.baseEquipment[pos].condition !== 100}
-											<div class="flex  items-center">
-												<div class="text-xs flex-1">CND:</div>
-												<input
-													type="number"
-													class="border w-20 ml-2"
-													bind:value={currentState.baseEquipment[pos].condition}
-												/>
-											</div>
-										{/if}
 									</div>
 								</div>
 							{/each}
@@ -904,23 +904,24 @@
 								<div class="form-row">
 									<div class="form-label w-12 xs">{pos}</div>
 									<div class="form-controll flex flex-1 gap-4 border-r border-well-read-900">
-										<div class="flex  items-center">
+										<div class="flex items-center flex-1">
+											{#if initialState.cosplayEquipment[pos].condition !== 100}
+												<div class="text-xs">CND:</div>
+												<input
+													type="number"
+													class="border w-20 ml-2"
+													bind:value={currentState.cosplayEquipment[pos].condition}
+												/>
+											{/if}
+										</div>
+
+										<div class="flex  items-center flex-1">
 											<input
 												type="number"
 												class="border w-20 ml-2"
 												bind:value={otherInfo.cosplayEquipment[pos].cost}
 											/><span class="bg-gray-900 px-1 border border-gray-900">mMV</span>
 										</div>
-										{#if initialState.cosplayEquipment[pos].condition !== 100}
-											<div class="flex items-center">
-												<div class="text-xs flex-1">CND:</div>
-												<input
-													type="number"
-													class="border w-20 ml-2"
-													bind:value={currentState.cosplayEquipment[pos].condition}
-												/>
-											</div>
-										{/if}
 									</div>
 								</div>
 							{/each}
