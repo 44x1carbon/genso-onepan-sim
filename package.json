@@ -33,6 +33,7 @@
 	"type": "module",
 	"dependencies": {
 		"firebase": "^9.16.0",
-		"html-to-image": "^1.11.4"
+		"html-to-image": "^1.11.4",
+		"shepherd.js": "^11.0.1"
 	}
 }

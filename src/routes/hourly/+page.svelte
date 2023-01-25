@@ -494,7 +494,7 @@
 	}
 
 	function famchick() {
-		return Math.floor(hourlyPay() / 2);
+		return Math.floor(USD2JPY(hourlyPay()) / 220);
 	}
 
 	let result = {
