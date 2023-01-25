@@ -908,7 +908,7 @@
 												type="number"
 												class="border w-20 ml-2"
 												bind:value={otherInfo.cosplayEquipment[pos].cost}
-											/><span class="bg-gray-900 px-1 border border-gray-900">mR</span>
+											/><span class="bg-gray-900 px-1 border border-gray-900">mMV</span>
 										</div>
 										{#if initialState.cosplayEquipment[pos].condition !== 100}
 											<div class="flex items-center">
