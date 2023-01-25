@@ -318,6 +318,26 @@
 	}
 
 	function baseEquipmentRepairCosts() {
+		const _baseEquipmentDiffCnd = baseEquipmentDiffCnd();
+		return Object.fromEntries(
+			Object.keys(currentState.baseEquipment).map((pos) => {
+				if (initialState.baseEquipment[pos].condition === 100) {
+					return [pos, otherInfo.baseEquipment[pos].cost];
+				}
+
+				// 100%と狩り後のCNDの差分
+				const diffCndFrom100 = 100 - currentState.baseEquipment[pos].condition;
+				// 初期時と狩り後のCNDの差分
+				const diffCnd = _baseEquipmentDiffCnd[pos] || 1;
+
+				let cost =
+					diffCndFrom100 === 0
+						? otherInfo.baseEquipment[pos].cost
+						: Math.floor(otherInfo.baseEquipment[pos].cost / diffCnd / diffCndFrom100);
+
+				return [pos, cost];
+			})
+		);
 		return Object.fromEntries(
 			Object.entries({
 				右手: Math.floor(
@@ -349,44 +369,65 @@
 	}
 
 	function cosplayEquipmentRepairCosts() {
+		const _cosplayEquipmentDiffCnd = cosplayEquipmentDiffCnd();
 		return Object.fromEntries(
-			Object.entries({
-				右手: Math.floor(
-					otherInfo.cosplayEquipment.右手.cost /
-						(100 - currentState.cosplayEquipment.右手.condition)
-				),
-				左手: Math.floor(
-					otherInfo.cosplayEquipment.左手.cost /
-						(100 - currentState.cosplayEquipment.左手.condition)
-				),
-				胴: Math.floor(
-					otherInfo.cosplayEquipment.胴.cost / (100 - currentState.cosplayEquipment.胴.condition)
-				),
-				足: Math.floor(
-					otherInfo.cosplayEquipment.足.cost / (100 - currentState.cosplayEquipment.足.condition)
-				),
-				頭: Math.floor(
-					otherInfo.cosplayEquipment.頭.cost / (100 - currentState.cosplayEquipment.頭.condition)
-				),
-				背中: Math.floor(
-					otherInfo.cosplayEquipment.背中.cost /
-						(100 - currentState.cosplayEquipment.背中.condition)
-				),
-				肩: Math.floor(
-					otherInfo.cosplayEquipment.肩.cost / (100 - currentState.cosplayEquipment.肩.condition)
-				)
-			}).map(([k, v]) => [k, Number.isNaN(v) || v === Infinity ? 0 : v])
+			Object.keys(currentState.cosplayEquipment).map((pos) => {
+				if (initialState.cosplayEquipment[pos].condition === 100) {
+					return [pos, otherInfo.cosplayEquipment[pos].cost];
+				}
+
+				// 100%と狩り後のCNDの差分
+				const diffCndFrom100 = 100 - currentState.cosplayEquipment[pos].condition;
+				// 初期時と狩り後のCNDの差分
+				const diffCnd = _cosplayEquipmentDiffCnd[pos] || 1;
+
+				let cost =
+					diffCndFrom100 === 0
+						? otherInfo.cosplayEquipment[pos].cost
+						: Math.floor(otherInfo.cosplayEquipment[pos].cost / diffCnd / diffCndFrom100);
+
+				return [pos, cost];
+			})
 		);
+
+		// return Object.fromEntries(
+		// 	Object.entries({
+		// 		右手: Math.floor(
+		// 			100 - currentState.cosplayEquipment.右手.condition === 0
+		// 				? otherInfo.cosplayEquipment.右手.cost
+		// 				: otherInfo.cosplayEquipment.右手.cost /
+		// 						(100 - currentState.cosplayEquipment.右手.condition)
+		// 		),
+		// 		左手: Math.floor(
+		// 			otherInfo.cosplayEquipment.左手.cost /
+		// 				(100 - currentState.cosplayEquipment.左手.condition)
+		// 		),
+		// 		胴: Math.floor(
+		// 			otherInfo.cosplayEquipment.胴.cost / (100 - currentState.cosplayEquipment.胴.condition)
+		// 		),
+		// 		足: Math.floor(
+		// 			otherInfo.cosplayEquipment.足.cost / (100 - currentState.cosplayEquipment.足.condition)
+		// 		),
+		// 		頭: Math.floor(
+		// 			otherInfo.cosplayEquipment.頭.cost / (100 - currentState.cosplayEquipment.頭.condition)
+		// 		),
+		// 		背中: Math.floor(
+		// 			otherInfo.cosplayEquipment.背中.cost /
+		// 				(100 - currentState.cosplayEquipment.背中.condition)
+		// 		),
+		// 		肩: Math.floor(
+		// 			otherInfo.cosplayEquipment.肩.cost / (100 - currentState.cosplayEquipment.肩.condition)
+		// 		)
+		// 	}).map(([k, v]) => [k, Number.isNaN(v) || v === Infinity ? 0 : v])
+		// );
 	}
 
 	function baseEquipmentRepairCost() {
 		const _baseEquipmentRepairCosts = baseEquipmentRepairCosts();
 		return Math.floor(
-			Object.entries(baseEquipmentDiffCnd()).reduce((p, c) => {
-				const [pos, cnd] = c;
-				const cost = initialState.baseEquipment[pos].isUnEquipped
-					? 0
-					: _baseEquipmentRepairCosts[pos] * cnd;
+			Object.entries(_baseEquipmentRepairCosts).reduce((p, c) => {
+				let [pos, cost] = c;
+				cost = initialState.baseEquipment[pos].isUnEquipped ? 0 : cost;
 				return p + cost;
 			}, 0)
 		);
@@ -395,11 +436,9 @@
 	function cosplayEquipmentRepairCost() {
 		const _cosplayEquipmentRepairCosts = cosplayEquipmentRepairCosts();
 		return Math.floor(
-			Object.entries(cosplayEquipmentDiffCnd()).reduce((p, c) => {
-				const [pos, cnd] = c;
-				const cost = initialState.cosplayEquipment[pos].isUnEquipped
-					? 0
-					: _cosplayEquipmentRepairCosts[pos] * cnd;
+			Object.entries(_cosplayEquipmentRepairCosts).reduce((p, c) => {
+				let [pos, cost] = c;
+				cost = initialState.cosplayEquipment[pos].isUnEquipped ? 0 : cost;
 				return p + cost;
 			}, 0)
 		);
