@@ -1205,9 +1205,8 @@
 				>
 					ツイートする
 				</a>
-			{:else}
-				<button class="btn w-full block" on:click={showResult}>時給を計算する</button>
 			{/if}
+			<button class="btn w-full block" on:click={showResult}>時給を計算する</button>
 		</div>
 	</div>
 </div>
