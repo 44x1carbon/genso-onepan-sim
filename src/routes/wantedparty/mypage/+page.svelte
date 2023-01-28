@@ -15,6 +15,10 @@
 		ownWantedDataList = await firestore.ownWantedDataList(getUserInfo());
 		joinWantedDataList = await firestore.joinWantedDataList(getUserInfo());
 	});
+
+	function deleteWantedParty() {
+		
+	}
 </script>
 
 <div class="flex flex-wrap gap-4 md:w-[74rem] md:mx-auto">

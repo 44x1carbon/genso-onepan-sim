@@ -1,5 +1,5 @@
 import setupFirebaseApp from "$lib/Firebase";
-import { addDoc, collection, getFirestore, query, getDocs, Timestamp, doc, getDoc, updateDoc, arrayUnion, orderBy, limit, where, QueryFieldFilterConstraint } from "firebase/firestore";
+import { addDoc, collection, getFirestore, query, getDocs, Timestamp, doc, getDoc, updateDoc, arrayUnion, orderBy, limit, where, QueryFieldFilterConstraint, deleteDoc } from "firebase/firestore";
 import { USERINFO_SAVE_KEY } from "./SaveKeys";
 import type { UserInfo } from "./UserInfo";
 import { getCanApply, type WantedParty } from "./WantedParty";
@@ -125,6 +125,13 @@ export default () => {
 
             return wantedDataList;
 
+        },
+
+        async deleteWantedParty(wantedParty: WantedParty): Promise<boolean> {
+            const docRef = doc(db, 'wantedparty', wantedParty.id);
+
+            await deleteDoc(docRef);
+            return true;
         },
 
         async getWantedParty(id: string): Promise<WantedParty> {

@@ -8,14 +8,16 @@
 
 	let hasUserInfo = false;
 
-	if (browser) {
-		const json = localStorage.getItem(USERINFO_SAVE_KEY);
-		if (json === null) {
-			goto('/wantedparty/user');
-		} else {
-			hasUserInfo = true;
+	onMount(() => {
+		if (browser) {
+			const json = localStorage.getItem(USERINFO_SAVE_KEY);
+			if (json === null) {
+				goto('/wantedparty/user');
+			} else {
+				hasUserInfo = true;
+			}
 		}
-	}
+	});
 </script>
 
 <svelte:head>
