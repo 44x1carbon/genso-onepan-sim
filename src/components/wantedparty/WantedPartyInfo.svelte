@@ -28,6 +28,7 @@
 
 	onMount(() => {
 		firestore = useStore();
+		userInfo = getUserInfo() as UserInfo;
 	});
 
 	function formatDate(timestamp: Timestamp, minute: number) {
@@ -64,6 +65,13 @@
 	</div>
 
 	<div class="panel border-well-read-700 border">
+		<div class="form-row">
+			<div class="form-label xs w-16">期間</div>
+			<div class="form-control px-4 py-1 flex text-sm items-center">
+				{formatDate(wantedParty.details.time.from, wantedParty.details.time.to)}
+			</div>
+		</div>
+
 		{#if wantedParty.details.targetMonster}
 			<div class="form-row">
 				<div class="form-label xs w-16">対象</div>
@@ -72,13 +80,6 @@
 				</div>
 			</div>
 		{/if}
-
-		<div class="form-row">
-			<div class="form-label xs w-16">期間</div>
-			<div class="form-control px-4 py-1 flex text-sm items-center">
-				{formatDate(wantedParty.details.time.from, wantedParty.details.time.to)}
-			</div>
-		</div>
 
 		<div class="heading2">募集要項</div>
 		<div class="form-row">

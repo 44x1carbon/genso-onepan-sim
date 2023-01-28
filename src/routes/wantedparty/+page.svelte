@@ -9,17 +9,29 @@
 	import SearchForm from '../../components/wantedparty/SearchForm.svelte';
 	import { wantedPartyListStore } from '$lib/wantedparty/Store';
 	import type { WantedParty } from '$lib/wantedparty/WantedParty';
+	import dayjs from 'dayjs';
+	import utc from 'dayjs/plugin/utc';
+	import timezone from 'dayjs/plugin/timezone';
+	import 'dayjs/locale/ja';
+	dayjs.extend(utc);
+	dayjs.extend(timezone);
+	dayjs.tz.setDefault('Asia/Tokyo');
+	dayjs.locale('ja');
 
 	let firestore: any = undefined;
 
 	onMount(() => {
 		firestore = useFirestore();
 
-		firestore.searchWantedDataList().then((wantedPartyList: WantedParty[]) => {
-			wantedPartyListStore.update(() => {
-				return wantedPartyList;
+		firestore
+			.searchWantedDataList({
+				timeFrom: dayjs().subtract(120, 'm').format('YYYY-MM-DDTHH:mm')
+			})
+			.then((wantedPartyList: WantedParty[]) => {
+				wantedPartyListStore.update(() => {
+					return wantedPartyList;
+				});
 			});
-		});
 	});
 </script>
 
