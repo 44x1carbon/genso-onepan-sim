@@ -18,7 +18,7 @@
 </script>
 
 <div class="flex flex-wrap gap-4 md:w-[74rem] md:mx-auto">
-	<div class="w-full bg-black text-white p-2 font-bold">募集中のPT</div>
+	<div class="w-full bg-well-read-700 text-white p-2 font-bold">募集中のPT</div>
 	{#each ownWantedDataList as wantedParty}
 		<div class="w-full md:w-[24rem]">
 			<WantedPartyInfoCard {wantedParty} />
@@ -31,7 +31,7 @@
 </div>
 
 <div class="flex flex-wrap gap-4 md:w-[74rem] md:mx-auto mt-4">
-	<div class="w-full bg-black text-white p-2 font-bold">参加予定のPT</div>
+	<div class="w-full bg-well-read-700 text-white p-2 font-bold">参加予定のPT</div>
 	{#each joinWantedDataList as wantedParty}
 		<div class="w-full md:w-[24rem]">
 			<WantedPartyInfoCard {wantedParty} />
