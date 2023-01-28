@@ -34,7 +34,7 @@
 		</div>
 	{/each}
 
-	{#if $wantedPartyListStore.length}
+	{#if $wantedPartyListStore.length === 0}
 		<div class="panel border border-well-read-700 p-2 w-full">募集中のPTが見つかりませんでした</div>
 	{/if}
 </div>
