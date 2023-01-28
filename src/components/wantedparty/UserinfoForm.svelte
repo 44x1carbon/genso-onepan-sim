@@ -1,16 +1,15 @@
 <script lang="ts">
 	import { USERINFO_SAVE_KEY } from '$lib/wantedparty/SaveKeys';
-	import type { UserInfo } from '$lib/wantedparty/UserInfo';
+	import { getUserInfo, type UserInfo } from '$lib/wantedparty/UserInfo';
 	import JobData from '../../JobData';
 	import { v4 } from 'uuid';
 	import { goto } from '$app/navigation';
-	import { getContext } from 'svelte';
 	import { browser } from '$app/environment';
 
 	export let isEdit: boolean = false;
 
 	let userInfo: UserInfo = isEdit
-		? getContext('userInfo')
+		? getUserInfo()
 		: {
 				id: v4(),
 				name: '',

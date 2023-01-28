@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { UserInfo } from '$lib/wantedparty/UserInfo';
+	import { getUserInfo, type UserInfo } from '$lib/wantedparty/UserInfo';
 	import { getCanApply, getCanApplyJobs, type WantedParty } from '$lib/wantedparty/WantedParty';
 	import type { WantedPartyDetails } from '$lib/wantedparty/WantedPartyDetails';
 	import type { Timestamp } from 'firebase/firestore';
@@ -16,7 +16,7 @@
 
 	export let wantedParty: WantedParty;
 
-	let userInfo: UserInfo | undefined = getContext('userInfo');
+	let userInfo: UserInfo = getUserInfo();
 	let joinJob: string = '';
 	let firestore: any | undefined = undefined;
 

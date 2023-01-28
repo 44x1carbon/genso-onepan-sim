@@ -8,21 +8,17 @@
 	import useFirestore from '$lib/wantedparty/Firestore';
 	import SearchForm from '../../components/wantedparty/SearchForm.svelte';
 	import { wantedPartyListStore } from '$lib/wantedparty/Store';
+	import type { WantedParty } from '$lib/wantedparty/WantedParty';
 
 	let firestore: any = undefined;
 
-	onMount(async () => {
-		const json = localStorage.getItem(USERINFO_SAVE_KEY);
-
-		if (json === null) {
-			goto('/wantedparty/user');
-		}
-
+	onMount(() => {
 		firestore = useFirestore();
 
-		const wantedPartyList = await firestore.searchWantedDataList();
-		wantedPartyListStore.update(() => {
-			return wantedPartyList;
+		firestore.searchWantedDataList().then((wantedPartyList: WantedParty[]) => {
+			wantedPartyListStore.update(() => {
+				return wantedPartyList;
+			});
 		});
 	});
 </script>
