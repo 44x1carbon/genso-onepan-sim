@@ -104,6 +104,28 @@ export default () => {
 
         },
 
+        async joinWantedDataList(userInfo: UserInfo): Promise<WantedParty[]> {
+
+            const q = query(wantedPartyRef,
+                where("owner.id", "==", userInfo.id),
+                where("details.time.from", ">=", dayjs().toDate()),
+                orderBy("details.time.from", "asc"), limit(100)
+            );
+
+            const querySnapshot = await getDocs(q);
+
+            const wantedDataList: WantedParty[] = [];
+            querySnapshot.forEach((doc) => {
+                wantedDataList.push({
+                    id: doc.id,
+                    ...doc.data(),
+                } as WantedParty)
+            });            
+
+            return wantedDataList;
+
+        },
+
         async getWantedParty(id: string): Promise<WantedParty> {
             const docRef = doc(db, 'wantedparty', id);
 

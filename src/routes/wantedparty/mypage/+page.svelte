@@ -7,12 +7,11 @@
 
 	let firestore: any = undefined;
 	let wantedPartyList: WantedParty[] = [];
-	let userInfo: UserInfo = getUserInfo();
 
 	onMount(async () => {
 		firestore = useFirestore();
 
-		wantedPartyList = await firestore.ownWantedDataList(userInfo);
+		wantedPartyList = await firestore.ownWantedDataList(getUserInfo());
 	});
 </script>
 

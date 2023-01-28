@@ -18,7 +18,7 @@
 
 	$: _MonsterData = wantedData.map ? MonsterData.filter((m) => m.area === wantedData.map) : [];
 
-	let firestore: any = undefined;	
+	let firestore: any = undefined;
 
 	let wantedData: WantedPartyDetails = {
 		purpose: 'タワー攻略',
@@ -177,7 +177,7 @@
 			<div class="form-label w-[7.4rem]">時間</div>
 			<div class="form-controll space flex">
 				<input type="number" class="text-xs" bind:value={wantedData.time.to} /><span
-					class="bg-gray-900 px-1 border border-gray-900">分</span
+					class="bg-gray-900 px-1 border border-gray-900 text-xs">分</span
 				>
 			</div>
 		</div>
