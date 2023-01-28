@@ -36,6 +36,7 @@
 		"firebase": "^9.16.0",
 		"html-to-image": "^1.11.4",
 		"shepherd.js": "^11.0.1",
+		"svelte-component-to-image": "^0.1.0",
 		"uuid": "^9.0.0"
 	}
 }
