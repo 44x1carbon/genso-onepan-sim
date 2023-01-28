@@ -4,7 +4,7 @@ import useFirestore from '$lib/wantedparty/Firestore';
 
 import { image_from_component, type RenderOptions } from 'svelte-component-to-image'
 
-import WantedPartyInfo__SvelteComponent_ from '../../../components/wantedparty/WantedPartyInfo.svelte';
+import WanterdPartyInfoOgp__SvelteComponent_ from '../../../components/wantedparty/WanterdPartyInfoOGP.svelte';
 
 export const GET = (async ({ url }) => {
     const firestore = useFirestore();
@@ -18,11 +18,10 @@ export const GET = (async ({ url }) => {
             const wantedParty = await firestore.getWantedParty(id);
             console.log(`${url.origin}/SourceHanSans-VF.ttf`)
             const options: RenderOptions = {
-                width: 1200,
-                height: 600,
+                width: 1400,
+                height: 700,
                 props: {
-                    wantedParty,
-                    isOGP: true
+                    wantedParty
                 },
                 fonts: [
                     {
@@ -41,7 +40,7 @@ export const GET = (async ({ url }) => {
             }
 
             // pass the component and options to the package
-            const image = await image_from_component(WantedPartyInfo__SvelteComponent_, options)
+            const image = await image_from_component(WanterdPartyInfoOgp__SvelteComponent_, options)
             const response = new Response(image)
             response.headers.append('Content-Type', 'image/png')
             response.headers.append('Cache-Control', 's-maxage=604800, stale-while-revalidate=604800')

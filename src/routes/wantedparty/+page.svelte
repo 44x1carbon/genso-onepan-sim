@@ -13,6 +13,7 @@
 	import utc from 'dayjs/plugin/utc';
 	import timezone from 'dayjs/plugin/timezone';
 	import 'dayjs/locale/ja';
+	import WanterdPartyInfoOgp from '../../components/wantedparty/WanterdPartyInfoOGP.svelte';
 	dayjs.extend(utc);
 	dayjs.extend(timezone);
 	dayjs.tz.setDefault('Asia/Tokyo');
@@ -43,6 +44,7 @@
 	{#each $wantedPartyListStore as wantedParty}
 		<div class="w-full md:w-[24rem]">
 			<WantedPartyInfoCard {wantedParty} />
+			<WanterdPartyInfoOgp {wantedParty} />
 		</div>
 	{/each}
 

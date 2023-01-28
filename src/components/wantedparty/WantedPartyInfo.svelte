@@ -15,9 +15,8 @@
 	dayjs.locale('ja');
 
 	export let wantedParty: WantedParty;
-	export let isOGP: boolean = false;
 
-	let userInfo: UserInfo = isOGP ? undefined : getUserInfo();
+	let userInfo: UserInfo = getUserInfo();
 	let joinJob: string = '';
 	let firestore: any | undefined = undefined;
 
@@ -109,7 +108,7 @@
 		<div class="form-row">
 			<div class="form-label xs w-16">備考</div>
 			<div class="form-control px-4 py-1 flex text-sm items-center">
-				{wantedParty.details.condition.memo}
+				{@html wantedParty.details.condition.memo.replaceAll('\n', '<br>')}
 			</div>
 		</div>
 
@@ -144,26 +143,24 @@
 			{/if}
 		</div>
 
-		{#if !isOGP}
-			<div class="p-2 bg-chocolate-900">
-				{#if canApply}
-					<select class="w-full mb-2 rounded-sm" bind:value={joinJob}>
-						<option value="">使用する職業を選んでください</option>
-						{#each canApplyJobs as job}
-							<option value={job.name}>{job.name}</option>
-						{/each}
-					</select>
-					<button class="btn w-full" on:click={join}>参加する</button>
-				{:else if userInfo?.id === wantedParty.owner.id}
-					<div class="bg-gray-700 p-1 rounded-sm text-sm">自分の募集の為参加できません</div>
-				{:else if alreadyJoin}
-					<div class="bg-gray-700 p-1 rounded-sm text-sm">既に参加しています</div>
-				{:else}
-					<div class="bg-gray-700 p-1 rounded-sm text-sm">
-						あなたが参加できる条件に空きがありません
-					</div>
-				{/if}
-			</div>
-		{/if}
+		<div class="p-2 bg-chocolate-900">
+			{#if canApply}
+				<select class="w-full mb-2 rounded-sm" bind:value={joinJob}>
+					<option value="">使用する職業を選んでください</option>
+					{#each canApplyJobs as job}
+						<option value={job.name}>{job.name}</option>
+					{/each}
+				</select>
+				<button class="btn w-full" on:click={join}>参加する</button>
+			{:else if userInfo?.id === wantedParty.owner.id}
+				<div class="bg-gray-700 p-1 rounded-sm text-sm">自分の募集の為参加できません</div>
+			{:else if alreadyJoin}
+				<div class="bg-gray-700 p-1 rounded-sm text-sm">既に参加しています</div>
+			{:else}
+				<div class="bg-gray-700 p-1 rounded-sm text-sm">
+					あなたが参加できる条件に空きがありません
+				</div>
+			{/if}
+		</div>
 	</div>
 </div>
