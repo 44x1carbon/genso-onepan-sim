@@ -51,7 +51,7 @@
 		if (json) {
 			status = JSON.parse(json);
 		}
-		isInit = true;
+		isInit = true;		
 	});
 </script>
 

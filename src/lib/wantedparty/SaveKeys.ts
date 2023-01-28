@@ -1,0 +1,1 @@
+export const USERINFO_SAVE_KEY = 'GENSO-USERINFO';

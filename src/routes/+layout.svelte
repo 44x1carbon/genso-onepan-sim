@@ -1,29 +1,15 @@
 <script>
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
-	// Import the functions you need from the SDKs you need
-	import { initializeApp } from 'firebase/app';
 	import { getAnalytics } from 'firebase/analytics';
 	// TODO: Add SDKs for Firebase products that you want to use
 	// https://firebase.google.com/docs/web/setup#available-libraries
 
 	import 'shepherd.js/dist/css/shepherd.css';
+	import setupFirebaseApp from '$lib/Firebase';
 
 	onMount(() => {
-		// Your web app's Firebase configuration
-		// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-		const firebaseConfig = {
-			apiKey: 'AIzaSyDJiJ7iOX4zQ6l4wH89G1R-vQu5xZ6KAHE',
-			authDomain: 'genso-tools.firebaseapp.com',
-			projectId: 'genso-tools',
-			storageBucket: 'genso-tools.appspot.com',
-			messagingSenderId: '1021494508287',
-			appId: '1:1021494508287:web:283adc5a6e81ea4a54eaca',
-			measurementId: 'G-2YTL0DQ3WQ'
-		};
-
-		// Initialize Firebase
-		const app = initializeApp(firebaseConfig);
+		const app = setupFirebaseApp();
 		const analytics = getAnalytics(app);
 	});
 </script>
@@ -31,7 +17,7 @@
 <header class="block border-box text-white header">
 	<div class="p-2 flex items-center">
 		<a href="https://twitter.com/IGNISgenso">
-			<img src="logo.png" class="block w-16" />
+			<img src="/logo.png" class="block w-16" />
 		</a>
 		<div class="ml-4 ">
 			<div class="font-bold text-2xl">IGNIS TOOLS</div>
@@ -54,6 +40,13 @@
 			class:text-black={$page['route'].id === '/hourly'}
 		>
 			<a href="/hourly">時給計算機</a>
+		</div>
+		<div
+			class="border border-mai-tai-900 p-2 py-1"
+			class:bg-mai-tai-400={$page['route'].id?.startsWith('/wantedparty')}
+			class:text-black={$page['route'].id?.startsWith('/wantedparty')}
+		>
+			<a href="/wantedparty">PT募集掲示板</a>
 		</div>
 	</div>
 </header>
@@ -108,6 +101,11 @@
 		);
 	}
 
+	:global(.heading.gray) {
+		@apply text-white font-bold p-1 px-2 bg-black border border-gray-700 border-b-0;
+		background-image: none;
+	}
+
 	:global(.form-label) {
 		@apply bg-well-read-700 text-white font-bold p-1 px-2 text-sm flex items-center;
 	}
@@ -126,6 +124,10 @@
 
 	:global(.form-controll) {
 		@apply p-1 flex;
+	}
+
+	:global(.form-controll.space) {
+		@apply px-4 py-2;
 	}
 
 	:global(.form-row) {
@@ -154,5 +156,13 @@
 
 	:global(.btn) {
 		@apply border rounded p-1 bg-mai-tai-400 border-mai-tai-900 text-black font-bold block;
+	}
+
+	:global(.heading2) {
+		@apply bg-mai-tai-700 text-white px-2 text-sm  py-1;
+	}
+
+	:global(.selected) {
+		@apply bg-mai-tai-500 border-mai-tai-700 text-black font-bold;
 	}
 </style>

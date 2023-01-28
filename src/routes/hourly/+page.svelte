@@ -1276,9 +1276,7 @@
 </div>
 
 <style>
-	.heading2 {
-		@apply bg-mai-tai-700 text-white px-2 text-sm  py-1;
-	}
+	
 
 	.result * {
 		text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, -1px 1px 0 #000, 1px -1px 0 #000, 0px 1px 0 #000,

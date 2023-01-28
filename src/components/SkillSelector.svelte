@@ -95,7 +95,5 @@
 {/if}
 
 <style>
-	.selected {
-		@apply bg-mai-tai-500 border-mai-tai-700 text-black font-bold;
-	}
+	
 </style>
