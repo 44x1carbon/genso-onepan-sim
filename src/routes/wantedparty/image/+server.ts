@@ -27,13 +27,13 @@ export const GET = (async ({ url }) => {
                 fonts: [
                     {
                         name: 'NotoSansJP',
-                        url: `https://ignis-tools.vercel.app/NotoSansJP-Regular.ttf`,
+                        url: `https://ignis-tools.vercel.app/NotoSansJP-Regular.otf`,
                         weight: 400,
                         style: 'normal'
                     },
                     {
                         name: 'NotoSansJP',
-                        url: `https://ignis-tools.vercel.app/NotoSansJP-Bold.ttf`,
+                        url: `https://ignis-tools.vercel.app/NotoSansJP-Bold.otf`,
                         weight: 800,
                         style: 'normal'
                     }
