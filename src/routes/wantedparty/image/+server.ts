@@ -26,9 +26,15 @@ export const GET = (async ({ url }) => {
                 },
                 fonts: [
                     {
-                        name: 'SourceHanSans-VF',
-                        url: `${url.origin}/SourceHanSans-VF.ttf`,
+                        name: 'NotoSansJP',
+                        url: `https://ignis-tools.vercel.app/NotoSansJP-Regular.ttf`,
                         weight: 400,
+                        style: 'normal'
+                    },
+                    {
+                        name: 'NotoSansJP',
+                        url: `https://ignis-tools.vercel.app/NotoSansJP-Bold.ttf`,
+                        weight: 800,
                         style: 'normal'
                     }
                 ]
