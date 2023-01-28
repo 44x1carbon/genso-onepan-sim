@@ -84,13 +84,15 @@
 		<div class="form-row">
 			<div class="form-label xs w-16">メンバー</div>
 			<div class="form-control px-4 py-1 flex text-sm items-center">
-				{#each wantedParty.details.wantedJobs as wantedJobs, i}
-					{#if wantedJobs.job !== ''}
-						{wantedJobs.job} {wantedJobs.num}人
-					{:else if i === 0}
-						職業自由 {wantedJobs.num}人
-					{/if}
-				{/each}
+				<ul class="list-disc pl-4">
+					{#each wantedParty.details.wantedJobs as wantedJobs, i}
+						{#if wantedJobs.job !== ''}
+							<li>{wantedJobs.job} {wantedJobs.num}人</li>
+						{:else if i === 0}
+							<li>職業自由 {wantedJobs.num}人</li>
+						{/if}
+					{/each}
+				</ul>
 			</div>
 		</div>
 		<div class="form-row">
