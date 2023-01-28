@@ -17,6 +17,12 @@
 	}
 </script>
 
+<svelte:head>
+	<title>IGNIS TOOLS - PT募集掲示板(α版)</title>
+	<meta name="description" content="元素騎士オンラインのPT募集掲示板です。" />
+	<meta name="keywords" content="元素騎士オンライン,元素騎士,PT募集掲示板" />
+</svelte:head>
+
 <div
 	class="border rounded-sm mx-auto p-2 mb-4 border-yellow-700 bg-yellow-500 text-black md:w-[74rem]"
 >
