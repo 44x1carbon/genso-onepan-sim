@@ -6,12 +6,14 @@
 	import { onMount, setContext } from 'svelte';
 	import { page } from '$app/stores';
 
+	let hasUserInfo = false;
+
 	if (browser) {
 		const json = localStorage.getItem(USERINFO_SAVE_KEY);
 		if (json === null) {
 			goto('/wantedparty/user');
 		} else {
-			setContext('userInfo', JSON.parse(json) as UserInfo);
+			hasUserInfo = true;
 		}
 	}
 </script>
@@ -35,43 +37,47 @@
 	</div>
 </div>
 
-<div class="text-xs flex mb-4 md:w-[74rem] md:mx-auto w-full">
-	<div
-		class="cursor-pointer text-center flex-1"
-		class:bg-gray-700={$page['route'].id !== '/wantedparty'}
-		class:bg-mai-tai-400={$page['route'].id === '/wantedparty'}
-		class:text-black={$page['route'].id === '/wantedparty'}
-		class:font-bold={$page['route'].id === '/wantedparty'}
-	>
-		<a href="/wantedparty/" class="h-full w-full block p-2 "> PT募集<br />一覧 </a>
+{#if hasUserInfo}
+	<div class="text-xs flex mb-4 md:w-[74rem] md:mx-auto w-full">
+		<div
+			class="cursor-pointer text-center flex-1"
+			class:bg-gray-700={$page['route'].id !== '/wantedparty'}
+			class:bg-mai-tai-400={$page['route'].id === '/wantedparty'}
+			class:text-black={$page['route'].id === '/wantedparty'}
+			class:font-bold={$page['route'].id === '/wantedparty'}
+		>
+			<a href="/wantedparty/" class="h-full w-full block p-2 "> PT募集<br />一覧 </a>
+		</div>
+		<div
+			class="cursor-pointer  text-center flex-1"
+			class:bg-gray-700={$page['route'].id !== '/wantedparty/wanted'}
+			class:bg-mai-tai-400={$page['route'].id === '/wantedparty/wanted'}
+			class:text-black={$page['route'].id === '/wantedparty/wanted'}
+			class:font-bold={$page['route'].id === '/wantedparty/wanted'}
+		>
+			<a href="/wantedparty/wanted" class="h-full w-full block p-2 "> PTを<br />募集する </a>
+		</div>
+		<div
+			class="cursor-pointer bg-gray-700  text-center flex-1"
+			class:bg-gray-700={$page['route'].id !== '/wantedparty/mypage'}
+			class:bg-mai-tai-400={$page['route'].id === '/wantedparty/mypage'}
+			class:text-black={$page['route'].id === '/wantedparty/mypage'}
+			class:font-bold={$page['route'].id === '/wantedparty/mypage'}
+		>
+			<a href="/wantedparty/mypage" class="h-full w-full block p-2 "> 自分の<br />募集一覧 </a>
+		</div>
+		<div
+			class="cursor-pointer bg-gray-700  text-center flex-1"
+			class:bg-gray-700={$page['route'].id !== '/wantedparty/edituser'}
+			class:bg-mai-tai-400={$page['route'].id === '/wantedparty/edituser'}
+			class:text-black={$page['route'].id === '/wantedparty/edituser'}
+			class:font-bold={$page['route'].id === '/wantedparty/edituser'}
+		>
+			<a href="/wantedparty/edituser" class="h-full w-full block p-2 ">
+				ユーザ-情報<br />編集する
+			</a>
+		</div>
 	</div>
-	<div
-		class="cursor-pointer  text-center flex-1"
-		class:bg-gray-700={$page['route'].id !== '/wantedparty/wanted'}
-		class:bg-mai-tai-400={$page['route'].id === '/wantedparty/wanted'}
-		class:text-black={$page['route'].id === '/wantedparty/wanted'}
-		class:font-bold={$page['route'].id === '/wantedparty/wanted'}
-	>
-		<a href="/wantedparty/wanted" class="h-full w-full block p-2 "> PTを<br />募集する </a>
-	</div>
-	<div
-		class="cursor-pointer bg-gray-700  text-center flex-1"
-		class:bg-gray-700={$page['route'].id !== '/wantedparty/mypage'}
-		class:bg-mai-tai-400={$page['route'].id === '/wantedparty/mypage'}
-		class:text-black={$page['route'].id === '/wantedparty/mypage'}
-		class:font-bold={$page['route'].id === '/wantedparty/mypage'}
-	>
-		<a href="/wantedparty/mypage" class="h-full w-full block p-2 "> 自分の<br />募集一覧 </a>
-	</div>
-	<div
-		class="cursor-pointer bg-gray-700  text-center flex-1"
-		class:bg-gray-700={$page['route'].id !== '/wantedparty/edituser'}
-		class:bg-mai-tai-400={$page['route'].id === '/wantedparty/edituser'}
-		class:text-black={$page['route'].id === '/wantedparty/edituser'}
-		class:font-bold={$page['route'].id === '/wantedparty/edituser'}
-	>
-		<a href="/wantedparty/edituser" class="h-full w-full block p-2 "> ユーザ-情報<br />編集する </a>
-	</div>
-</div>
+{/if}
 
 <slot />
