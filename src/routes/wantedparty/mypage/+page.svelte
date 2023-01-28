@@ -6,23 +6,39 @@
 	import WantedPartyInfoCard from '../../../components/wantedparty/WantedPartyInfo.svelte';
 
 	let firestore: any = undefined;
-	let wantedPartyList: WantedParty[] = [];
+	let ownWantedDataList: WantedParty[] = [];
+	let joinWantedDataList: WantedParty[] = [];
 
 	onMount(async () => {
 		firestore = useFirestore();
 
-		wantedPartyList = await firestore.ownWantedDataList(getUserInfo());
+		ownWantedDataList = await firestore.ownWantedDataList(getUserInfo());
+		joinWantedDataList = await firestore.joinWantedDataList(getUserInfo());
 	});
 </script>
 
 <div class="flex flex-wrap gap-4 md:w-[74rem] md:mx-auto">
-	{#each wantedPartyList as wantedParty}
-		<div class="w-full md:w-1/4">
+	<div class="w-full bg-black text-white p-2 font-bold">募集中のPT</div>
+	{#each ownWantedDataList as wantedParty}
+		<div class="w-full md:w-[24rem]">
 			<WantedPartyInfoCard {wantedParty} />
 		</div>
 	{/each}
 
-	{#if wantedPartyList.length === 0}
+	{#if ownWantedDataList.length === 0}
 		<div class="panel border border-well-read-700 p-2 w-full">現在募集中のPTはありません</div>
+	{/if}
+</div>
+
+<div class="flex flex-wrap gap-4 md:w-[74rem] md:mx-auto mt-4">
+	<div class="w-full bg-black text-white p-2 font-bold">参加予定のPT</div>
+	{#each joinWantedDataList as wantedParty}
+		<div class="w-full md:w-[24rem]">
+			<WantedPartyInfoCard {wantedParty} />
+		</div>
+	{/each}
+
+	{#if joinWantedDataList.length === 0}
+		<div class="panel border border-well-read-700 p-2 w-full">現在参加予定のPTはありません</div>
 	{/if}
 </div>

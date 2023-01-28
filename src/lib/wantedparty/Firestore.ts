@@ -25,6 +25,7 @@ export default () => {
             if (getCanApply(currentData, userInfo, joinJob)) {
                 const docRef = doc(db, 'wantedparty', currentData.id);
                 await updateDoc(docRef, {
+                    memberIds: arrayUnion(userInfo.id),
                     members: arrayUnion({
                         joinJob,
                         ...userInfo
@@ -50,7 +51,8 @@ export default () => {
                         bookNums: wantedData.bookNums.split(",")
                     },
                     owner: userInfo,
-                    members: []
+                    members: [],
+                    memberIds: []
                 });
             }
         },
@@ -86,7 +88,7 @@ export default () => {
 
             const q = query(wantedPartyRef,
                 where("owner.id", "==", userInfo.id),
-                where("details.time.from", ">=", dayjs().toDate()),
+                where("details.time.from", ">=", dayjs().subtract(30, "m").toDate()),
                 orderBy("details.time.from", "asc"), limit(100)
             );
 
@@ -98,17 +100,16 @@ export default () => {
                     id: doc.id,
                     ...doc.data(),
                 } as WantedParty)
-            });            
+            });
 
             return wantedDataList;
 
         },
 
         async joinWantedDataList(userInfo: UserInfo): Promise<WantedParty[]> {
-
             const q = query(wantedPartyRef,
-                where("owner.id", "==", userInfo.id),
-                where("details.time.from", ">=", dayjs().toDate()),
+                where("memberIds", "array-contains-any", [userInfo.id]),
+                where("details.time.from", ">=", dayjs().subtract(30, "m").toDate()),
                 orderBy("details.time.from", "asc"), limit(100)
             );
 
@@ -120,7 +121,7 @@ export default () => {
                     id: doc.id,
                     ...doc.data(),
                 } as WantedParty)
-            });            
+            });
 
             return wantedDataList;
 

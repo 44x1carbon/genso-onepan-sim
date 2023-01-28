@@ -5,7 +5,8 @@ export type WantedParty = {
     id: string
     owner: UserInfo
     details: WantedPartyDetails
-    members: ({ joinJob: string } & UserInfo)[]
+    members: ({ joinJob: string } & UserInfo)[],
+    memberIds: string[]
 }
 
 export function getCanApplyJobs(
@@ -38,7 +39,7 @@ export function getCanApply(
     return (
         userInfo !== undefined &&
         userInfo.id !== wantedParty.owner.id &&
-        !wantedParty.members.some(member => member.id === userInfo?.id) &&
+        !wantedParty.memberIds.includes(userInfo?.id) &&
         canApplyJobs.length !== 0
     );
 }
