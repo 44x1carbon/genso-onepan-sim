@@ -30,6 +30,10 @@
 	<div>
 		<a href="https://twitter.com/44genso" class="underline text-blue-700">@44genso</a>
 	</div>
+
+	<div>
+		アクセス増加によりサーバー費が高額になった場合はサービスを一時停止する可能性があります。
+	</div>
 </div>
 
 <div class="text-xs flex mb-4 md:w-[74rem] md:mx-auto w-full">
