@@ -5,20 +5,25 @@
 	import { v4 } from 'uuid';
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/environment';
+	import { onMount } from 'svelte';
 
 	export let isEdit: boolean = false;
 
-	let userInfo: UserInfo = isEdit
-		? getUserInfo()
-		: {
-				id: v4(),
-				name: '',
-				jobs: [
-					{ name: '', level: 1 },
-					{ name: '', level: 1 },
-					{ name: '', level: 1 }
-				]
-		  };
+	let userInfo: UserInfo = {
+		id: v4(),
+		name: '',
+		jobs: [
+			{ name: '', level: 1 },
+			{ name: '', level: 1 },
+			{ name: '', level: 1 }
+		]
+	};
+
+	onMount(() => {
+		if (isEdit) {
+			userInfo = getUserInfo();
+		}
+	});
 
 	function registerUserInfo() {
 		if (userInfo.name === '') {
