@@ -45,8 +45,10 @@
 
 		if (await firestore.joinWantedPrty(wantedParty, userInfo, joinJob)) {
 			alert('参加できました');
+		} else if (alreadyJoin) {
+			alert('既に参加済みです');
 		} else {
-			alert('参加できませんでした。既に満員の可能性があります。');
+			alert('参加できませんでした。既に満員の可能性があります');
 		}
 	}
 </script>
