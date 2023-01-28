@@ -16,8 +16,11 @@
 		joinWantedDataList = await firestore.joinWantedDataList(getUserInfo());
 	});
 
-	function deleteWantedParty() {
-		
+	async function deleteWantedParty(wantedParty: WantedParty) {
+		if (confirm(`パーティー募集を削除しても良いですか？`)) {
+			await firestore.deleteWantedParty(wantedParty);
+			ownWantedDataList = await firestore.ownWantedDataList(getUserInfo());
+		}
 	}
 </script>
 
@@ -26,6 +29,7 @@
 	{#each ownWantedDataList as wantedParty}
 		<div class="w-full md:w-[24rem]">
 			<WantedPartyInfoCard {wantedParty} />
+			<button class="btn w-full mt-1" on:click={() => deleteWantedParty(wantedParty)}>削除</button>
 		</div>
 	{/each}
 
