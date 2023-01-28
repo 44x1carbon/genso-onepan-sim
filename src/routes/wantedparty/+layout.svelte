@@ -9,14 +9,20 @@
 	let hasUserInfo = false;
 
 	onMount(() => {
-		if (browser) {
-			const json = localStorage.getItem(USERINFO_SAVE_KEY);
-			if (json === null) {
-				goto('/wantedparty/user');
-			} else {
-				hasUserInfo = true;
+		const id = setInterval(() => {
+			if (browser && $page['route'].id !== '/wantedparty/user') {
+				const json = localStorage.getItem(USERINFO_SAVE_KEY);
+				if (json === null) {
+					goto('/wantedparty/user');
+				} else {
+					hasUserInfo = true;
+				}
+
+				if (hasUserInfo) {
+					clearInterval(id);
+				}
 			}
-		}
+		}, 100);
 	});
 </script>
 
@@ -82,4 +88,6 @@
 	</div>
 {/if}
 
-<slot />
+{#if hasUserInfo || $page['route'].id === '/wantedparty/user'}
+	<slot />
+{/if}

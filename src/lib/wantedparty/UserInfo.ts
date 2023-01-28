@@ -11,12 +11,12 @@ export type Job = {
     level: number
 }
 
-export const getUserInfo = (): UserInfo => {
+export const getUserInfo = (): UserInfo | undefined => {
     const json = localStorage.getItem(USERINFO_SAVE_KEY);
 
     if (json) {
         return JSON.parse(json) as UserInfo
     } else {
-        throw new Error();
+        return undefined;
     }
 }
