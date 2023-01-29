@@ -22,14 +22,53 @@
 			ownWantedDataList = await firestore.ownWantedDataList(getUserInfo());
 		}
 	}
+
+	function makeTweetUrl(wantedParty: WantedParty) {
+		return `https://twitter.com/intent/tweet?text=${encodeURI(
+			`
+【PT募集中】
+${wantedParty.details.purpose} ${
+				wantedParty.details.purpose === 'ブック解放'
+					? 'No.' + wantedParty.details.bookNums
+					: wantedParty.details.map
+			}${wantedParty.details.targetMonster ? '\n' + wantedParty.details.targetMonster : ''}
+
+募集メンバー
+Lv.${wantedParty.details.condition.level.from}~${wantedParty.details.condition.level.to}
+${wantedParty.details.wantedJobs
+	.map((wantedJob, i) =>
+		`
+	${
+		wantedJob.job !== ''
+			? `・${wantedJob.job} ${wantedJob.num}人`
+			: i === 0
+			? `・職業自由 ${wantedJob.num}人`
+			: ''
+	}	
+`.trim()
+	)
+	.filter((t) => t)
+	.join('\n')}
+
+↓PTへの参加はこちらから\n`.trimStart()
+		)}&url=https://ignis-tools.vercel.app/wantedparty/${wantedParty.id}&hashtags=元素騎士,PT募集`;
+	}
 </script>
 
 <div class="flex flex-wrap gap-4 md:w-[74rem] md:mx-auto">
 	<div class="w-full bg-well-read-700 text-white p-2 font-bold">募集中のPT</div>
 	{#each ownWantedDataList as wantedParty}
 		<div class="w-full md:w-[24rem]">
-			<WantedPartyInfoCard {wantedParty} />
-			<button class="btn w-full mt-1" on:click={() => deleteWantedParty(wantedParty)}>削除</button>
+			<div class="p-2 bg-gray-700 rounded-sm">
+				<WantedPartyInfoCard {wantedParty} />
+				<a
+					href={makeTweetUrl(wantedParty)}
+					class="border p-1 rounded bg-blue-500 border-blue-900 w-full block text-center mt-4"
+					target="_blank">TwitterでPT募集を宣伝する</a
+				>
+				<button class="btn w-full mt-2" on:click={() => deleteWantedParty(wantedParty)}>削除</button
+				>
+			</div>
 		</div>
 	{/each}
 
@@ -42,7 +81,9 @@
 	<div class="w-full bg-well-read-700 text-white p-2 font-bold">参加予定のPT</div>
 	{#each joinWantedDataList as wantedParty}
 		<div class="w-full md:w-[24rem]">
-			<WantedPartyInfoCard {wantedParty} />
+			<div class="p-2 bg-gray-700 rounded-sm">
+				<WantedPartyInfoCard {wantedParty} />
+			</div>
 		</div>
 	{/each}
 
