@@ -7,10 +7,13 @@
 	import useFirestore from '$lib/wantedparty/Firestore';
 	import { USERINFO_SAVE_KEY } from '$lib/wantedparty/SaveKeys';
 	import { goto } from '$app/navigation';
+	import TweetModal from './TweetModal.svelte';
+
 	import dayjs from 'dayjs';
 	import utc from 'dayjs/plugin/utc';
 	import timezone from 'dayjs/plugin/timezone';
 	import 'dayjs/locale/ja';
+	import { updateModal } from '$lib/ModalStore';
 	dayjs.extend(utc);
 	dayjs.extend(timezone);
 	dayjs.tz.setDefault('Asia/Tokyo');
@@ -88,9 +91,11 @@
 		}
 
 		if (firestore) {
-			await firestore.registerWantedData(wantedData);
+			const id = await firestore.registerWantedData(wantedData);
 
-			alert('登録完了しました');
+			alert('登録完了しました');		
+						
+			updateModal(TweetModal, { id, wantedData });
 			goto('/wantedparty');
 		}
 	}

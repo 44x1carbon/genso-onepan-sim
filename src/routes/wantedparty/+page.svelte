@@ -33,6 +33,8 @@
 				});
 			});
 	});
+
+	import Modal from '../../components/Modal.svelte';
 </script>
 
 <div class="md:w-[74rem] md:mx-auto mb-4">

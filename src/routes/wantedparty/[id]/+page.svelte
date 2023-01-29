@@ -1,4 +1,5 @@
 <script lang="ts">
+	import WantedPartyInfo from '../../../components/wantedparty/WantedPartyInfo.svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -19,4 +20,6 @@
 	<meta name="twitter:player" content="@44genso" />
 </svelte:head>
 
-{data.id}
+<div class="md:w-[74rem] md:mx-auto">
+	<WantedPartyInfo wantedParty={data.wantedParty} />
+</div>

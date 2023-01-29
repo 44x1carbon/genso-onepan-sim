@@ -7,10 +7,13 @@
 
 	import 'shepherd.js/dist/css/shepherd.css';
 	import setupFirebaseApp from '$lib/Firebase';
+	import { modalStore, modalDataStore, updateModal } from '$lib/ModalStore';
+
+	
 
 	onMount(() => {
 		const app = setupFirebaseApp();
-		const analytics = getAnalytics(app);
+		const analytics = getAnalytics(app);		
 	});
 </script>
 
@@ -66,6 +69,14 @@
 		</div>
 	</div>
 </footer>
+
+{#if $modalStore !== undefined}
+	<div
+		class="fixed top-0 left-0 w-screen h-screen bg-gray-900 bg-opacity-70 flex items-center justify-center"
+	>
+		<svelte:component this={$modalStore} data={$modalDataStore} />
+	</div>
+{/if}
 
 <style global>
 	@tailwind utilities;

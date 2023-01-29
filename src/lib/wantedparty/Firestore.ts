@@ -37,11 +37,11 @@ export default () => {
                 return false;
             }
         },
-        async registerWantedData(wantedData: WantedPartyDetails) {
+        async registerWantedData(wantedData: WantedPartyDetails): Promise<string> {
             const json = localStorage.getItem(USERINFO_SAVE_KEY);
             if (json) {
                 const userInfo = JSON.parse(json);
-                await addDoc(wantedPartyRef, {
+                const result = await addDoc(wantedPartyRef, {
                     details: {
                         ...wantedData,
                         time: {
@@ -54,6 +54,10 @@ export default () => {
                     members: [],
                     memberIds: []
                 });
+
+                return result.id
+            } else {
+                return ""
             }
         },
         async searchWantedDataList(condition: {
