@@ -92,7 +92,7 @@
 					{#each wantedParty.details.wantedJobs as wantedJobs, i}
 						{#if wantedJobs.job !== ''}
 							<li>{wantedJobs.job} {wantedJobs.num}人</li>
-						{:else if i === 0}
+						{:else if wantedJobs.num !== 0}
 							<li>職業自由 {wantedJobs.num}人</li>
 						{/if}
 					{/each}

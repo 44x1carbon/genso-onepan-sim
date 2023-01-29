@@ -24,7 +24,7 @@ export function getCanApplyJobs(
                     wantedParty.details.condition.level.from <= level &&
                     level <= wantedParty.details.condition.level.to;
                 return wantedParty.details.wantedJobs.some(({ job, num }) => {
-                    return (job === '' || job === name) && isLevelMatch;
+                    return ((job === '' && num !== 0) || job === name) && isLevelMatch;
                 });
             }) ?? []
     );

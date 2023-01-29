@@ -16,7 +16,6 @@ export const GET = (async ({ url }) => {
     } else {
         try {
             const wantedParty = await firestore.getWantedParty(id);
-            console.log(`${url.origin}/SourceHanSans-VF.ttf`)
             const options: RenderOptions = {
                 width: 1400,
                 height: 700,
