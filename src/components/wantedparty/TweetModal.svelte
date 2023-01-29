@@ -15,6 +15,7 @@ ${data.wantedData.purpose} ${
 		}${data.wantedData.targetMonster ? '\n' + data.wantedData.targetMonster : ''}
 
 募集メンバー
+Lv.${data.wantedData.condition.level.from}~${data.wantedData.condition.level.to}
 ${data.wantedData.wantedJobs
 	.map((wantedJob, i) =>
 		`
