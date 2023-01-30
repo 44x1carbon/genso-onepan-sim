@@ -52,7 +52,8 @@ export default () => {
                     },
                     owner: userInfo,
                     members: [],
-                    memberIds: []
+                    memberIds: [],
+                    createAt: Timestamp.fromDate(dayjs().toDate())
                 });
 
                 return result.id
