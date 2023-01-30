@@ -93,8 +93,8 @@
 		if (firestore) {
 			const id = await firestore.registerWantedData(wantedData);
 
-			alert('登録完了しました');		
-						
+			alert('登録完了しました');
+
 			updateModal(TweetModal, { id, wantedData });
 			goto('/wantedparty');
 		}
@@ -235,6 +235,7 @@
 					<option value="エルロンド商店街">エルロンド商店街</option>
 					<option value="コルキア村">コルキア村</option>
 					<option value="ポートブルの港">ポートブルの港</option>
+					<option value="龍の門">龍の門</option>
 					{#each MapData as map}
 						<option value={map.name}>{map.name}</option>
 					{/each}
