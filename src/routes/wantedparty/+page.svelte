@@ -51,4 +51,9 @@
 	{#if $wantedPartyListStore.length === 0}
 		<div class="panel border border-well-read-700 p-2 w-full">募集中のPTが見つかりませんでした</div>
 	{/if}
+
+	<div class="w-full">
+		<div class="p-1">目的のPTが見つからない時は、自分で募集してみよう！</div>
+		<a href="/wantedparty/wanted" class="btn block w-full text-center">PTを募集する</a>
+	</div>
 </div>
