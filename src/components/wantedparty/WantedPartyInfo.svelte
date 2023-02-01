@@ -35,7 +35,7 @@
 		const start = dayjs(timestamp.toDate());
 		return `${start.format('YYYY/MM/DD HH:mm')}~${start
 			.add(minute, 'm')
-			.format('H:mm')}(${minute}分)`;
+			.format('HH:mm')}(${minute}分)`;
 	}
 
 	async function join() {

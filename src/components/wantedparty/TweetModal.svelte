@@ -2,6 +2,14 @@
 	import type { WantedPartyDetails } from '$lib/wantedparty/WantedPartyDetails';
 	import Modal from '../Modal.svelte';
 	import { closeModal } from '$lib/ModalStore';
+	import dayjs from 'dayjs';
+	import utc from 'dayjs/plugin/utc';
+	import timezone from 'dayjs/plugin/timezone';
+	import 'dayjs/locale/ja';
+	dayjs.extend(utc);
+	dayjs.extend(timezone);
+	dayjs.tz.setDefault('Asia/Tokyo');
+	dayjs.locale('ja');
 
 	export let data: { wantedData: WantedPartyDetails; id: string };
 
@@ -13,6 +21,14 @@ ${data.wantedData.purpose} ${
 				? 'No.' + data.wantedData.bookNums
 				: data.wantedData.map
 		}${data.wantedData.targetMonster ? '\n' + data.wantedData.targetMonster : ''}
+
+時間
+${dayjs(data.wantedData.time.from).tz().format('YYYY/MM/DD HH:mm')}~${dayjs(
+			data.wantedData.time.from
+		)
+			.tz()
+			.add(data.wantedData.time.to, 'm')
+			.format(' HH:mm')}(${data.wantedData.time.to}分)
 
 募集メンバー
 Lv.${data.wantedData.condition.level.from}~${data.wantedData.condition.level.to}

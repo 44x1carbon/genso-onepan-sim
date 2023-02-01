@@ -4,6 +4,14 @@
 	import type { WantedParty } from '$lib/wantedparty/WantedParty';
 	import { getContext, onMount } from 'svelte';
 	import WantedPartyInfoCard from '../../../components/wantedparty/WantedPartyInfo.svelte';
+	import dayjs from 'dayjs';
+	import utc from 'dayjs/plugin/utc';
+	import timezone from 'dayjs/plugin/timezone';
+	import 'dayjs/locale/ja';
+	dayjs.extend(utc);
+	dayjs.extend(timezone);
+	dayjs.tz.setDefault('Asia/Tokyo');
+	dayjs.locale('ja');
 
 	let firestore: any = undefined;
 	let ownWantedDataList: WantedParty[] = [];
@@ -32,6 +40,14 @@ ${wantedParty.details.purpose} ${
 					? 'No.' + wantedParty.details.bookNums
 					: wantedParty.details.map
 			}${wantedParty.details.targetMonster ? '\n' + wantedParty.details.targetMonster : ''}
+
+時間
+${dayjs(wantedParty.details.time.from.toDate()).tz().format('YYYY/MM/DD HH:mm')}~${dayjs(
+				wantedParty.details.time.from.toDate()
+			)
+				.tz()
+				.add(wantedParty.details.time.to, 'm')
+				.format(' HH:mm')}(${wantedParty.details.time.to}分)
 
 募集メンバー
 Lv.${wantedParty.details.condition.level.from}~${wantedParty.details.condition.level.to}
