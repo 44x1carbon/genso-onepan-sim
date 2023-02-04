@@ -6,6 +6,7 @@
 	import { browser } from '$app/environment';
 	import { onMount } from 'svelte';
 	import tourSetup from '../../lib/houly/Tour';
+	import ExpTableData from '../../ExpTableData';
 
 	const SAVE_KEY = 'GENSO-HOULY-DATA';
 
@@ -20,56 +21,6 @@
 		レベル1: 0.97,
 		レベル2: 0.94,
 		レベル3: 0.9
-	};
-
-	const defaultInitialState = {
-		baseEquipment: {
-			右手: { isUnEquipped: false, condition: 100 },
-			左手: { isUnEquipped: false, condition: 100 },
-			胴: { isUnEquipped: false, condition: 100 },
-			足: { isUnEquipped: false, condition: 100 },
-			頭: { isUnEquipped: false, condition: 100 },
-			背中: { isUnEquipped: false, condition: 100 },
-			肩: { isUnEquipped: false, condition: 100 },
-			指輪: { isUnEquipped: false, condition: 100 }
-		},
-		cosplayEquipment: {
-			右手: { isUnEquipped: false, condition: 100 },
-			左手: { isUnEquipped: false, condition: 100 },
-			胴: { isUnEquipped: false, condition: 100 },
-			足: { isUnEquipped: false, condition: 100 },
-			頭: { isUnEquipped: false, condition: 100 },
-			背中: { isUnEquipped: false, condition: 100 },
-			肩: { isUnEquipped: false, condition: 100 }
-		},
-		portion: {
-			hp: {
-				1: 0,
-				2: 0,
-				3: 0,
-				4: 0,
-				5: 0,
-				6: 0
-			},
-			mp: {
-				1: 0,
-				2: 0,
-				3: 0,
-				4: 0,
-				5: 0,
-				6: 0
-			}
-		},
-		meal: new Array(5).fill(null).map(() => {
-			return {
-				itemName: 'なし',
-				num: 0
-			};
-		}),
-		mR: 0,
-		funClubCard: 'なし',
-		exp: 0,
-		skillExp: 0
 	};
 
 	let initialState = {
@@ -119,61 +70,9 @@
 		mR: 0,
 		funClubCard: 'なし',
 		exp: 0,
-		skillExp: 0
-	};
-
-	const defaultCurrentState = {
-		baseEquipment: {
-			右手: { condition: 100 },
-			左手: { condition: 100 },
-			胴: { condition: 100 },
-			足: { condition: 100 },
-			頭: { condition: 100 },
-			背中: { condition: 100 },
-			肩: { condition: 100 },
-			指輪: { condition: 100 }
-		},
-		cosplayEquipment: {
-			右手: { condition: 100 },
-			左手: { condition: 100 },
-			胴: { condition: 100 },
-			足: { condition: 100 },
-			頭: { condition: 100 },
-			背中: { condition: 100 },
-			肩: { condition: 100 }
-		},
-		portion: {
-			hp: {
-				1: 0,
-				2: 0,
-				3: 0,
-				4: 0,
-				5: 0,
-				6: 0
-			},
-			mp: {
-				1: 0,
-				2: 0,
-				3: 0,
-				4: 0,
-				5: 0,
-				6: 0
-			}
-		},
-		meal: new Array(5).fill(null).map(() => {
-			return {
-				num: 0
-			};
-		}),
-		spring: {
-			cost: 0,
-			num: 0
-		},
-		mR: 0,
-		workPlace: '',
-		workingMinute: 60,
-		exp: 0,
-		skillExp: 0
+		level: 0,
+		skillExp: 0,
+		skillLevel: 0
 	};
 
 	let currentState = {
@@ -227,7 +126,9 @@
 		workPlace: '',
 		workingMinute: 60,
 		exp: 0,
-		skillExp: 0
+		level: 0,
+		skillExp: 0,
+		skillLevel: 0
 	};
 
 	let otherInfo = {
@@ -257,7 +158,8 @@
 			'ROND-USD': 0.0135,
 			'USD-JPY': 129.56,
 			'ファミチキ-JPY': 220
-		}
+		},
+		isCalcExp: false
 	};
 
 	function baseEquipmentDiffCnd() {
@@ -498,6 +400,26 @@
 		return Math.floor(USD2JPY(hourlyPay()) / 220);
 	}
 
+	function exp() {
+		if (currentState.level - initialState.level === 0) {
+			return currentState.exp - initialState.exp;
+		} else {
+			// @ts-ignore
+			return ExpTableData.level[initialState.level] - initialState.exp + currentState.exp;
+		}
+	}
+
+	function skillExp() {
+		if (currentState.skillLevel - initialState.skillLevel === 0) {
+			return currentState.skillExp - initialState.skillExp;
+		} else {
+			return (
+				// @ts-ignore
+				ExpTableData.skill[initialState.skillLevel] - initialState.skillExp + currentState.skillExp
+			);
+		}
+	}
+
 	let result = {
 		baseEquipmentRepairCost: 0,
 		cosplayEquipmentRepairCost: 0,
@@ -508,7 +430,11 @@
 		usd: 0,
 		hourlyPay: 0,
 		total: 0,
-		famchick: 0
+		famchick: 0,
+		exp: 0,
+		hourlyExp: 0,
+		skillExp: 0,
+		hourlySkillExp: 0
 	};
 	let isShowResult = false;
 
@@ -523,6 +449,10 @@
 		result.hourlyPay = hourlyPay();
 		result.total = total();
 		result.famchick = famchick();
+		result.exp = exp();
+		result.hourlyExp = exp() / (currentState.workingMinute / 60);
+		result.skillExp = skillExp();
+		result.hourlySkillExp = skillExp() / (currentState.workingMinute / 60);
 
 		setTimeout(() => {
 			resultToImage();
@@ -567,6 +497,18 @@
 				initialState = data.initialState;
 				currentState = data.currentState;
 				otherInfo = data.otherInfo;
+
+				if (initialState.exp === undefined) initialState.exp = 0;
+				if (initialState.level === undefined) initialState.level = 0;
+				if (initialState.skillExp === undefined) initialState.skillExp = 0;
+				if (initialState.skillLevel === undefined) initialState.skillLevel = 0;
+
+				if (currentState.exp === undefined) currentState.exp = 0;
+				if (currentState.level === undefined) currentState.level = 0;
+				if (currentState.skillExp === undefined) currentState.skillExp = 0;
+				if (currentState.skillLevel === undefined) currentState.skillLevel = 0;
+
+				if (otherInfo.isCalcExp === undefined) otherInfo.isCalcExp = false;
 			}
 		}
 	});
@@ -787,8 +729,7 @@
 					</section>
 
 					<section>
-						<!-- <div class="heading2">現在の所持金・EXP・スキルEXPを入力してください</div> -->
-						<div class="heading2">現在の所持金を入力してください</div>
+						<div class="heading2">現在の所持金・EXP・スキルEXPを入力してください</div>
 						<div>
 							<div class="form-row">
 								<div class="form-label w-40">所持 mR</div>
@@ -798,24 +739,6 @@
 									>
 								</div>
 							</div>
-						</div>
-						<!-- <div>
-							<div class="form-row">
-								<div class="form-label w-40">EXP</div>
-								<div class="form-controll">
-									<input type="number" class="border" bind:value={initialState.mR} />
-								</div>
-							</div>
-						</div>
-						<div>
-							<div class="form-row">
-								<div class="form-label w-40">スキルEXP</div>
-								<div class="form-controll">
-									<input type="number" class="border" bind:value={initialState.mR} />
-								</div>
-							</div>
-						</div> -->
-						<div>
 							<div class="form-row">
 								<div class="form-label w-40">ファンクラブ会員権</div>
 								<div class="form-controll">
@@ -827,6 +750,49 @@
 									</select>
 								</div>
 							</div>
+							<div class="form-row">
+								<div class="form-label w-40">経験値も計算する</div>
+								<div class="form-controll">
+									<input type="checkbox" bind:checked={otherInfo.isCalcExp} />
+								</div>
+							</div>
+							{#if otherInfo.isCalcExp}
+								<div class="form-row">
+									<div class="form-label w-40">レベル</div>
+									<div class="form-controll">
+										<input
+											type="number"
+											class="border"
+											bind:value={initialState.level}
+											on:input={() => (currentState.level = initialState.level)}
+										/>
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-label w-40">経験値</div>
+									<div class="form-controll">
+										<input type="number" class="border" bind:value={initialState.exp} />
+									</div>
+								</div>
+
+								<div class="form-row">
+									<div class="form-label w-40">スキルレベル</div>
+									<div class="form-controll">
+										<input
+											type="number"
+											class="border"
+											bind:value={initialState.skillLevel}
+											on:input={() => (currentState.skillLevel = initialState.skillLevel)}
+										/>
+									</div>
+								</div>
+								<div class="form-row">
+									<div class="form-label w-40">スキル経験値</div>
+									<div class="form-controll">
+										<input type="number" class="border" bind:value={initialState.skillExp} />
+									</div>
+								</div>
+							{/if}
 						</div>
 					</section>
 				</Step>
@@ -1028,7 +994,7 @@
 					</section>
 
 					<section>
-						<div class="heading2">現在の所持金を入力してください</div>
+						<div class="heading2">現在の所持金・経験値を入力してください</div>
 						<div class="form-row">
 							<div class="form-label w-36">働いた時間</div>
 							<div class="form-controll flex items-center">
@@ -1048,6 +1014,34 @@
 								>
 							</div>
 						</div>
+
+						{#if otherInfo.isCalcExp}
+							<div class="form-row">
+								<div class="form-label w-36">レベル</div>
+								<div class="form-controll">
+									<input type="number" class="border" bind:value={currentState.level} />
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="form-label w-36">経験値</div>
+								<div class="form-controll">
+									<input type="number" class="border" bind:value={currentState.exp} />
+								</div>
+							</div>
+
+							<div class="form-row">
+								<div class="form-label w-36">スキルレベル</div>
+								<div class="form-controll">
+									<input type="number" class="border" bind:value={currentState.skillLevel} />
+								</div>
+							</div>
+							<div class="form-row">
+								<div class="form-label w-36">スキル経験値</div>
+								<div class="form-controll">
+									<input type="number" class="border" bind:value={currentState.skillExp} />
+								</div>
+							</div>
+						{/if}
 					</section>
 				</Step>
 			</div>
@@ -1273,11 +1267,35 @@
 			({result.famchick}ファミチキ)
 		</div>
 	</div>
+	{#if otherInfo.isCalcExp}
+		<div class="flex justify-between mt-2 border-t-2 pt-1">
+			<div>経験値</div>
+			<div class="text-green-500">
+				+{result.exp}
+			</div>
+		</div>
+		<div class="flex justify-between mt-0 pt-1">
+			<div>経験値(時給)</div>
+			<div class="text-green-500">
+				+{result.hourlyExp}
+			</div>
+		</div>
+		<div class="flex justify-between mt-2 pt-1">
+			<div>スキル経験値</div>
+			<div class="text-green-500">
+				+{result.skillExp}
+			</div>
+		</div>
+		<div class="flex justify-between mt-0 pt-1">
+			<div>スキル経験値(時給)</div>
+			<div class="text-green-500">
+				+{result.hourlySkillExp}
+			</div>
+		</div>
+	{/if}
 </div>
 
 <style>
-	
-
 	.result * {
 		text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, -1px 1px 0 #000, 1px -1px 0 #000, 0px 1px 0 #000,
 			0 -1px 0 #000, -1px 0 0 #000, 1px 0 0 #000;
