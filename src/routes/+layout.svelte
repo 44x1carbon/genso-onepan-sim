@@ -1,7 +1,8 @@
 <script>
+	import jquery from 'jquery';
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
-	import { getAnalytics } from 'firebase/analytics';
+	import { getAnalytics, logEvent } from 'firebase/analytics';
 	// TODO: Add SDKs for Firebase products that you want to use
 	// https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -9,11 +10,20 @@
 	import setupFirebaseApp from '$lib/Firebase';
 	import { modalStore, modalDataStore, updateModal } from '$lib/ModalStore';
 
-	
-
 	onMount(() => {
 		const app = setupFirebaseApp();
-		const analytics = getAnalytics(app);		
+		const analytics = getAnalytics(app);
+
+		jquery(document).on('click', 'button,a', (e) => {
+			const title = jquery(document)
+				.attr('title')
+				.replace('IGNIS TOOLS - ', '')
+				.replace('(α版)', '');
+			logEvent(analytics, 'custom_click', {
+				page: title,
+				text: jquery(e.currentTarget).text()
+			});
+		});
 	});
 </script>
 

@@ -798,11 +798,11 @@
 				</Step>
 			</div>
 			<div class="flex justify-between p-2">
-				<button class="btn w-20" on:click={() => (step -= 1)}>戻る</button>
+				<div class="btn w-20 text-center cursor-pointer" on:click={() => (step -= 1)}>戻る</div>
 				<div>
 					{step + 1}/{maxStep}
 				</div>
-				<button class="btn w-20" on:click={() => (step += 1)}>次へ</button>
+				<div class="btn w-20 text-center  cursor-pointer" on:click={() => (step += 1)}>次へ</div>
 			</div>
 		</div>
 
@@ -1046,11 +1046,11 @@
 				</Step>
 			</div>
 			<div class="flex justify-between p-2">
-				<button class="btn w-20" on:click={() => (step2 -= 1)}>戻る</button>
+				<div class="btn w-20 text-center cursor-pointer" on:click={() => (step2 -= 1)}>戻る</div>
 				<div>
 					{step2 + 1}/{maxStep2}
 				</div>
-				<button class="btn w-20" on:click={() => (step2 += 1)}>次へ</button>
+				<div class="btn w-20 text-center cursor-pointer" on:click={() => (step2 += 1)}>次へ</div>
 			</div>
 		</div>
 
