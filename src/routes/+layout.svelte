@@ -21,7 +21,8 @@
 				.replace('(α版)', '');
 			logEvent(analytics, 'custom_click', {
 				page: title,
-				text: jquery(e.currentTarget).text()
+				text: jquery(e.currentTarget).text(),
+				routeId: $page['route'].id
 			});
 		});
 	});
