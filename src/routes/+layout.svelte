@@ -13,7 +13,7 @@
 	let nav: { label: string; href: string }[] = [
 		{ label: 'ダメージ<br>計算', href: '/' },
 		{ label: '時給<br>計算', href: '/hourly' },
-		{ label: 'PT募集<br>掲示板', href: '/wantedparty' },
+		{ label: 'PT募集<br>掲示板', href: '/wantedparty' }
 		// { label: 'フレンド<br>機能', href: '/friend' }
 	];
 
@@ -75,13 +75,11 @@
 
 <footer class="bg-chocolate-900 p-4 fixed w-full bottom-0 text-white text-xs panel">
 	<div>
-		IGNISへの入団希望の方はTwitterのIGNIS公式アカウントにDMをお送りください！<br>
+		IGNISへの入団希望の方はTwitterのIGNIS公式アカウントにDMをお送りください！<br />
 		<a href="https://twitter.com/IGNISgenso" class="underline text-blue-300">@IGNISgenso</a>
 	</div>
 	<div class="leading-relaxed mt-2">
-		<div>
-			不具合などありましたら下記のTwitterでDMを下さい。			
-		</div>
+		<div>不具合などありましたら下記のTwitterでDMを下さい。</div>
 		<div>
 			開発者: <a href="https://twitter.com/44genso" class="underline text-blue-300">@44genso</a>
 		</div>
@@ -163,7 +161,7 @@
 		@apply border -mt-px flex border border-l-0 border-r-0 border-well-read-900;
 	}
 
-	:global(input[type="text"]) {
+	:global(input[type='text'], input[type='number']) {
 		@apply border indent-1 w-full bg-gray-200 text-gray-900 border-gray-900 rounded-sm;
 	}
 
