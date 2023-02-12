@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import jquery from 'jquery';
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
@@ -10,21 +10,30 @@
 	import setupFirebaseApp from '$lib/Firebase';
 	import { modalStore, modalDataStore, updateModal } from '$lib/ModalStore';
 
-	onMount(() => {
-		const app = setupFirebaseApp();
-		const analytics = getAnalytics(app);
+	let nav: { label: string; href: string }[] = [
+		{ label: 'ダメージ<br>計算', href: '/' },
+		{ label: '時給<br>計算', href: '/hourly' },
+		{ label: 'PT募集<br>掲示板', href: '/wantedparty' },
+		// { label: 'フレンド<br>機能', href: '/friend' }
+	];
 
-		jquery(document).on('click', 'button,a', (e) => {
-			const title = jquery(document)
-				.attr('title')
-				.replace('IGNIS TOOLS - ', '')
-				.replace('(α版)', '');
-			logEvent(analytics, 'custom_click', {
-				page: title,
-				text: jquery(e.currentTarget).text(),
-				routeId: $page['route'].id
+	onMount(() => {
+		try {
+			const app = setupFirebaseApp();
+			const analytics = getAnalytics(app);
+
+			jquery(document).on('click', 'button,a', (e) => {
+				const title = jquery(document)
+					.attr('title')
+					.replace('IGNIS TOOLS - ', '')
+					.replace('(α版)', '');
+				logEvent(analytics, 'custom_click', {
+					page: title,
+					text: jquery(e.currentTarget).text(),
+					routeId: $page['route'].id
+				});
 			});
-		});
+		} catch {}
 	});
 </script>
 
@@ -41,27 +50,19 @@
 		</div>
 	</div>
 	<div class="flex text-sm bg-mai-tai-700 w-full">
-		<div
-			class="border border-mai-tai-900 p-2 py-1"
-			class:bg-mai-tai-400={$page['route'].id === '/'}
-			class:text-black={$page['route'].id === '/'}
-		>
-			<a href="/">ダメージ計算機</a>
-		</div>
-		<div
-			class="border border-mai-tai-900 p-2 py-1"
-			class:bg-mai-tai-400={$page['route'].id === '/hourly'}
-			class:text-black={$page['route'].id === '/hourly'}
-		>
-			<a href="/hourly">時給計算機</a>
-		</div>
-		<div
-			class="border border-mai-tai-900 p-2 py-1"
-			class:bg-mai-tai-400={$page['route'].id?.startsWith('/wantedparty')}
-			class:text-black={$page['route'].id?.startsWith('/wantedparty')}
-		>
-			<a href="/wantedparty">PT募集掲示板</a>
-		</div>
+		{#each nav as { label, href }}
+			<div
+				class="border border-mai-tai-900 p-2 py-1 text-xs font-bold"
+				class:bg-mai-tai-400={($page['route'].id?.startsWith(href) && href !== '/') ||
+					$page['route'].id === href}
+				class:text-black={($page['route'].id?.startsWith(href) && href !== '/') ||
+					$page['route'].id === href}
+			>
+				<a {href} class="flex items-center justify-center leading-tight text-center"
+					>{@html label}</a
+				>
+			</div>
+		{/each}
 	</div>
 </header>
 
@@ -73,8 +74,14 @@
 </main>
 
 <footer class="bg-chocolate-900 p-4 fixed w-full bottom-0 text-white text-xs panel">
-	<div class="leading-relaxed">
-		<div>不具合などありましたら下記のTwitterでDMを下さい。</div>
+	<div>
+		IGNISへの入団希望の方はTwitterのIGNIS公式アカウントにDMをお送りください！<br>
+		<a href="https://twitter.com/IGNISgenso" class="underline text-blue-300">@IGNISgenso</a>
+	</div>
+	<div class="leading-relaxed mt-2">
+		<div>
+			不具合などありましたら下記のTwitterでDMを下さい。			
+		</div>
 		<div>
 			開発者: <a href="https://twitter.com/44genso" class="underline text-blue-300">@44genso</a>
 		</div>
@@ -156,12 +163,16 @@
 		@apply border -mt-px flex border border-l-0 border-r-0 border-well-read-900;
 	}
 
-	:global(input) {
-		@apply border indent-1 w-full bg-gray-200 text-gray-900 border-gray-900;
+	:global(input[type="text"]) {
+		@apply border indent-1 w-full bg-gray-200 text-gray-900 border-gray-900 rounded-sm;
 	}
 
 	:global(select) {
-		@apply bg-gray-200 border text-gray-900;
+		@apply bg-gray-200 border text-gray-900 rounded-sm;
+	}
+
+	:global(textarea) {
+		@apply bg-gray-200 border text-gray-900 resize-none rounded-sm;
 	}
 
 	:global(.panel) {
@@ -174,6 +185,7 @@
 			rgba(51, 1, 1, 1) 5px,
 			rgba(51, 1, 1, 1) 10px
 		);
+		@apply border-well-read-900 border;
 	}
 
 	:global(.btn) {
