@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Core, type UserInfo } from '$lib/friend/Core';
+	import { Core, type UserInfo, N } from '$lib/friend/Core';
 	import { onMount } from 'svelte';
 	import setupFirebaseApp from '$lib/Firebase';
 	import { getUserInfo, saveUserInfo } from '$lib/friend/UserInfoStore';
@@ -21,6 +21,8 @@
 	});
 
 	async function login() {
+		await N.requestPermission();
+
 		if (core === undefined || userInfo === undefined) return;
 		await core.login(userInfo);
 		saveUserInfo({

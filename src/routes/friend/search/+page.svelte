@@ -87,9 +87,7 @@
 		// 	// console.log('次郎', 'friendList', await core.getFriendList(userInfo2));
 		// });
 
-		// await core.sendFriendRequest(userInfo2.id, userInfo1, 'aaaa');
-
-		// await N.requestPermission();
+		// await core.sendFriendRequest(userInfo2.id, userInfo1, 'aaaa'		
 
 		// console.log('太郎', 'friendList', await core.getFriendList(userInfo1));
 		// console.log('次郎', 'friendList', await core.getFriendList(userInfo2));
