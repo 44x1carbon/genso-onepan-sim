@@ -7,6 +7,7 @@
 
 	export let userInfo: UserInfo;
 	let from: UserInfo = getUserInfo();
+	console.log(userInfo);
 
 	function jobShortName(jobName: string) {
 		return JobData.find((job) => job.name === jobName)?.shortName ?? '';

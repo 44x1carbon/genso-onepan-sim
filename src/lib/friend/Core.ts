@@ -43,7 +43,7 @@ export class Core {
         const snapshot = await database.get(database.child(this.dbRef, 'users'));
         if (snapshot.exists()) {
             return Object.values(snapshot.val()).map((userInfo: any) => {
-                return { ...userInfo, jobs: userInfo.jobs ?? [] }
+                return { ...userInfo, jobs: userInfo.jobs ?? [], status: userInfo.status ?? [] }
             }) as UserInfo[];
         } else {
             return [];
