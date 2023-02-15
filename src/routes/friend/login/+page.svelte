@@ -70,4 +70,4 @@
 
 <button class="btn w-full mt-4" on:click={logout}>ログアウト</button>
 
-<a class="btn text-center justify-center" href={loginUrl} target="_blank">ゲーム起動</a>
+<a class="btn text-center justify-center mt-4" href={loginUrl} target="_blank">ゲーム起動</a>
