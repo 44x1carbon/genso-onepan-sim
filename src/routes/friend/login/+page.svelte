@@ -54,6 +54,8 @@
 				}
 			});
 		});
+
+		alert('ログインしました!');
 	}
 
 	async function logout() {
