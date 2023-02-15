@@ -28,17 +28,20 @@
 	<div class="panel flex flex-1">
 		<div class="flex-1">
 			<div class="flex gap-1 flex-wrap text-xs p-1">
-				{#each userInfo.jobs as job}
+				{#each userInfo.jobs.filter(({ name }) => name !== '') as job}
 					<span class="bg-gray-200 rounded-sm px-1 text-gray-900 font-bold"
 						>{jobShortName(job.name)} L{job.level}</span
 					>
 				{/each}
 			</div>
-			<div class="flex gap-1 p-1 text-xs flex-wrap ">
-				{#each userInfo.status as status}
-					<span class="text-xs bg-gray-200 rounded-sm text-gray-900 px-1 font-bold">{status}</span>
-				{/each}
-			</div>
+			{#if userInfo.status.length !== 0}
+				<div class="flex gap-1 p-1 text-xs flex-wrap ">
+					{#each userInfo.status as status}
+						<span class="text-xs bg-gray-200 rounded-sm text-gray-900 px-1 font-bold">{status}</span
+						>
+					{/each}
+				</div>
+			{/if}
 			<div class="text-xs bg-black bg-opacity-50 text-white m-1 rounded-sm font-bold p-1">
 				{userInfo.message}
 			</div>
