@@ -24,6 +24,7 @@
 	async function requestPermission() {
 		await N.requestPermission();
 		N.showNotification('aaaa', 'aaaa');
+		alert('通知を送信しました');
 	}
 
 	async function login() {
