@@ -23,6 +23,7 @@
 
 	async function requestPermission() {
 		await N.requestPermission();
+		N.showNotification('aaaa', 'aaaa');
 	}
 
 	async function login() {
