@@ -66,8 +66,8 @@
 	}
 </script>
 
-<a class="btn text-center justify-center" href={loginUrl} on:click={login} target="_blank"
-	>ログイン</a
->
+<button class="btn text-center justify-center" on:click={login}>ログイン</button>
 
 <button class="btn w-full mt-4" on:click={logout}>ログアウト</button>
+
+<a class="btn text-center justify-center" href={loginUrl} target="_blank">ゲーム起動</a>
