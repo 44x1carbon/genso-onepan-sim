@@ -77,3 +77,5 @@
 <a class="btn text-center justify-center mt-4" href={loginUrl} target="_blank">ゲーム起動</a>
 
 <button class="btn w-full mt-4" on:click={requestPermission}>通知</button>
+
+{N.isSupport()}
