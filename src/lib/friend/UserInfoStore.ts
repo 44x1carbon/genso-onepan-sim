@@ -1,4 +1,4 @@
-import type { UserInfo } from "genso-friend-core"
+import type { UserInfo } from "$lib/friend/Core"
 
 const SAVE_KEY = "GENSO-FRIEND-USERINFO"
 

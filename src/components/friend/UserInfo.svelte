@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { updateModal } from '$lib/ModalStore';
-	import { type UserInfo } from 'genso-friend-core';
+	import { type UserInfo } from '$lib/friend/Core';
 	import JobData from '../../JobData';
-	import FriendRequestModal from '$components/friend/FriendRequestModal.svelte';	
-
+	import FriendRequestModal from '$components/friend/FriendRequestModal.svelte';
+	import { getUserInfo } from '$lib/friend/UserInfoStore';
 
 	export let userInfo: UserInfo;
+	let from: UserInfo = getUserInfo();
 
 	function jobShortName(jobName: string) {
 		return JobData.find((job) => job.name === jobName)?.shortName ?? '';
@@ -13,16 +14,17 @@
 
 	function openFriendRequestModal() {
 		updateModal(FriendRequestModal, {
-			to: userInfo
-		})
+			to: userInfo,
+			from
+		});
 	}
 </script>
 
-<div class="md:w-[24rem] w-full">
+<div class="md:w-[24rem] w-full flex flex-col">
 	<div class="heading text-sm p-1">
 		<span class="mr-4">ID:{userInfo.id}</span><span class="">{userInfo.name}</span>
 	</div>
-	<div class="panel flex">
+	<div class="panel flex flex-1">
 		<div class="flex-1">
 			<div class="flex gap-1 flex-wrap text-xs p-1">
 				{#each userInfo.jobs as job}
@@ -41,7 +43,10 @@
 			</div>
 		</div>
 		<div class="p-1">
-			<button class="btn w-full text-xs flex h-full w-full leading-none" on:click={openFriendRequestModal}>友達<br />申請</button>
+			<button
+				class="btn w-full text-xs flex h-full w-full leading-none"
+				on:click={openFriendRequestModal}>友達<br />申請</button
+			>
 		</div>
 	</div>
 </div>

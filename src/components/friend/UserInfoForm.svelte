@@ -1,35 +1,37 @@
 <script lang="ts">
-	import { type UserInfo } from 'genso-friend-core';	
-	import { getUserInfo, saveUserInfo } from '$lib/friend/UserInfoStore'
-	import JobData from '../../JobData';	
+	import { type UserInfo, Core } from '$lib/friend/Core';
+	import { getUserInfo, saveUserInfo } from '$lib/friend/UserInfoStore';
+	import JobData from '../../JobData';
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/environment';
 	import { onMount } from 'svelte';
+	import setupFirebaseApp from '$lib/Firebase';
 
 	export let isEdit: boolean = true;
 
 	let userInfo: UserInfo = {
-		id: "",
+		id: '',
 		name: '',
 		jobs: [
 			{ name: '', level: 1 },
 			{ name: '', level: 1 },
-			{ name: '', level: 1 },			
+			{ name: '', level: 1 }
 		],
 		status: [],
-  		isLogin: false,
-  		message: "",
+		isLogin: false,
+		message: ''
 	};
 
-	onMount(() => {		
-		userInfo = getUserInfo();
-		console.log(userInfo);
-		if (userInfo === undefined) {
+	onMount(() => {
+		const _userInfo = getUserInfo();
+		if (_userInfo === undefined) {
 			isEdit = false;
+		} else {
+			userInfo = _userInfo;
 		}
 	});
 
-	function registerUserInfo() {
+	async function registerUserInfo() {
 		if (userInfo.name === '') {
 			alert('ユーザー名は必須です。ユーザー名を入力してください。');
 			return;
@@ -40,6 +42,8 @@
 			return;
 		}
 
+		const core = new Core(setupFirebaseApp());
+		await core.updateUserInfo(userInfo);
 		saveUserInfo(userInfo);
 
 		alert('登録しました');
@@ -60,23 +64,34 @@
 			<div class="form-row">
 				<div class="form-label w-28 ">ユーザー名</div>
 				<div class="form-controll space flex-1">
-					<input type="text" class="text-sm " bind:value={userInfo.name} placeholder="ゲーム内のキャラ名"/>
+					<input
+						type="text"
+						class="text-sm "
+						bind:value={userInfo.name}
+						placeholder="ゲーム内のキャラ名"
+					/>
 				</div>
 			</div>
 			<div class="form-row">
 				<div class="form-label w-28 ">やりたい事</div>
-				<div class="form-controll space flex flex-col text-xs flex-1 gap-1">					
-					{#each ["ストーリー", "ブック解放", "レベリング", "金策", "ドラゴンタワー中級", "ドラゴンタワー上級"] as want}
+				<div class="form-controll space flex flex-col text-xs flex-1 gap-1">
+					{#each ['ストーリー', 'ブック解放', 'レベリング', '金策', 'ドラゴンタワー中級', 'ドラゴンタワー上級'] as want}
 						<label for={`GensoWantTo-${want}`} class="flex items-center">
-							<input type="checkbox" bind:group={userInfo.status} value={want} id={`GensoWantTo-${want}`} class="mr-1">{want}
+							<input
+								type="checkbox"
+								bind:group={userInfo.status}
+								value={want}
+								id={`GensoWantTo-${want}`}
+								class="mr-1"
+							/>{want}
 						</label>
-					{/each}					
+					{/each}
 				</div>
 			</div>
 			<div class="form-row">
 				<div class="form-label w-28 ">メッセージ</div>
 				<div class="form-controll space flex-1">
-					<textarea bind:value={userInfo.message} class="text-xs w-full" rows="5"></textarea>					
+					<textarea bind:value={userInfo.message} class="text-xs w-full" rows="5" />
 				</div>
 			</div>
 			{#each userInfo.jobs as _, i}
