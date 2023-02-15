@@ -67,3 +67,5 @@
 <a class="btn text-center justify-center" href={loginUrl} on:click={login} target="_blank"
 	>ログイン</a
 >
+
+<button class="btn w-full mt-4" on:click={logout}>ログアウト</button>
