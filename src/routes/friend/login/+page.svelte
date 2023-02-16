@@ -53,6 +53,7 @@
 		});
 
 		(await core.getFriendList(userInfo)).forEach((friend) => {
+			console.log(friend);
 			core?.watchFriendStatus(friend.id, (_userInfo) => {
 				if (_userInfo.isLogin) {
 					core?.showLoginFriendNotification(_userInfo);

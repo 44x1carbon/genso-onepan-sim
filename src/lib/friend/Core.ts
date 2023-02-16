@@ -31,7 +31,18 @@ export class Core {
 
     // ユーザー情報更新
     async updateUserInfo(userInfo: UserInfo): Promise<boolean> {
-        await database.set(database.ref(this.database, `users/${userInfo.id}`), userInfo);
+        const userRef = database.ref(this.database, `users/${userInfo.id}`)
+        const snapshot = await database.get(userRef);
+        const prevUserInfo = snapshot.val() as UserInfo | null;
+
+        await database.update(
+            userRef,
+            Object.fromEntries(Object.entries(userInfo).filter(([key, value]) => {
+                if (prevUserInfo === null) return true;
+                // @ts-ignore
+                return value !== prevUserInfo[key]
+            }))
+        );
         return true;
     };
 
@@ -264,7 +275,7 @@ export class Core {
 
     // フレンドのログイン状況の監視
     watchFriendStatus(id: string, onChangeState: (userInfo: UserInfo) => void) {
-        const userRef = database.ref(this.database, `user/${id}`);
+        const userRef = database.ref(this.database, `users/${id}`);
 
         let isInit = false;
 
@@ -273,6 +284,7 @@ export class Core {
         }, 1000)
 
         database.onChildChanged(userRef, (snapshot, previousChildName) => {
+            console.log(snapshot, previousChildName)
             if (!isInit) return;
 
             if (previousChildName === 'isLogin') {
