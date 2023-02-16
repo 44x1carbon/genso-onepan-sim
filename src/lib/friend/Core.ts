@@ -445,14 +445,23 @@ export class N {
         data: any = undefined,
         onClick: (data: any, n: Notification) => void = () => { return }
     ) {
-        const n = new Notification(title, {
-            icon: "/logo.png",
-            body,
-        });
+        const ctrl = navigator.serviceWorker.controller;
+        console.log(ctrl);
+        ctrl?.postMessage({
+            type: "notification",
+            payload: {
+                title,
+                body
+            }
+        })
+        // const n = new Notification(title, {
+        //     icon: "/logo.png",
+        //     body,
+        // });
 
-        n.onclick = () => {
-            onClick(data, n);
-        }
+        // n.onclick = () => {
+        //     onClick(data, n);
+        // }
     }
 
     static async requestPermission() {
