@@ -3,6 +3,7 @@ export type WantedPartyDetails = {
     map: string;
     targetMonster: string;
     bookNums: string;
+    storyNums: string;
     time: Time;
     wantedNum: number;
     wantedJobs: (WantedJob)[];

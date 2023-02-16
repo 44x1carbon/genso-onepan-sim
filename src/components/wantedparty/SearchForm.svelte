@@ -9,7 +9,8 @@
 	let searchCondition = {
 		purpose: '',
 		map: '',
-		bookNum: '',
+		bookNums: '',
+		storyNums: '',
 		timeFrom: new Date(new Date().getTime() + 1000 * 60 * 60 * 9).toISOString().slice(0, -8)
 	};
 
@@ -35,6 +36,7 @@
 			<div class="form-controll space">
 				<select bind:value={searchCondition.purpose}>
 					<option value="">全て</option>
+					<option value="ストーリー攻略">ストーリー攻略</option>
 					<option value="タワー攻略">タワー攻略</option>
 					<option value="金策">金策</option>
 					<option value="レベル上げ">レベル上げ</option>
@@ -58,7 +60,15 @@
 			<div class="form-row">
 				<div class="form-label w-[7.4rem]">ブックNo</div>
 				<div class="form-controll space">
-					<input type="text" bind:value={searchCondition.bookNum} />
+					<input type="text" bind:value={searchCondition.bookNums} />
+				</div>
+			</div>
+		{/if}
+		{#if ['ストーリー攻略'].includes(searchCondition.purpose)}
+			<div class="form-row">
+				<div class="form-label w-[7.4rem]">ストーリーの番号</div>
+				<div class="form-controll space">
+					<input type="text" bind:value={searchCondition.storyNums} />
 				</div>
 			</div>
 		{/if}

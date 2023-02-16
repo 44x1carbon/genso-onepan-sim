@@ -65,12 +65,14 @@ export default () => {
             purpose?: string,
             map?: string,
             bookNums?: string,
+            storyNums?: string,
             timeFrom?: string
         }): Promise<WantedParty[]> {
             const whereConditions = ([] as QueryFieldFilterConstraint[]).concat(
                 condition && condition.purpose ? [where("details.purpose", "==", condition.purpose)] : [],
                 condition && condition.map ? [where("details.map", "==", condition.map)] : [],
                 condition && condition.bookNums ? where("details.bookNums", "in", condition.bookNums.split(",")) : [],
+                condition && condition.storyNums ? where("details.storyNums", "in", condition.storyNums.split(",")) : [],
                 condition && condition.timeFrom ? [where("details.time.from", ">=", new Date(condition.timeFrom))] : [where("details.time.from", ">=", dayjs().toDate())]
             );
             const q = query(wantedPartyRef, ...whereConditions, orderBy("details.time.from", "asc"), limit(100));

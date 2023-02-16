@@ -28,6 +28,7 @@
 		map: '',
 		targetMonster: '',
 		bookNums: '',
+		storyNums: '',
 		time: {
 			from: dayjs().tz().format('YYYY-MM-DDTHH:mm'),
 			to: 60
@@ -78,6 +79,11 @@
 				alert('目的マップを入力して下さい。');
 				return;
 			}
+		} else if (['ストーリー攻略'].includes(wantedData.purpose)) {
+			if (wantedData.storyNums === '') {
+				alert('攻略したいストーリー番号を入れて下さい。');
+				return;
+			}
 		}
 
 		if (wantedData.time.from === '') {
@@ -116,6 +122,7 @@
 			<div class="form-label w-[7.4rem]">目的</div>
 			<div class="form-controll space">
 				<select bind:value={wantedData.purpose} class="text-xs">
+					<option value="ストーリー攻略">ストーリー攻略</option>
 					<option value="タワー攻略">タワー攻略</option>
 					<option value="金策">金策</option>
 					<option value="レベル上げ">レベル上げ</option>
@@ -144,6 +151,19 @@
 						type="text"
 						placeholder="複数ある場合はカンマ区切りで記入して下さい。例) 1,2,3"
 						bind:value={wantedData.bookNums}
+					/>
+				</div>
+			</div>
+		{/if}
+		{#if ['ストーリー攻略'].includes(wantedData.purpose)}
+			<div class="form-row">
+				<div class="form-label w-[7.4rem]">ストーリーの番号</div>
+				<div class="form-controll space flex-1">
+					<input
+						class="text-xs w-full"
+						type="text"
+						placeholder="複数ある場合はカンマ区切りで記入して下さい。例) 4-1,4-2,4-3"
+						bind:value={wantedData.storyNums}
 					/>
 				</div>
 			</div>

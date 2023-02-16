@@ -161,7 +161,7 @@
 		@apply border -mt-px flex border border-l-0 border-r-0 border-well-read-900;
 	}
 
-	:global(input[type='text'], input[type='number']) {
+	:global(input[type='text'], input[type='number'], input[type='datetime-local']) {
 		@apply border indent-1 w-full bg-gray-200 text-gray-900 border-gray-900 rounded-sm;
 	}
 
