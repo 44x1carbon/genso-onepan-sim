@@ -190,7 +190,7 @@ export class Core {
 
         setTimeout(() => {
             isInit = true;
-        }, 100)
+        }, 1000)
 
         database.onChildAdded(friendRequestRef, async (snapshot) => {
             if (!isInit) return;
@@ -227,7 +227,7 @@ export class Core {
 
         setTimeout(() => {
             isInit = true;
-        }, 100)
+        }, 1000)
 
         database.onChildChanged(friendRequestRef, async (snapshot, previousChildName) => {
             if (!isInit) return;
@@ -268,7 +268,7 @@ export class Core {
 
         setTimeout(() => {
             isInit = true;
-        }, 100)
+        }, 1000)
 
         database.onChildChanged(userRef, (snapshot, previousChildName) => {
             if (!isInit) return;
@@ -290,7 +290,7 @@ export class Core {
 
         setTimeout(() => {
             isInit = true;
-        }, 100)
+        }, 1000)
 
         database.onChildAdded(chatRef, async (snapshot) => {
             if (!isInit) return;
