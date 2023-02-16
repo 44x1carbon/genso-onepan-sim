@@ -4,6 +4,7 @@
 	import setupFirebaseApp from '$lib/Firebase';
 	import { getUserInfo, saveUserInfo } from '$lib/friend/UserInfoStore';
 	import MobileDetect from 'mobile-detect';
+	import { browser } from '$app/environment';
 
 	let core: Core | undefined = undefined;
 	let userInfo: UserInfo | undefined = undefined;
@@ -15,9 +16,13 @@
 
 		const md = new MobileDetect(window.navigator.userAgent);
 
-		// if (['iOS', 'iPadOS', 'AndroidOS'].includes(md.os())) {
-		// 	loginUrl = 'https://prd-app.genso.game/svc/mail/login';
-		// }
+		if (['iOS', 'iPadOS'].includes(md.os())) {
+			loginUrl = 'https://apps.apple.com/app/id1635951038';
+		}
+
+		if (['AndroidOS'].includes(md.os())) {
+			loginUrl = 'https://play.google.com/store/apps/details?id=ai.metap.gensokishi';
+		}
 		// alert(N.isSupport());
 	});
 
@@ -61,6 +66,7 @@
 			});
 		});
 
+		userInfo = getUserInfo();
 		alert('ログインしました!');
 	}
 
@@ -71,13 +77,17 @@
 			...userInfo,
 			isLogin: false
 		});
+		userInfo = getUserInfo();
+		alert('ログアウトしました');
 	}
 </script>
 
-<button class="btn text-center justify-center" on:click={login}>ログイン</button>
-
-<button class="btn w-full mt-4" on:click={logout}>ログアウト</button>
+{#if browser}
+	{#if userInfo?.isLogin}
+		<button class="btn w-full" on:click={logout}>ログアウト</button>
+	{:else}
+		<button class="btn text-center justify-center w-full" on:click={login}>ログイン</button>
+	{/if}
+{/if}
 
 <a class="btn text-center justify-center mt-4" href={loginUrl} target="_blank">ゲーム起動</a>
-
-<button class="btn w-full mt-4" on:click={requestPermission}>通知</button>

@@ -283,12 +283,13 @@ export class Core {
             isInit = true;
         }, 1000)
 
-        database.onChildChanged(userRef, (snapshot, previousChildName) => {
-            console.log(snapshot, previousChildName)
+        database.onChildChanged(userRef, async (snapshot) => {
             if (!isInit) return;
 
-            if (previousChildName === 'isLogin') {
-                const userInfo = snapshot.val() as UserInfo;
+            if (snapshot.key === 'isLogin' && snapshot.ref.parent) {
+                const parentSnapshot = await database.get(snapshot.ref.parent.ref)
+                const userInfo = parentSnapshot.val() as UserInfo;
+                console.log(userInfo);
                 onChangeState(userInfo);
             }
         });
