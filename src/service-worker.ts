@@ -7,10 +7,10 @@ self.addEventListener("message", (event) => {
 
     switch (type) {
         case "notification": {
-            const { title, message } = payload as { title: string, message: string };
+            const { title, body } = payload as { title: string, body: string };
             event.waitUntil(
                 self.registration.showNotification(title, {
-                    body: message,
+                    body: body,
                     icon: "/logo.png",
                     tag: ''
                 })
