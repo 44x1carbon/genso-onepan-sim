@@ -18,7 +18,7 @@
 		// if (['iOS', 'iPadOS', 'AndroidOS'].includes(md.os())) {
 		// 	loginUrl = 'https://prd-app.genso.game/svc/mail/login';
 		// }
-		alert(N.isSupport());
+		// alert(N.isSupport());
 	});
 
 	async function requestPermission() {

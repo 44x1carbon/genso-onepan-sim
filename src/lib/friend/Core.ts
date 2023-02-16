@@ -10,6 +10,7 @@ export class Core {
         this.app = app;
         this.database = database.getDatabase(app)
         this.dbRef = database.ref(this.database)
+        N.setup();
     }
 
     async resetDB() {
@@ -431,6 +432,8 @@ export class Core {
 }
 
 export class N {
+    static ctrl: ServiceWorker | null = null;
+
     static isSupport() {
         return Notification !== undefined;
     }
@@ -439,15 +442,21 @@ export class N {
         return Notification.permission === "granted";
     }
 
+    static setup() {
+        if (this.ctrl !== null) return;
+
+        navigator.serviceWorker.ready.then((registration) => {
+            this.ctrl = registration.active
+        })
+    }
+
     static showNotification(
         title: string,
         body: string,
         data: any = undefined,
         onClick: (data: any, n: Notification) => void = () => { return }
     ) {
-        const ctrl = navigator.serviceWorker.controller;
-        console.log(ctrl);
-        ctrl?.postMessage({
+        this.ctrl?.postMessage({
             type: "notification",
             payload: {
                 title,

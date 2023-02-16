@@ -3,8 +3,7 @@ self.addEventListener("install", (event) => {
 })
 
 self.addEventListener("message", (event) => {
-    const { type, payload } = event;
-    console.log(type, payload);
+    const { type, payload } = event.data;
 
     switch (type) {
         case "notification": {
