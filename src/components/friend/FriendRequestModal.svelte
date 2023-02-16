@@ -51,7 +51,7 @@
 		/>
 	</svelte:fragment>
 	<svelte:fragment slot="controll">
-		<button class="btn nomal" on:click={close}>キャンセル</button>
+		<button class="btn normal" on:click={close}>キャンセル</button>
 		<button class="btn" on:click={send}>送信する</button>
 	</svelte:fragment>
 </Modal>

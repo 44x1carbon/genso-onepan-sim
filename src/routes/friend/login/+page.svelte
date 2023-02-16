@@ -83,10 +83,41 @@
 </script>
 
 {#if browser}
+	{#if userInfo}
+		<div class="md:w-[24rem] w-full flex flex-col">
+			<div class="heading text-sm p-1">
+				<span class="mr-4">ID:{userInfo.id}</span><span class="">{userInfo.name}</span>
+			</div>
+			<div class="panel flex flex-1">
+				<div class="flex-1">
+					<div class="flex gap-1 flex-wrap text-xs p-1">
+						{#each userInfo.jobs.filter(({ name }) => name !== '') as job}
+							<div class="bg-gray-200 rounded-sm px-1 text-gray-900 font-bold">
+								{job.name} Lv.{job.level}
+							</div>
+						{/each}
+					</div>
+					{#if userInfo.status.length !== 0}
+						<div class="flex gap-1 p-1 text-xs flex-wrap ">
+							{#each userInfo.status as status}
+								<span class="text-xs bg-gray-200 rounded-sm text-gray-900 px-1 font-bold"
+									>{status}</span
+								>
+							{/each}
+						</div>
+					{/if}
+					<div class="p-1">
+						<a class="btn w-full justify-center text-sm">ユーザー情報を編集</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	{/if}
+
 	{#if userInfo?.isLogin}
-		<button class="btn w-full" on:click={logout}>ログアウト</button>
+		<button class="btn w-full mt-4" on:click={logout}>ログアウト</button>
 	{:else}
-		<button class="btn text-center justify-center w-full" on:click={login}>ログイン</button>
+		<button class="btn text-center justify-center w-full mt-4" on:click={login}>ログイン</button>
 	{/if}
 {/if}
 

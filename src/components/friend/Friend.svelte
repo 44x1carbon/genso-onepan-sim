@@ -7,13 +7,26 @@
 	import { getLastSeenTime } from '$lib/friend/LastSeenTimeStore';
 	import { onMount } from 'svelte';
 	import setupFirebaseApp from '$lib/Firebase';
+	import { getMuteList, mute, unmute } from '$lib/friend/FriendMute';
 
 	export let userInfo: UserInfo;
+	let muteList = getMuteList();
 	let from: UserInfo = getUserInfo();
 	let unreadNum: number = 0;
 
 	function jobShortName(jobName: string) {
 		return JobData.find((job) => job.name === jobName)?.shortName ?? '';
+	}
+
+	function doMute() {
+		confirm(`${userInfo.name}さんをミュートしますか？ミュートすると通知が来なくなります。`);
+		mute(userInfo);
+		muteList = getMuteList();
+	}
+
+	function doUnmute() {
+		unmute(userInfo);
+		muteList = getMuteList();
 	}
 
 	onMount(async () => {
@@ -27,12 +40,21 @@
 	});
 </script>
 
-<div class="md:w-[24rem] w-full flex flex-col" class:opacity-50={!userInfo.isLogin}>
+<div
+	class="md:w-[24rem] w-full flex flex-col"
+	class:opacity-50={!userInfo.isLogin || muteList.includes(userInfo.id)}
+>
 	<div class="heading text-sm p-1">
-		<div class="bg-black inline-block bg-opacity-50 text-xs rounded-sm px-1">
-			<span class={(userInfo.isLogin ? 'text-green-500' : 'text-red-500') + ' mr-1'}>●</span
-			>{userInfo.isLogin ? 'ログイン' : '未ログイン'}
+		<div>
+			<div class="bg-black inline-block bg-opacity-50 text-xs rounded-sm px-1">
+				<span class={(userInfo.isLogin ? 'text-green-500' : 'text-red-500') + ' mr-1'}>●</span
+				>{userInfo.isLogin ? 'ログイン' : '未ログイン'}
+			</div>
+			<div class="bg-black inline-block bg-opacity-50 text-xs rounded-sm px-1">
+				{muteList.includes(userInfo.id) ? 'ミュート中' : ''}
+			</div>
 		</div>
+
 		<div>
 			<span class="mr-4">ID:{userInfo.id}</span><span class="">{userInfo.name}</span>
 		</div>
@@ -57,7 +79,7 @@
 		</div>
 		<div class="p-1">
 			<a
-				class="btn w-full text-xs h-full w-full leading-none items-center relative flex-col justify-center"
+				class="btn w-full text-xs w-full leading-none items-center relative flex-col justify-center h-[3rem]"
 				href={`/friend/chat/${userInfo.id}`}
 			>
 				<div class:h-4={unreadNum} class="w-full" />
@@ -71,6 +93,12 @@
 					>
 				{/if}
 			</a>
+
+			{#if muteList.includes(userInfo.id)}
+				<button class="btn text-xs h-[3rem] normal" on:click={doUnmute}>ミュート<br />解除</button>
+			{:else}
+				<button class="btn text-xs h-[1.5rem] normal" on:click={doMute}>ミュート</button>
+			{/if}
 		</div>
 	</div>
 </div>

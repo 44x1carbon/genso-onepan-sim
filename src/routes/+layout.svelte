@@ -196,7 +196,7 @@
 		@apply flex;
 	}
 
-	:global(.btn.nomal) {
+	:global(.btn.normal) {
 		@apply bg-gray-400 border-gray-900 text-gray-900;
 	}
 

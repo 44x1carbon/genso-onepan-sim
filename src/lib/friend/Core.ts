@@ -2,6 +2,7 @@ import { goto } from '$app/navigation';
 import type { FirebaseApp } from '@firebase/app';
 import * as database from '@firebase/database';
 import { v4 } from 'uuid';
+import { getMuteList } from './FriendMute';
 
 export class Core {
     app: FirebaseApp
@@ -210,6 +211,9 @@ export class Core {
             const userList = await this.getUserInfoList();
             const raw = snapshot.val() as FriendRequestRaw;
 
+            const muteList = getMuteList();
+            if (muteList.includes(raw.from)) return;
+
             const fromUserInfo = userList.find(user => user.id === raw.from);
             const toUserInfo = userList.find(user => user.id === raw.to);
 
@@ -251,6 +255,10 @@ export class Core {
             const userList = await this.getUserInfoList();
 
             const raw = snapshot.child(previousChildName).val() as FriendRequestRaw;
+
+            const muteList = getMuteList();
+            if (muteList.includes(raw.to)) return;
+
             if (raw.from === userInfo.id && raw.isApproved) {
 
                 const fromUserInfo = userList.find(user => user.id === raw.from);
@@ -289,7 +297,10 @@ export class Core {
             if (snapshot.key === 'isLogin' && snapshot.ref.parent) {
                 const parentSnapshot = await database.get(snapshot.ref.parent.ref)
                 const userInfo = parentSnapshot.val() as UserInfo;
-                console.log(userInfo);
+
+                const muteList = getMuteList();
+                if (muteList.includes(userInfo.id)) return;
+
                 onChangeState(userInfo);
             }
         });
@@ -312,6 +323,9 @@ export class Core {
 
             const userList = await this.getUserInfoList();
             const raw = snapshot.val() as ChatMessageRaw;
+
+            const muteList = getMuteList();
+            if (muteList.includes(raw.from)) return;
 
             const fromUserInfo = userList.find(user => user.id === raw.from);
             const toUserInfo = userList.find(user => user.id === raw.to);

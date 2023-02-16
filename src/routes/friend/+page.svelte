@@ -4,14 +4,21 @@
 	import { getUserInfo } from '$lib/friend/UserInfoStore';
 	import { onMount } from 'svelte';
 	import Friend from '$components/friend/Friend.svelte';
+	import { getMuteList } from '$lib/friend/FriendMute';
 
 	let friendList: UserInfo[] = [];
 
 	onMount(async () => {
 		const core = new Core(setupFirebaseApp());
-
+		const muteList = getMuteList();
 		friendList = (await core.getFriendList(getUserInfo())).sort((a, b) => {
-			return (b.isLogin ? 1 : 0) - (a.isLogin ? 1 : 0);
+			const isLoginNum = (b.isLogin ? 1 : 0) - (a.isLogin ? 1 : 0)
+			if (isLoginNum ! == 0) {
+				return isLoginNum;
+			} else {
+				return  (muteList.includes(b.id) ? 0 : 1) - (muteList.includes(a.id) ? 0 : 1) ;
+			}
+			
 		});		
 	});
 </script>
