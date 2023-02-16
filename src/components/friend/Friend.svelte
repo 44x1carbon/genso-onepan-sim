@@ -57,7 +57,7 @@
 		</div>
 		<div class="p-1">
 			<a
-				class="btn w-full text-xs h-full w-full leading-none items-center relative flex-col"
+				class="btn w-full text-xs h-full w-full leading-none items-center relative flex-col justify-center"
 				href={`/friend/chat/${userInfo.id}`}
 			>
 				<div class:h-4={unreadNum} class="w-full" />
