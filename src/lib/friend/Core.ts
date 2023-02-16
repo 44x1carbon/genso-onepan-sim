@@ -1,5 +1,7 @@
+import { goto } from '$app/navigation';
 import type { FirebaseApp } from '@firebase/app';
 import * as database from '@firebase/database';
+import { v4 } from 'uuid';
 
 export class Core {
     app: FirebaseApp
@@ -412,17 +414,23 @@ export class Core {
 
     // フレンド申請を受け取った際の通知を表示する
     showReciveFriendRequestNotification(friendRequest: FriendRequest) {
-        N.showNotification(`${friendRequest.from.name}さんから友達申請が来ています！`, friendRequest.message);
+        N.showNotification(`${friendRequest.from.name}さんから友達申請が来ています！`, friendRequest.message, friendRequest, (data) => {
+            goto("/friend/requests");
+        });
     }
 
     // フレンド申請が通った際の通知を表示する
     showApprovedFriendRequestNotification(friendRequest: FriendRequest) {
-        N.showNotification(`${friendRequest.to.name}さんが友達申請を許可しました！`, "");
+        N.showNotification(`${friendRequest.to.name}さんが友達申請を許可しました！`, "", friendRequest, (data) => {
+            goto("/friend");
+        });
     }
 
     // チェットメッセージを受け取った際の通知を表示する
     showReciveChatMessageNotification(chatMessage: ChatMessage) {
-        N.showNotification(`${chatMessage.from.name}さんからメッセージが届きました`, `${chatMessage.message}`);
+        N.showNotification(`${chatMessage.from.name}さんからメッセージが届きました`, `${chatMessage.message}`, chatMessage, (data) => {
+            goto(`/friend/chat/${data.from.id}`);
+        });
     }
 
     // 友人がログインした際の通知を表示する
@@ -450,27 +458,34 @@ export class N {
         })
     }
 
-    static showNotification(
+    static showNotification<T>(
         title: string,
         body: string,
-        data: any = undefined,
-        onClick: (data: any, n: Notification) => void = () => { return }
+        data: T | undefined = undefined,
+        onClick: (data: T) => void = () => { return }
     ) {
+        const id = v4();
+
         this.ctrl?.postMessage({
             type: "notification",
             payload: {
+                id,
                 title,
-                body
+                body,
+                data
             }
         })
-        // const n = new Notification(title, {
-        //     icon: "/logo.png",
-        //     body,
-        // });
 
-        // n.onclick = () => {
-        //     onClick(data, n);
-        // }
+        const listener = (event: MessageEvent) => {
+            const data = event.data;
+
+            if (id === data.id) {
+                onClick(data);
+                navigator.serviceWorker.removeEventListener("message", listener)
+            }
+        }
+
+        navigator.serviceWorker.addEventListener("message", listener);
     }
 
     static async requestPermission() {

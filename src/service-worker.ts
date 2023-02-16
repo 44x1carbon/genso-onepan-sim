@@ -7,17 +7,32 @@ self.addEventListener("message", (event) => {
 
     switch (type) {
         case "notification": {
-            const { title, body } = payload as { title: string, body: string };
+            const { title, body, data, id } = payload as { title: string, body: string, data: any, id: string };
             event.waitUntil(
                 self.registration.showNotification(title, {
                     body: body,
                     icon: "/logo.png",
-                    tag: ''
+                    tag: '',
+                    data: {
+                        ...data,
+                        id,
+                    }
                 })
             );
             break;
         }
     }
-
-
 })
+
+self.addEventListener('notificationclick', (event) => {
+    event.notification.close();
+
+    event.waitUntil(clients.matchAll({
+        includeUncontrolled: true,
+        type: "window"
+    }).then((clientList) => {
+        for (const client of clientList) {
+            client.postMessage(event.notification.data)
+        }
+    }));
+});
