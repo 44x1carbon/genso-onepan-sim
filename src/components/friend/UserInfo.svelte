@@ -6,8 +6,10 @@
 	import { getUserInfo } from '$lib/friend/UserInfoStore';
 
 	export let userInfo: UserInfo;
+	export let friendList: UserInfo[];
+
+	$: friendIdList = friendList.map((friend) => friend.id);
 	let from: UserInfo = getUserInfo();
-	console.log(userInfo);
 
 	function jobShortName(jobName: string) {
 		return JobData.find((job) => job.name === jobName)?.shortName ?? '';
@@ -46,11 +48,13 @@
 				{userInfo.message}
 			</div>
 		</div>
-		<div class="p-1">
-			<button
-				class="btn w-full text-xs flex h-full w-full leading-none"
-				on:click={openFriendRequestModal}>友達<br />申請</button
-			>
-		</div>
+		{#if !friendIdList.includes(userInfo.id)}
+			<div class="p-1">
+				<button
+					class="btn w-full text-xs flex h-full w-full leading-none"
+					on:click={openFriendRequestModal}>友達<br />申請</button
+				>
+			</div>
+		{/if}
 	</div>
 </div>

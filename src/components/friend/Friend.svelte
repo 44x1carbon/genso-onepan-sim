@@ -57,12 +57,14 @@
 		</div>
 		<div class="p-1">
 			<a
-				class="btn w-full text-xs h-full w-full leading-none items-center relative"
+				class="btn w-full text-xs h-full w-full leading-none items-center relative flex-col"
 				href={`/friend/chat/${userInfo.id}`}
 			>
+				<div class:h-4={unreadNum} class="w-full" />
 				チャット
 
 				{#if unreadNum}
+					<div class:h-5={unreadNum} class="w-full" />
 					<span
 						class="absolute bottom-1 text-xs left-0 right-0 bg-gray-900 bg-opacity-70 w-fit rounded mx-auto px-1 text-white"
 						>未読:{unreadNum}</span

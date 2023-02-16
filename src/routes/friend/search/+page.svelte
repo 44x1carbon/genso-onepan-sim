@@ -1,96 +1,47 @@
 <script lang="ts">
 	import setupFirebaseApp from '$lib/Firebase';
-	import { Core, type UserInfo, N } from '$lib/friend/Core';
+	import { Core, type UserInfo } from '$lib/friend/Core';
 	import UserInfoComponent from '$components/friend/UserInfo.svelte';
 	import UserInfoSearchForm from '$components/friend/UserInfoSearchForm.svelte';
 	import { onMount } from 'svelte';
 	import type { SearchCondition } from '$lib/friend/SearchCondition';
-	import { saveUserInfo } from '$lib/friend/UserInfoStore';
-
-	let userInfo1: UserInfo = {
-		id: 'abcd',
-		name: '太郎',
-		jobs: [
-			{ name: 'ファイター', level: 10 },
-			{ name: 'ガーディアン', level: 13 },
-			{ name: 'ビショップ', level: 13 }
-		],
-		status: ['レベリング', 'ドラゴンタワー中級'],
-		isLogin: true,
-		message: 'ほげほげ'
-	};
-
-	let userInfo2: UserInfo = {
-		id: 'efgh',
-		name: '次郎',
-		jobs: [
-			{ name: 'ファイター', level: 10 },
-			{ name: 'ガーディアン', level: 13 },
-			{ name: 'ビショップ', level: 13 }
-		],
-		status: ['レベリング'],
-		isLogin: true,
-		message: 'ほげほげ'
-	};
+	import { saveUserInfo, getUserInfo } from '$lib/friend/UserInfoStore';
 
 	let userInfoList: UserInfo[] = [];
 	let _userInfoList: UserInfo[] = [];
+	let core: Core | undefined = undefined;
+	let userInfo: UserInfo | undefined = undefined;
+	let friendList: UserInfo[] = [];
 
-	function search(condition: SearchCondition) {
+	async function search(condition: SearchCondition) {
+		userInfoList = (await core?.getUserInfoList()) ?? [];
 		_userInfoList = [
-			...userInfoList.filter((userInfo) => {
-				if (condition.id !== '') {
-					return condition.id === userInfo.id;
-				}
+			...userInfoList
+				.filter(({ id }) => id !== userInfo?.id)
+				.filter((userInfo) => {
+					if (condition.id !== '') {
+						return condition.id === userInfo.id;
+					}
 
-				console.log(userInfo, condition.status);
-
-				return (
-					userInfo.jobs.some((job) => {
-						return condition.level.from <= job.level && job.level <= condition.level.to;
-					}) && (condition.status ? userInfo.status.includes(condition.status) : true)
-				);
-			})
+					return (
+						userInfo.jobs.some((job) => {
+							return condition.level.from <= job.level && job.level <= condition.level.to;
+						}) && (condition.status ? userInfo.status.includes(condition.status) : true)
+					);
+				})
 		];
 	}
 
 	onMount(async () => {
-		const core = new Core(setupFirebaseApp());
+		core = new Core(setupFirebaseApp());
+		userInfo = getUserInfo();
 
 		userInfoList = await core.getUserInfoList();
-		_userInfoList = [...userInfoList];
+		_userInfoList = [...userInfoList].filter(({ id }) => id !== userInfo?.id);
 
-		// await core.resetDB();
-
-		// await core.registerUserInfo(userInfo1);
-		// await core.registerUserInfo(userInfo2);
-
-		// core.addListenerApprovedFriendRequest(userInfo1, (friendRequest) => {
-		// 	console.log('太郎', 'approved', friendRequest);
-		// 	core.showApprovedFriendRequestNotification(friendRequest);
-		// });
-		// core.addListenerApprovedFriendRequest(userInfo2, (friendRequest) => {
-		// 	console.log('次郎', 'approved', friendRequest);
-		// 	core.showApprovedFriendRequestNotification(friendRequest);
-		// });
-
-		// core.addListenerReciveFriendRequest(userInfo1, (friendRequest) => {
-		// 	console.log('太郎', 'recive', friendRequest);
-		// 	core.showReciveFriendRequestNotification(friendRequest);
-		// });
-		// core.addListenerReciveFriendRequest(userInfo2, async (friendRequest) => {
-		// 	console.log('次郎', 'recive', friendRequest);
-		// 	core.showReciveFriendRequestNotification(friendRequest);
-		// 	await core.apploveFriendRequest(friendRequest);
-
-		// 	// console.log('太郎', 'friendList', await core.getFriendList(userInfo1));
-		// 	// console.log('次郎', 'friendList', await core.getFriendList(userInfo2));
-		// });
-
-		// await core.sendFriendRequest(userInfo2.id, userInfo1, 'aaaa'		
-
-		// console.log('太郎', 'friendList', await core.getFriendList(userInfo1));
-		// console.log('次郎', 'friendList', await core.getFriendList(userInfo2));
+		if (userInfo) {
+			friendList = await core.getFriendList(userInfo);
+		}
 	});
 
 	let selectUser: UserInfo | undefined = undefined;
@@ -101,16 +52,16 @@
 	}
 </script>
 
-<select bind:value={selectUser} on:change={changeUser}>
+<!-- <select bind:value={selectUser} on:change={changeUser}>
 	{#each userInfoList as userInfo}
 		<option value={userInfo}>{userInfo.name}</option>
 	{/each}
-</select>
+</select> -->
 
 <UserInfoSearchForm onClickSearch={(c) => search(c)} />
 
 <div class="flex flex-wrap gap-2 md:w-[74rem] md:mx-auto">
 	{#each _userInfoList as userInfo}
-		<UserInfoComponent {userInfo} />
+		<UserInfoComponent {userInfo} {friendList}/>
 	{/each}
 </div>

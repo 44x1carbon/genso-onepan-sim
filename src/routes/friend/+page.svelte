@@ -12,8 +12,7 @@
 
 		friendList = (await core.getFriendList(getUserInfo())).sort((a, b) => {
 			return (b.isLogin ? 1 : 0) - (a.isLogin ? 1 : 0);
-		});
-		console.log(friendList);
+		});		
 	});
 </script>
 
