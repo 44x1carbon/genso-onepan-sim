@@ -61,13 +61,18 @@
 		<div class="border shadow border-well-read-700 bg-chocolate-900 panel">
 			<div class="form-row">
 				<div class="form-label w-28 ">ID</div>
-				<div class="form-controll space flex-1">
-					<input
-						type="text"
-						class="text-sm"
-						bind:value={userInfo.id}
-						placeholder="ゲーム内のIDを入力してください 例) abcd"
-					/>
+				<div class="form-controll space flex-1 flex-col">
+					<div>
+						<input
+							type="text"
+							class="text-sm"
+							bind:value={userInfo.id}
+							placeholder="ゲーム内のIDを入力してください 例) abcd"
+							maxlength="4"
+						/>
+					</div>
+					<div class="text-xs">※ゲーム内のIDを入力して下さい</div>
+					<div class="text-xs">※IDを変えると友達が消えるので一度設定したら変えないでください。</div>
 				</div>
 			</div>
 			<div class="form-row">
