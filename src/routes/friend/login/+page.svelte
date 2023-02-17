@@ -9,6 +9,7 @@
 	let core: Core | undefined = undefined;
 	let userInfo: UserInfo | undefined = undefined;
 	let loginUrl: string = 'https://genso.game/ja/';
+	let isNotification = false;
 
 	onMount(async () => {
 		core = new Core(setupFirebaseApp());
@@ -23,7 +24,6 @@
 		if (['AndroidOS'].includes(md.os())) {
 			loginUrl = 'https://play.google.com/store/apps/details?id=ai.metap.gensokishi';
 		}
-		// alert(N.isSupport());
 	});
 
 	async function requestPermission() {
@@ -39,6 +39,14 @@
 			...userInfo,
 			isLogin: true
 		});
+
+		userInfo = getUserInfo();
+		await setupNotification();
+		alert('ログインしました!');
+	}
+
+	async function setupNotification() {
+		if (core === undefined || userInfo === undefined) return;
 
 		core.addListenerReciveChatMessage(userInfo, (chatMessage) => {
 			core?.showReciveChatMessageNotification(chatMessage);
@@ -66,8 +74,7 @@
 			});
 		});
 
-		userInfo = getUserInfo();
-		alert('ログインしました!');
+		isNotification = true;
 	}
 
 	async function logout() {
@@ -84,9 +91,15 @@
 
 {#if browser}
 	{#if userInfo}
-		<div class="md:w-[24rem] w-full flex flex-col">
+		<div class="w-full flex flex-col">
 			<div class="heading text-sm p-1">
-				<span class="mr-4">ID:{userInfo.id}</span><span class="">{userInfo.name}</span>
+				<div class="bg-black inline-block bg-opacity-50 text-xs rounded-sm px-1">
+					<span class={(userInfo.isLogin ? 'text-green-500' : 'text-red-500') + ' mr-1'}>●</span
+					>{userInfo.isLogin ? 'ログイン' : '未ログイン'}
+				</div>
+				<div>
+					<span class="mr-4">ID:{userInfo.id}</span><span class="">{userInfo.name}</span>
+				</div>
 			</div>
 			<div class="panel flex flex-1">
 				<div class="flex-1">
@@ -114,11 +127,29 @@
 		</div>
 	{/if}
 
-	{#if userInfo?.isLogin}
-		<button class="btn w-full mt-4" on:click={logout}>ログアウト</button>
-	{:else}
-		<button class="btn text-center justify-center w-full mt-4" on:click={login}>ログイン</button>
-	{/if}
-{/if}
+	<div class="bg-black bg-opacity-50 border border-black mt-4 rounded-sm overflow-hidden">
+		<div class="p-2 font-bold bg-gray-500">ログイン・ログアウト</div>
+		<div class="p-2 ">
+			{#if userInfo?.isLogin}
+				<button class="btn w-full" on:click={logout}>ログアウト</button>
+			{:else}
+				<button class="btn text-center justify-center w-full" on:click={login}>ログイン</button>
+				<div class="p-1 text-xs">ログインすると通知が受け取れる様になります。</div>
+			{/if}
 
-<a class="btn text-center justify-center mt-4" href={loginUrl} target="_blank">ゲーム起動</a>
+			<a class="btn text-center justify-center mt-2" href={loginUrl} target="_blank">ゲーム起動</a>
+
+			<div class="p-2 bg-white bg-opacity-20 rounded-sm mt-4 text-sm">
+				このページをブックマークやホームに設置すると便利です！<br />
+				・iPhoneでホームに設置する方法は<a
+					href="https://www.ipodwave.com/iphone/howto/website_home.html"
+					class="underline text-blue-500">こちら</a
+				>(外部サイト)<br />
+				・Androidでホームに設置する方法は<a
+					href="https://sp7pc.com/google/android/61065"
+					class="underline text-blue-500">こちら</a
+				>(外部サイト)
+			</div>
+		</div>
+	</div>
+{/if}

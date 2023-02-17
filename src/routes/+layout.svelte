@@ -33,7 +33,7 @@
 					routeId: $page['route'].id
 				});
 			});
-		} catch {}
+		} catch {}		
 	});
 </script>
 

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { getUserInfo } from '$lib/friend/UserInfoStore';
+	import { getUserInfo, saveUserInfo } from '$lib/friend/UserInfoStore';
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
@@ -8,11 +8,12 @@
 	import setupFirebaseApp from '$lib/Firebase';
 
 	let nav: { label: string; href: string; badge?: number }[] = [
-		{ label: 'ログイン', href: '/friend/login' },
+		{ label: 'ログ<br>イン', href: '/friend/login' },
 		{ label: '友達<br>一覧', href: '/friend' },
-		{ label: 'ユーザー<br>検索', href: '/friend/search' },
+		{ label: 'ユーザ<br>検索', href: '/friend/search' },
 		{ label: '申請<br>一覧', href: '/friend/requests' },
-		{ label: 'ユーザー<br>編集', href: '/friend/edituser' }
+		{ label: 'ユーザ<br>編集', href: '/friend/edituser' },
+		{ label: '使い方', href: '/friend/guide' }
 	];
 
 	let hasUserInfo = false;
