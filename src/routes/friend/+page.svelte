@@ -12,14 +12,13 @@
 		const core = new Core(setupFirebaseApp());
 		const muteList = getMuteList();
 		friendList = (await core.getFriendList(getUserInfo())).sort((a, b) => {
-			const isLoginNum = (b.isLogin ? 1 : 0) - (a.isLogin ? 1 : 0)
-			if (isLoginNum ! == 0) {
+			const isLoginNum = (b.isLogin ? 1 : 0) - (a.isLogin ? 1 : 0);
+			if (isLoginNum !== 0) {
 				return isLoginNum;
 			} else {
-				return  (muteList.includes(b.id) ? 0 : 1) - (muteList.includes(a.id) ? 0 : 1) ;
+				return (muteList.includes(b.id) ? 0 : 1) - (muteList.includes(a.id) ? 0 : 1);
 			}
-			
-		});		
+		});
 	});
 </script>
 
