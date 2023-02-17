@@ -44,6 +44,12 @@
 	});
 </script>
 
+<svelte:head>
+	<title>IGNIS TOOLS - フレンド機能(α版)</title>
+	<meta name="description" content="元素騎士オンラインのフレンドを管理できるツールです。" />
+	<meta name="keywords" content="元素騎士オンライン,元素騎士,フレンド" />
+</svelte:head>
+
 <div>
 	<div class="text-xs flex mb-4 md:w-[74rem] md:mx-auto w-full">
 		{#each nav as { label, href, badge }}
