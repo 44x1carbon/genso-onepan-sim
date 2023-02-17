@@ -4,7 +4,7 @@
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
-	import { Core } from '$lib/friend/Core';
+	import { Core, N, type UserInfo } from '$lib/friend/Core';
 	import setupFirebaseApp from '$lib/Firebase';
 
 	let nav: { label: string; href: string; badge?: number }[] = [
@@ -17,8 +17,12 @@
 	];
 
 	let hasUserInfo = false;
+	let core: Core | undefined = undefined;
+	let userInfo: UserInfo | undefined = undefined;
 
 	onMount(() => {
+		core = new Core(setupFirebaseApp());
+		userInfo = getUserInfo();
 		const id = setInterval(async () => {
 			if (browser && !['/friend/edituser', '/friend/guide'].includes($page['route'].id ?? '')) {
 				const userInfo = getUserInfo();
@@ -41,7 +45,43 @@
 				nav[3].badge = oneselfRequests.length;
 			}
 		}, 100);
+		setupNotification();
 	});
+
+	async function requestPermission() {
+		await N.requestPermission();
+		N.showNotification('通知を受け取れる状態です', '');
+	}
+
+	async function setupNotification() {
+		await requestPermission();
+		if (core === undefined || userInfo === undefined) return;
+
+		core.addListenerReciveChatMessage(userInfo, (chatMessage) => {
+			core?.showReciveChatMessageNotification(chatMessage);
+		});
+
+		core.addListenerReciveFriendRequest(userInfo, (friendRequest) => {
+			core?.showReciveFriendRequestNotification(friendRequest);
+		});
+
+		core.addListenerApprovedFriendRequest(userInfo, (friendRequest) => {
+			core?.showApprovedFriendRequestNotification(friendRequest);
+			core?.watchFriendStatus(friendRequest.from.id, (_userInfo) => {
+				if (_userInfo.isLogin) {
+					core?.showLoginFriendNotification(_userInfo);
+				}
+			});
+		});
+
+		(await core.getFriendList(userInfo)).forEach((friend) => {
+			core?.watchFriendStatus(friend.id, (_userInfo) => {
+				if (_userInfo.isLogin) {
+					core?.showLoginFriendNotification(_userInfo);
+				}
+			});
+		});
+	}
 </script>
 
 <svelte:head>

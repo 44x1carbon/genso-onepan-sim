@@ -26,12 +26,6 @@
 		}
 	});
 
-	async function requestPermission() {
-		await N.requestPermission();
-		N.showNotification('aaaa', 'aaaa');
-		alert('通知を送信しました');
-	}
-
 	async function login() {
 		if (core === undefined || userInfo === undefined) return;
 		await core.login(userInfo);
@@ -41,40 +35,7 @@
 		});
 
 		userInfo = getUserInfo();
-		await setupNotification();
 		alert('ログインしました!');
-	}
-
-	async function setupNotification() {
-		if (core === undefined || userInfo === undefined) return;
-
-		core.addListenerReciveChatMessage(userInfo, (chatMessage) => {
-			core?.showReciveChatMessageNotification(chatMessage);
-		});
-
-		core.addListenerReciveFriendRequest(userInfo, (friendRequest) => {
-			core?.showReciveFriendRequestNotification(friendRequest);
-		});
-
-		core.addListenerApprovedFriendRequest(userInfo, (friendRequest) => {
-			core?.showApprovedFriendRequestNotification(friendRequest);
-			core?.watchFriendStatus(friendRequest.from.id, (_userInfo) => {
-				if (_userInfo.isLogin) {
-					core?.showLoginFriendNotification(_userInfo);
-				}
-			});
-		});
-
-		(await core.getFriendList(userInfo)).forEach((friend) => {
-			console.log(friend);
-			core?.watchFriendStatus(friend.id, (_userInfo) => {
-				if (_userInfo.isLogin) {
-					core?.showLoginFriendNotification(_userInfo);
-				}
-			});
-		});
-
-		isNotification = true;
 	}
 
 	async function logout() {
