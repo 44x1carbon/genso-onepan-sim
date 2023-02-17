@@ -20,7 +20,7 @@
 
 	onMount(() => {
 		const id = setInterval(async () => {
-			if (browser && $page['route'].id !== '/friend/edituser') {
+			if (browser && !['/friend/edituser', '/friend/guide'].includes($page['route'].id ?? '')) {
 				const userInfo = getUserInfo();
 				if (userInfo === undefined) {
 					goto('/friend/edituser');
