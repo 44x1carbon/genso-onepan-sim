@@ -32,6 +32,10 @@
 	});
 
 	async function registerUserInfo() {
+		if (userInfo.id === '') {
+			alert('IDは必須です。ゲーム内のIDを入力してください。');
+			return;
+		}
 		if (userInfo.name === '') {
 			alert('ユーザー名は必須です。ユーザー名を入力してください。');
 			return;
@@ -58,7 +62,12 @@
 			<div class="form-row">
 				<div class="form-label w-28 ">ID</div>
 				<div class="form-controll space flex-1">
-					<input type="text" class="text-sm" bind:value={userInfo.id} placeholder="例) abcd" />
+					<input
+						type="text"
+						class="text-sm"
+						bind:value={userInfo.id}
+						placeholder="ゲーム内のIDを入力してください 例) abcd"
+					/>
 				</div>
 			</div>
 			<div class="form-row">
