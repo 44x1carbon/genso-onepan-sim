@@ -211,8 +211,8 @@ export class Core {
             const userList = await this.getUserInfoList();
             const raw = snapshot.val() as FriendRequestRaw;
 
-            const muteList = getMuteList();
-            if (muteList.includes(raw.from)) return;
+            // const muteList = getMuteList();
+            // if (muteList.includes(raw.from)) return;
 
             const fromUserInfo = userList.find(user => user.id === raw.from);
             const toUserInfo = userList.find(user => user.id === raw.to);
@@ -256,8 +256,8 @@ export class Core {
 
             const raw = snapshot.child(previousChildName).val() as FriendRequestRaw;
 
-            const muteList = getMuteList();
-            if (muteList.includes(raw.to)) return;
+            // const muteList = getMuteList();
+            // if (muteList.includes(raw.to)) return;
 
             if (raw.from === userInfo.id && raw.isApproved) {
 
@@ -298,8 +298,8 @@ export class Core {
                 const parentSnapshot = await database.get(snapshot.ref.parent.ref)
                 const userInfo = parentSnapshot.val() as UserInfo;
 
-                const muteList = getMuteList();
-                if (muteList.includes(userInfo.id)) return;
+                // const muteList = getMuteList();
+                // if (muteList.includes(userInfo.id)) return;
 
                 onChangeState(userInfo);
             }
@@ -324,8 +324,8 @@ export class Core {
             const userList = await this.getUserInfoList();
             const raw = snapshot.val() as ChatMessageRaw;
 
-            const muteList = getMuteList();
-            if (muteList.includes(raw.from)) return;
+            // const muteList = getMuteList();
+            // if (muteList.includes(raw.from)) return;
 
             const fromUserInfo = userList.find(user => user.id === raw.from);
             const toUserInfo = userList.find(user => user.id === raw.to);
@@ -396,7 +396,7 @@ export class Core {
                 ),
                 ...(chatMessageMap[to] ? Object.entries(chatMessageMap[to]) : [])
             ]
-                .filter(([_, chatMessageRaw]) =>  (chatMessageRaw.from === from.id && chatMessageRaw.to === to) || (chatMessageRaw.from === to && chatMessageRaw.to === from.id))
+                .filter(([_, chatMessageRaw]) => (chatMessageRaw.from === from.id && chatMessageRaw.to === to) || (chatMessageRaw.from === to && chatMessageRaw.to === from.id))
                 .sort((a, b) => a[1].sendAt - b[1].sendAt)
                 .map(([key, raw]) => {
                     const fromUserInfo = userList.find(user => user.id === raw.from);
