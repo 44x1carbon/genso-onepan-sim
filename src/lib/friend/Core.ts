@@ -396,7 +396,7 @@ export class Core {
                 ),
                 ...(chatMessageMap[to] ? Object.entries(chatMessageMap[to]) : [])
             ]
-                .filter(([_, chatMessageRaw]) => [from.id, to].includes(chatMessageRaw.from) || [from.id, to].includes(chatMessageRaw.to))
+                .filter(([_, chatMessageRaw]) =>  (chatMessageRaw.from === from.id && chatMessageRaw.to === to) || (chatMessageRaw.from === to && chatMessageRaw.to === from.id))
                 .sort((a, b) => a[1].sendAt - b[1].sendAt)
                 .map(([key, raw]) => {
                     const fromUserInfo = userList.find(user => user.id === raw.from);

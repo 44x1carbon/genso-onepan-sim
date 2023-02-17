@@ -62,7 +62,7 @@
 	<div class="panel flex flex-1">
 		<div class="flex-1">
 			<div class="flex gap-1 flex-wrap text-xs p-1">
-				{#each userInfo.jobs as job}
+				{#each userInfo.jobs.filter(({ name }) => name !== '') as job}
 					<span class="bg-gray-200 rounded-sm px-1 text-gray-900 font-bold"
 						>{jobShortName(job.name)} L{job.level}</span
 					>

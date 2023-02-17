@@ -80,7 +80,7 @@
 
 						<div>
 							<div class="flex gap-1 flex-wrap text-xs p-1">
-								{#each friendRequest.from.jobs as job}
+								{#each friendRequest.from.jobs.filter(({ name }) => name !== '') as job}
 									<span class="bg-gray-200 rounded-sm px-1 text-gray-900 font-bold"
 										>{jobShortName(job.name)} L{job.level}</span
 									>
