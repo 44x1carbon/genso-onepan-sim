@@ -53,6 +53,12 @@
 	}
 </script>
 
+<svelte:head>
+	<title>IGNIS TOOLS - スキルシミュレーター(α版)</title>
+	<meta name="description" content="元素騎士オンラインのスキルシミュレーターです。" />
+	<meta name="keywords" content="元素騎士オンライン,元素騎士,スキルシミュレーター" />
+</svelte:head>
+
 <div class="mx-auto border-4 rounded-sm bg-black border-gray-500 w-full md:w-[74rem] md:mx-auto">
 	<div class="bg-gray-500 p-2 font-bold">
 		<select bind:value={selectJob} class="mr-2">
