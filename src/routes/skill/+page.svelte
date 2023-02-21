@@ -3,7 +3,8 @@
 	import JobData from '../../JobData';
 	import SkillTreeData from '../../SkillTreeData';
 
-	let selectJob = 'アサシン';
+	let selectJob = 'ファイター';
+	let prevSelectJob = 'ファイター';
 	$: mapData = selectJob ? mapping(SkillTreeData[selectJob]) : [1];
 	let mapLevelData = Object.entries(SkillTreeData[selectJob].skills).reduce((p, [id, _]) => {
 		p[id] = 0;
@@ -11,11 +12,20 @@
 		return p;
 	}, {} as { [id: string]: number });
 	$: {
-		mapLevelData = Object.entries(SkillTreeData[selectJob].skills).reduce((p, [id, _]) => {
-			p[id] = 0;
+		if (selectJob !== prevSelectJob) {
+			mapLevelData = Object.entries(SkillTreeData[selectJob].skills).reduce((p, [id, _]) => {
+				p[id] = 0;
 
-			return p;
-		}, {} as { [id: string]: number });
+				return p;
+			}, {} as { [id: string]: number });
+			prevSelectJob = selectJob;
+		}
+
+		Object.entries(mapLevelData).filter(([id, level]) => {
+			if (level !== 0 && !canLearn(id, mapLevelData)) {
+				mapLevelData[id] = 0;
+			}
+		});
 	}
 
 	$: needLevel = Object.values(mapLevelData).reduce((p, c) => p + c, 0);
