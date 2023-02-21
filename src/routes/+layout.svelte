@@ -13,7 +13,8 @@
 	let nav: { label: string; href: string }[] = [
 		{ label: 'ダメージ<br>計算', href: '/' },
 		{ label: '時給<br>計算', href: '/hourly' },
-		{ label: 'PT募集<br>掲示板', href: '/wantedparty' }
+		{ label: 'PT募集<br>掲示板', href: '/wantedparty' },
+		{ label: 'スキル<br>シミュ', href: '/skill' }
 		// { label: 'フレンド<br>機能', href: '/friend' }
 	];
 
