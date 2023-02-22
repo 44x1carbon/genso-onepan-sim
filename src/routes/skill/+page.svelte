@@ -1,7 +1,10 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { mapping } from '$lib/skill/Mapping';
+	import { onMount } from 'svelte';
 	import JobData from '../../JobData';
 	import SkillTreeData from '../../SkillTreeData';
+	import ClipboardJS from 'clipboard';
 
 	let selectJob = 'ファイター';
 	let prevSelectJob = 'ファイター';
@@ -51,6 +54,53 @@
 	function decrement(id: string) {
 		mapLevelData[id]--;
 	}
+
+	function parse(url: string) {
+		const _url = new URL(url);
+
+		selectJob = _url.searchParams.get('job') ?? 'ファイター';
+		mapLevelData = Object.entries(SkillTreeData[selectJob].skills).reduce((p, [id, _]) => {
+			p[id] = 0;
+
+			return p;
+		}, {} as { [id: string]: number });
+
+		const skillTree = SkillTreeData[selectJob];
+		(_url.searchParams.get('skills') ?? '').split('_').forEach((t) => {
+			const [hash, level] = t.split('*');
+			console.log(hash, level);
+
+			const [id] = Object.entries(skillTree.skills).find(([_, skill]) => skill.hash === hash) ?? [];
+
+			if (id) {
+				mapLevelData[id] = parseInt(level);
+			}
+		});
+	}
+	let isMount = false;
+	$: hash = Object.entries(mapLevelData)
+		.filter(([_, level]) => level !== 0)
+		.map(([id, level]) => `${SkillTreeData[selectJob].skills[id].hash}*${level}`)
+		.join('_');
+	let shareUrl = '';
+	$: {
+		if (browser && isMount) {
+			const url = new URL(window.location.href);
+
+			url.searchParams.set('job', selectJob);
+			url.searchParams.set('skills', hash);
+			shareUrl = url.href;
+		}
+	}
+	function copyShareUrl() {
+		alert('共有URLをコピーしました！');
+	}
+
+	onMount(() => {
+		parse(location.href);
+		new ClipboardJS('#CopyShareUrlBtn');
+		isMount = true;
+	});
 </script>
 
 <svelte:head>
@@ -58,6 +108,22 @@
 	<meta name="description" content="元素騎士オンラインのスキルシミュレーターです。" />
 	<meta name="keywords" content="元素騎士オンライン,元素騎士,スキルシミュレーター" />
 </svelte:head>
+
+<div class="mx-auto border-4 border-gray-500 rounded-sm w-full md:w-[74rem] md:mx-auto mb-4">
+	<div class="flex border-gray-500 border-b-4">
+		<div class="bg-gray-500 px-2 flex items-center">共有URL</div>
+		<div class="bg-black flex-1 px-2 flex items-center">{shareUrl}</div>
+		<div class="bg-gray-500 px-2">
+			<button
+				class="btn w-full"
+				id="CopyShareUrlBtn"
+				data-clipboard-text={shareUrl}
+				on:click={copyShareUrl}>コピー</button
+			>
+		</div>
+	</div>
+	<div class="text-sm p-2">このURLを送る事で考えたスキル構成を共有できます！</div>
+</div>
 
 <div class="mx-auto border-4 rounded-sm bg-black border-gray-500 w-full md:w-[74rem] md:mx-auto">
 	<div class="bg-gray-500 p-2 font-bold">
