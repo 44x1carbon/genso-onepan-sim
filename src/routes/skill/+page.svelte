@@ -58,6 +58,7 @@
 	function parse(url: string) {
 		const _url = new URL(url);
 
+		prevSelectJob = _url.searchParams.get('job') ?? 'ファイター';
 		selectJob = _url.searchParams.get('job') ?? 'ファイター';
 		mapLevelData = Object.entries(SkillTreeData[selectJob].skills).reduce((p, [id, _]) => {
 			p[id] = 0;
@@ -112,7 +113,11 @@
 <div class="mx-auto border-4 border-gray-500 rounded-sm w-full md:w-[74rem] md:mx-auto mb-4">
 	<div class="flex border-gray-500 border-b-4">
 		<div class="bg-gray-500 px-2 flex items-center">共有URL</div>
-		<div class="bg-black flex-1 px-2 flex items-center">{shareUrl}</div>
+		<div
+			class="bg-black flex-1 px-2 flex items-center text-ellipsis overflow-hidden whitespace-nowrap"
+		>
+			{shareUrl}
+		</div>
 		<div class="bg-gray-500 px-2">
 			<button
 				class="btn w-full"
