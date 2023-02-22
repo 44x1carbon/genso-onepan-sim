@@ -68,7 +68,7 @@
 </header>
 
 <main class="bg-gray-900 min-h-screen border-box p-4 pb-24">
-	<div class="border-2 border-gray-700 rounded mx-auto p-2 bg-gray-700 md:w-[74rem]">
+	<div class="border-2 border-gray-700 rounded mx-auto p-2 bg-gray-700 md:w-[74rem] mb-4">
 		<div class="font-bold">お知らせ</div>
 		<ul class="flex flex-col gap-1  text-sm leading-tight list-[square] pl-6">
 			<li>
