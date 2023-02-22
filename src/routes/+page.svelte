@@ -9,7 +9,7 @@
 	import { browser } from '$app/environment';
 
 	let skills: Skill[] = [];
-	let levels: { [skillName: string]: SkillLevel  } = {};
+	let levels: { [skillName: string]: SkillLevel } = {};
 	let status: Status = {
 		offensivePower: 0,
 		magicalPower: 0,
@@ -51,7 +51,7 @@
 		if (json) {
 			status = JSON.parse(json);
 		}
-		isInit = true;		
+		isInit = true;
 	});
 </script>
 
@@ -65,7 +65,7 @@
 	<div class="text-2xl font-bold">ダメージ計算機</div>
 </div>
 <div
-	class="border-2 rounded mx-auto p-2 my-2 border-yellow-700 bg-yellow-500 text-black md:w-[74rem]"
+	class="border-2 rounded mx-auto p-2 my-2 border-yellow-700 bg-yellow-500 text-black md:w-[74rem] text-xs"
 >
 	公式や解析で正しい計算式が出ていない為、使用している計算式は開発者の独自検証によるものです。<br />
 	ゲーム内と大きく異なる可能性があるのであくまで参考程度としてお使いください。

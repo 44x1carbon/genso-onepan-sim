@@ -32,19 +32,6 @@
 	<meta name="keywords" content="元素騎士オンライン,元素騎士,PT募集掲示板" />
 </svelte:head>
 
-<div
-	class="border rounded-sm mx-auto p-2 mb-4 border-yellow-700 bg-yellow-500 text-black md:w-[74rem] text-xs"
->
-	<div>こちらのツールはα版です、表示がされないなど不具合があれば下記のTwitterに連絡ください。</div>
-	<div>
-		<a href="https://twitter.com/44genso" class="underline text-blue-700">@44genso</a>
-	</div>
-
-	<div>
-		アクセス増加によりサーバー費が高額になった場合はサービスを一時停止する可能性があります。
-	</div>
-</div>
-
 {#if hasUserInfo}
 	<div class="text-xs flex mb-4 md:w-[74rem] md:mx-auto w-full">
 		<div

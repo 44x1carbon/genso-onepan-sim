@@ -68,19 +68,43 @@
 </header>
 
 <main class="bg-gray-900 min-h-screen border-box p-4 pb-24">
+	<div class="border-2 border-gray-700 rounded mx-auto p-2 bg-gray-700 md:w-[74rem]">
+		<div class="font-bold">お知らせ</div>
+		<ul class="flex flex-col gap-1  text-sm leading-tight list-[square] pl-6">
+			<li>
+				ファンクラブを開設しました、応援していただける方は加入していただけると開発のモチベーションがUPします！<br
+				/>
+				<a href="https://fanclove.jp/club/IGNIS-TOOLS" class="underline text-blue-400"
+					>https://fanclove.jp/club/IGNIS-TOOLS</a
+				>
+			</li>
+			<li>スキルシミュレーターを公開しました。</li>
+		</ul>
+	</div>
 	<slot />
 	<div class="border-2 rounded mx-auto p-2 my-2 border-gray-900 bg-gray-700  md:w-[74rem]">
 		後々これらのツールを有料化する予定です。1ツール月額100円ぐらいで考えています。
 	</div>
 </main>
 
-<footer class="bg-chocolate-900 p-4 fixed w-full bottom-0 text-white text-xs panel">
+<footer
+	class="bg-chocolate-900 px-4 py-1 fixed w-full bottom-0 text-white panel leading-tight"
+	style="font-size:11px"
+>
 	<div>
-		IGNISへの入団希望の方はTwitterのIGNIS公式アカウントにDMをお送りください！<br />
+		■
+		ファンクラブを開設しました、応援していただける方は加入していただけると開発のモチベーションがUPします！<br
+		/>
+		<a href="https://fanclove.jp/club/IGNIS-TOOLS" class="underline text-blue-300"
+			>https://fanclove.jp/club/IGNIS-TOOLS</a
+		>
+	</div>
+	<div class="mt-2">
+		■ IGNISへの入団希望の方はTwitterのIGNIS公式アカウントにDMをお送りください！<br />
 		<a href="https://twitter.com/IGNISgenso" class="underline text-blue-300">@IGNISgenso</a>
 	</div>
-	<div class="leading-relaxed mt-2">
-		<div>不具合などありましたら下記のTwitterでDMを下さい。</div>
+	<div class=" mt-2">
+		<div>■ 不具合などありましたら下記のTwitterでDMを下さい。</div>
 		<div>
 			開発者: <a href="https://twitter.com/44genso" class="underline text-blue-300">@44genso</a>
 		</div>
