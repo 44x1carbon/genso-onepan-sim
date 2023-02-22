@@ -31,9 +31,7 @@
 			return maxScore >= dropScore;
 		})
 		.sort((a, b) => {
-			return a.punchNum - b.punchNum !== 0
-				? a.punchNum - b.punchNum
-				: areas.indexOf(a.area) - areas.indexOf(b.area) !== 0
+			return areas.indexOf(a.area) - areas.indexOf(b.area) !== 0
 				? areas.indexOf(a.area) - areas.indexOf(b.area)
 				: parseFloat(a.hp) - parseFloat(b.hp);
 		});
@@ -262,7 +260,7 @@ ${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${p
 
 	<ul class="max-h-96 overflow-y-scroll border border-chocolate-900">
 		{#each sortedMonsterData as m, i}
-			{#if onePunchNum !== 0 && i === 0}
+			<!-- {#if onePunchNum !== 0 && i === 0}
 				<li>
 					<div class="one-panch-line">ここから 1撃</div>
 				</li>
@@ -277,11 +275,11 @@ ${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${p
 				<li>
 					<div class="more-panch-line">ここから 2撃以上</div>
 				</li>
-			{/if}
+			{/if} -->
 			<li class="border-b">
 				<div
-					class={`${i < onePunchLine ? ' one-panch' : ''}${
-						i >= onePunchLine && i < twoPunchLine ? ' two-panch' : ''
+					class={`${
+						['one-panch', 'two-panch'][m.punchNum - 1]
 					} p-1 px-2 leading-snug text-sm bg-gray-50 text-gray-700`}
 				>
 					<div class="flex items-center">
@@ -307,7 +305,7 @@ ${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${p
 									<div class=" w-4 text-center ">{m[key]}</div>
 								{/each}
 							</div>
-							<div class="text-sm mt-1">
+							<div class="text-xs mt-1">
 								{m.dropStone.join(',')}
 							</div>
 						</div>
