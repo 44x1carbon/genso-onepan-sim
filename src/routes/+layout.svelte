@@ -38,6 +38,14 @@
 	});
 </script>
 
+<svelte:head>
+	<script
+		async
+		src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9799169908631652"
+		crossorigin="anonymous"
+	></script>
+</svelte:head>
+
 <header class="block border-box text-white header">
 	<div class="p-2 flex items-center">
 		<a href="https://twitter.com/IGNISgenso">
