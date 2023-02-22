@@ -18,20 +18,29 @@
 			return {
 				...monster,
 				damage,
-				punchNum: damage ? Math.ceil(parseInt(monster.hp) / damage) : 0
+				punchNum: damage ? Math.ceil(parseInt(monster.hp) / damage) : 0,
+				dropStone: monster.drop.split(',').filter((s) => s.includes('晶石') || s.includes('垢石'))
 			};
 		})
 		.filter((monster) => {
 			return monster.lv >= level;
 		})
+		.filter((monster) => {
+			const maxScore = Math.max(...monster.dropStone.map((d) => dropToNum(d)));
+
+			return maxScore >= dropScore;
+		})
 		.sort((a, b) => {
 			return a.punchNum - b.punchNum !== 0
 				? a.punchNum - b.punchNum
-				: parseInt(a.lv) - parseInt(b.lv);
+				: areas.indexOf(a.area) - areas.indexOf(b.area) !== 0
+				? areas.indexOf(a.area) - areas.indexOf(b.area)
+				: parseFloat(a.hp) - parseFloat(b.hp);
 		});
 
 	let selectArea: string = '';
 	let level: number = 0;
+	let dropScore: number = 0;
 
 	let areas = [
 		'旅立ちの草原',
@@ -204,6 +213,18 @@ ${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${p
 
 		return plusValue;
 	}
+
+	function dropToNum(drop: string) {
+		const order1 = ['無垢石', '緋晶石', '碧晶石', '紫晶石'];
+		const order2 = ['微', '小', '中', '大', '特大'];
+
+		const [s1, s2] = drop.replace(')', '').split('(');
+
+		const index1 = order1.indexOf(s1);
+		const index2 = order2.indexOf(s2);
+
+		return index1 + index2 * 0.1;
+	}
 </script>
 
 <div class="border panel border-chocolate-900 rounded-sm overflow-hidden md:w-96">
@@ -222,6 +243,18 @@ ${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${p
 				<option value={0}>- - レベルで絞り込む - -</option>
 				{#each new Array(30) as _, i}
 					<option value={i + 1}>Lv{i + 1}以上</option>
+				{/each}
+			</select>
+		</div>
+		<div>
+			<select class="border w-full bg-gray-50" bind:value={dropScore}>
+				<option value={0}>- - ドロップ品で絞り込む - -</option>
+				{#each ['無垢石', '緋晶石', '碧晶石', '紫晶石'] as d}
+					<option value={dropToNum(`${d}(微)`)}>{d}(微)以上</option>
+					<option value={dropToNum(`${d}(小)`)}>{d}(小)以上</option>
+					<option value={dropToNum(`${d}(中)`)}>{d}(中)以上</option>
+					<option value={dropToNum(`${d}(大)`)}>{d}(大)以上</option>
+					<option value={dropToNum(`${d}(特大)`)}>{d}(特大)以上</option>
 				{/each}
 			</select>
 		</div>
@@ -258,8 +291,16 @@ ${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${p
 								<span class="inline-block w-24">HP:{m.hp}</span>
 								<span>{m.area}</span>
 							</div>
-							<div class="flex w-fit text-xs mt-1 border">
-								{#each ['physics', 'devil', 'ground', 'water', 'fire', 'wind', 'shine', 'dark'] as key}
+							<div class="flex w-fit mt-1 border" style="font-size: 10px;">
+								{#each ['physics', 'devil', 'ground', 'water'] as key}
+									<div class=" w-4 text-center bg-gray-400 text-white ">
+										{(elementLabel(key) ?? typeLabel(key))?.substring(0, 1)}
+									</div>
+									<div class=" w-4 text-center ">{m[key]}</div>
+								{/each}
+							</div>
+							<div class="flex w-fit border border-t-0" style="font-size: 10px;">
+								{#each ['fire', 'wind', 'shine', 'dark'] as key}
 									<div class=" w-4 text-center bg-gray-400 text-white ">
 										{(elementLabel(key) ?? typeLabel(key))?.substring(0, 1)}
 									</div>
@@ -267,15 +308,16 @@ ${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${p
 								{/each}
 							</div>
 							<div class="text-sm mt-1">
-								{m.drop
-									.split(',')
-									.filter((s) => s.includes('晶石') || s.includes('垢石'))
-									.join(',')}
+								{m.dropStone.join(',')}
 							</div>
 						</div>
 						<div>
-							<div class="bg-red-500 text-white font-bold px-1 rounded text-xs text-center">
-								{m.damage}ダメ
+							<div
+								class="bg-red-500 text-white font-bold px-1 rounded text-center"
+								style="font-size: 10px;"
+							>
+								{m.damage}ダメ<br />
+								({m.punchNum}撃)
 							</div>
 							{#if i >= onePunchLine && skills.length}
 								<div
