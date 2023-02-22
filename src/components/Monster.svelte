@@ -21,6 +21,9 @@
 				punchNum: damage ? Math.ceil(parseInt(monster.hp) / damage) : 0
 			};
 		})
+		.filter((monster) => {
+			return monster.lv >= level;
+		})
 		.sort((a, b) => {
 			return a.punchNum - b.punchNum !== 0
 				? a.punchNum - b.punchNum
@@ -28,6 +31,7 @@
 		});
 
 	let selectArea: string = '';
+	let level: number = 0;
 
 	let areas = [
 		'旅立ちの草原',
@@ -204,14 +208,25 @@ ${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${p
 
 <div class="border panel border-chocolate-900 rounded-sm overflow-hidden md:w-96">
 	<div class="heading">モンスター別ダメージ表</div>
-	<div class="p-2">
-		<select class="border w-full bg-gray-50" bind:value={selectArea}>
-			<option value="">- - 地域で絞り込む - -</option>
-			{#each areas as area}
-				<option value={area}>{area}</option>
-			{/each}
-		</select>
+	<div class="p-2 flex flex-col gap-2">
+		<div>
+			<select class="border w-full bg-gray-50" bind:value={selectArea}>
+				<option value="">- - 地域で絞り込む - -</option>
+				{#each areas as area}
+					<option value={area}>{area}</option>
+				{/each}
+			</select>
+		</div>
+		<div>
+			<select class="border w-full bg-gray-50" bind:value={level}>
+				<option value={0}>- - レベルで絞り込む - -</option>
+				{#each new Array(30) as _, i}
+					<option value={i + 1}>Lv{i + 1}以上</option>
+				{/each}
+			</select>
+		</div>
 	</div>
+
 	<ul class="max-h-96 overflow-y-scroll border border-chocolate-900">
 		{#each sortedMonsterData as m, i}
 			{#if onePunchNum !== 0 && i === 0}
