@@ -30,6 +30,9 @@
 
 			return maxScore >= dropScore;
 		})
+		.filter((monster) => {
+			return isOnlyTwoPunch ? monster.punchNum <= 2 : true;
+		})
 		.sort((a, b) => {
 			return areas.indexOf(a.area) - areas.indexOf(b.area) !== 0
 				? areas.indexOf(a.area) - areas.indexOf(b.area)
@@ -39,6 +42,7 @@
 	let selectArea: string = '';
 	let level: number = 0;
 	let dropScore: number = 0;
+	let isOnlyTwoPunch: boolean = false;
 
 	let areas = [
 		'旅立ちの草原',
@@ -256,30 +260,43 @@ ${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${p
 				{/each}
 			</select>
 		</div>
+		<div>
+			<label
+				for="IsOnlyTwoPunch"
+				class="flex items-center bg-gray-50 px-2 text-gray-900 rounded-sm"
+			>
+				<input
+					type="checkbox"
+					id="IsOnlyTwoPunch"
+					bind:value={isOnlyTwoPunch}
+					class="mr-1"
+				/>2撃以内のみを表示
+			</label>
+		</div>
 	</div>
 
 	<ul class="max-h-96 overflow-y-scroll border border-chocolate-900">
 		{#each sortedMonsterData as m, i}
 			<!-- {#if onePunchNum !== 0 && i === 0}
 				<li>
-					<div class="one-panch-line">ここから 1撃</div>
+					<div class="one-punch-line">ここから 1撃</div>
 				</li>
 			{/if}
 			{#if twoPunchNum !== 0 && i === onePunchLine}
 				<li>
-					<div class="two-panch-line">ここから 2撃</div>
+					<div class="two-punch-line">ここから 2撃</div>
 				</li>
 			{/if}-->
 
 			{#if i === 0 || sortedMonsterData[i - 1].area !== m.area}
 				<li>
-					<div class="more-panch-line">{m.area}</div>
+					<div class="more-punch-line">{m.area}</div>
 				</li>
 			{/if}
 			<li class="border-b">
 				<div
 					class={`${
-						['one-panch', 'two-panch'][m.punchNum - 1]
+						['one-punch', 'two-punch'][m.punchNum - 1]
 					} p-1 px-2 leading-snug text-sm bg-gray-50 text-gray-700`}
 				>
 					<div class="flex items-center">
@@ -340,23 +357,23 @@ ${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${p
 </div>
 
 <style>
-	.one-panch {
+	.one-punch {
 		@apply bg-red-50 text-gray-700;
 	}
 
-	.two-panch {
+	.two-punch {
 		@apply bg-yellow-50 text-gray-700;
 	}
 
-	.one-panch-line {
+	.one-punch-line {
 		@apply bg-red-500 text-center text-white  text-xs font-bold;
 	}
 
-	.two-panch-line {
+	.two-punch-line {
 		@apply bg-yellow-500 text-center text-white text-xs font-bold;
 	}
 
-	.more-panch-line {
+	.more-punch-line {
 		@apply bg-gray-500 text-center text-white text-xs font-bold;
 	}
 </style>
