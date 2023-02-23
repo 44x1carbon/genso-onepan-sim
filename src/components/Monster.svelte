@@ -284,7 +284,12 @@ ${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${p
 				>
 					<div class="flex items-center">
 						<div class="flex-1">
-							<div class="font-bold">{m.name} L{m.lv}</div>
+							<div class="font-bold">
+								{m.name} L{m.lv}
+								{#if m.active === '○'}<span class="ml-1 text-xs px-1 bg-gray-500 text-white rounded"
+										>アクティブ</span
+									>{/if}
+							</div>
 							<div>
 								<span class="inline-block w-24">HP:{m.hp}</span>
 								<span>{m.area}</span>
