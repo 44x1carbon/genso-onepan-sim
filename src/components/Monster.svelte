@@ -269,13 +269,13 @@ ${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${p
 				<li>
 					<div class="two-panch-line">ここから 2撃</div>
 				</li>
-			{/if}
+			{/if}-->
 
-			{#if i === twoPunchLine}
+			{#if i === 0 || sortedMonsterData[i - 1].area !== m.area}
 				<li>
-					<div class="more-panch-line">ここから 2撃以上</div>
+					<div class="more-panch-line">{m.area}</div>
 				</li>
-			{/if} -->
+			{/if}
 			<li class="border-b">
 				<div
 					class={`${
