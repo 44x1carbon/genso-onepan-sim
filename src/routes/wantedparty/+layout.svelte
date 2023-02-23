@@ -5,6 +5,7 @@
 	import type { UserInfo } from '$lib/wantedparty/UserInfo';
 	import { onMount, setContext } from 'svelte';
 	import { page } from '$app/stores';
+	import ShareFab from '../../components/ShareFAB.svelte';
 
 	let hasUserInfo = false;
 
@@ -78,3 +79,5 @@
 {#if hasUserInfo || $page['route'].id === '/wantedparty/user'}
 	<slot />
 {/if}
+
+<ShareFab tweetBody={`【元素騎士 PT募集掲示板】\n一緒に元素騎士を楽しむ仲間を探そう！`} />

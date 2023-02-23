@@ -7,6 +7,7 @@
 	import Damage from '../components/Damage.svelte';
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
+	import ShareFab from '../components/ShareFAB.svelte';
 
 	let skills: Skill[] = [];
 	let levels: { [skillName: string]: SkillLevel } = {};
@@ -90,3 +91,7 @@
 		<Monster status={_status} skills={_skills} {levels} />
 	</div>
 </div>
+
+<ShareFab
+	tweetBody={`【元素騎士 ダメージ計算機】\n今の自分の実力がわかるダメージ計算機！\n狩場を探したりするのにも便利です！`}	
+/>

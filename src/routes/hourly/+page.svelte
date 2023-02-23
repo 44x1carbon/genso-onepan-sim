@@ -7,6 +7,7 @@
 	import { onMount } from 'svelte';
 	import tourSetup from '../../lib/houly/Tour';
 	import ExpTableData from '../../ExpTableData';
+	import ShareFab from '../../components/ShareFAB.svelte';
 
 	const SAVE_KEY = 'GENSO-HOULY-DATA';
 
@@ -1294,6 +1295,10 @@
 		</div>
 	{/if}
 </div>
+
+<ShareFab
+	tweetBody={`【元素騎士 時給計算機】\nあなたの今の時給は何円？？\n狩場の効率検証にも便利！`}
+/>
 
 <style>
 	.result * {

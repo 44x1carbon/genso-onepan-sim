@@ -5,6 +5,7 @@
 	import JobData from '../../JobData';
 	import SkillTreeData from '../../SkillTreeData';
 	import ClipboardJS from 'clipboard';
+	import ShareFab from '../../components/ShareFAB.svelte';
 
 	let selectJob = 'ファイター';
 	let prevSelectJob = 'ファイター';
@@ -131,14 +132,17 @@
 </div>
 
 <div class="mx-auto border-4 rounded-sm bg-black border-gray-500 w-full md:w-[74rem] md:mx-auto">
-	<div class="bg-gray-500 p-2 font-bold">
-		<select bind:value={selectJob} class="mr-2">
-			{#each JobData as job}
-				<option value={job.name}>{job.name}</option>
-			{/each}
-		</select>
-		<span>必要なスキルレベル Lv{needLevel}</span>
+	<div class="bg-gray-500 p-2">
+		<div class=" font-bold" style="font-size: 15px;">
+			<select bind:value={selectJob} class="mr-2">
+				{#each JobData as job}
+					<option value={job.name}>{job.name}</option>
+				{/each}
+			</select>
+			<span>必要なスキルレベル Lv{needLevel}</span>
+		</div>
 	</div>
+
 	<div class="overflow-x-scroll">
 		<table class="mx-auto">
 			{#each mapData as row, y}
@@ -232,6 +236,10 @@
 		</table>
 	</div>
 </div>
+
+<ShareFab
+	tweetBody={`【元素騎士 スキルシミュレーター】\n理想のスキル構成まで後何レベル？？\nスキルシミュレーターで確認しよう！`}
+/>
 
 <style>
 	.pos-top::before {
