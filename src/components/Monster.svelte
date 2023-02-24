@@ -400,7 +400,7 @@ ${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${p
 							</div>
 							<!-- <div>{m.expScore}</div>
 							<div>{m.mRScore}</div> -->
-							{#if i >= onePunchLine && skills.length}
+							{#if Math.ceil(m.punchNum) > 1 && skills.length}
 								<div
 									class="text-blue-500 bg-gray-50 font-bold p-1 rounded mt-2 cursor-pointer border border-blue-500"
 									style="font-size: 10px;"
