@@ -3,4 +3,5 @@ export type Status = {
     magicalPower: number
     brains: number
     armStrength: number
+    level: number
 }

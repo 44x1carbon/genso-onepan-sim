@@ -15,14 +15,16 @@
 		offensivePower: 0,
 		magicalPower: 0,
 		armStrength: 0,
-		brains: 0
+		brains: 0,
+		level: 0
 	};
 
 	let addStatus: Status = {
 		offensivePower: 0,
 		magicalPower: 0,
 		armStrength: 0,
-		brains: 0
+		brains: 0,
+		level: 0
 	};
 
 	let isIncludeNomalAttack: boolean = false;
@@ -33,11 +35,13 @@
 		offensivePower: status.offensivePower + addStatus.offensivePower,
 		magicalPower: status.magicalPower + addStatus.magicalPower,
 		armStrength: status.armStrength + addStatus.armStrength,
-		brains: status.brains + addStatus.brains
-	};
+		brains: status.brains + addStatus.brains,
+		level: status.level
+	} as Status;
 
 	// ステータスの入力内容を保存する処理
 	const SAVE_KEY = 'GENSO-ONEPAN-SIM-STATUS';
+	const SKILLS_SAVE_KEY = 'GENSO-ONEPAN-SIM-SKILLS';
 	let isInit = false;
 	$: {
 		// @ts-ignore
@@ -45,12 +49,28 @@
 			// @ts-ignore
 			localStorage.setItem(SAVE_KEY, JSON.stringify(status));
 		}
+
+		if (skills.length && browser && isInit) {
+			localStorage.setItem(
+				SKILLS_SAVE_KEY,
+				JSON.stringify({
+					skills,
+					levels
+				})
+			);
+		}
 	}
 	onMount(() => {
 		// @ts-ignore
 		const json = localStorage.getItem(SAVE_KEY);
 		if (json) {
 			status = JSON.parse(json);
+		}
+		const skillJson = localStorage.getItem(SKILLS_SAVE_KEY);
+		if (skillJson) {
+			const { skills: _skills, levels: _levels } = JSON.parse(skillJson);
+			skills = _skills;
+			levels = _levels;
 		}
 		isInit = true;
 	});
@@ -93,5 +113,5 @@
 </div>
 
 <ShareFab
-	tweetBody={`【元素騎士 ダメージ計算機】\n今の自分の実力がわかるダメージ計算機！\n狩場を探したりするのにも便利です！`}	
+	tweetBody={`【元素騎士 ダメージ計算機】\n今の自分の実力がわかるダメージ計算機！\n狩場を探したりするのにも便利です！`}
 />

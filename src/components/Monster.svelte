@@ -4,10 +4,13 @@
 	import { calcDamage } from '../Calac';
 	import type { Status } from '../Status';
 	import { elementLabel, typeLabel } from '../Label';
+	import BaseEquipmentData from '../BaseEquipmentData';
 
 	export let skills: Skill[] = [];
 	export let levels: { [skillName: string]: SkillLevel } = {};
 	export let status: Status;
+
+	let equipmentNames = BaseEquipmentData.map((bed) => bed.nameJp);
 
 	$: sortedMonsterData = MonsterData.filter((monster) =>
 		selectArea ? monster.area === selectArea : true
@@ -18,8 +21,16 @@
 			return {
 				...monster,
 				damage,
-				punchNum: damage ? Math.ceil(parseInt(monster.hp) / damage) : 0,
-				dropStone: monster.drop.split(',').filter((s) => s.includes('晶石') || s.includes('垢石'))
+				punchNum: damage ? Math.floor((parseInt(monster.hp) / damage) * 1000) / 1000 : 0,
+				dropStone: monster.drop.split(',').filter((s) => s.includes('晶石') || s.includes('垢石')),
+				dropEquipments: monster.drop.split(',').filter((s) => equipmentNames.includes(s))
+			};
+		})
+		.map((monster) => {
+			return {
+				...monster,
+				expScore: calcEXPScore(monster),
+				mRScore: calcMRONDScore(monster)
 			};
 		})
 		.filter((monster) => {
@@ -119,7 +130,7 @@
 ${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${panValue(monster, 1)}必要です。
 
 ${
-	monster.punchNum === 2
+	Math.ceil(monster.punchNum) === 2
 		? ''
 		: `
 2撃で倒すには
@@ -227,6 +238,51 @@ ${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${p
 
 		return index1 + index2 * 0.1;
 	}
+
+	function calcEXPScore(monster: any) {
+		const level = status.level ?? 0;
+		const diff = monster.lv >= level ? 0 : level - monster.lv;
+
+		if (diff >= 5) return 0;
+		return (30 - diff) / monster.punchNum;
+		// return diff / monster.punchNum;
+	}
+
+	const mRTable = {
+		'無垢石(微)': 2,
+		'無垢石(小)': 4,
+		'無垢石(中)': 6,
+		'無垢石(大)': 8,
+		'無垢石(特大)': 10,
+		'緋晶石(微)': 20,
+		'緋晶石(小)': 40,
+		'緋晶石(中)': 70,
+		'緋晶石(大)': 100,
+		'緋晶石(特大)': 150,
+		'碧晶石(微)': 180,
+		'碧晶石(小)': 210,
+		'碧晶石(中)': 240,
+		'碧晶石(大)': 270,
+		'碧晶石(特大)': 300,
+		'紫晶石(微)': 350,
+		'紫晶石(小)': 1000,
+		'紫晶石(中)': 3000,
+		'紫晶石(大)': 5000,
+		'紫晶石(特大)': 10000,
+		'太陽石(中)': 50000,
+		'太陽石(大)': 100000,
+		'太陽石(特大)': 200000
+	};
+	function calcMRONDScore(monster: any) {
+		// @ts-ignore
+		const totalmR = monster.dropStone
+			.map((stone: string) => {
+				return mRTable[stone] ?? [];
+			})
+			.reduce((p, c) => p + c, 0);
+
+		return totalmR / monster.punchNum;
+	}
 </script>
 
 <div class="border panel border-chocolate-900 rounded-sm overflow-hidden md:w-96">
@@ -296,7 +352,7 @@ ${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${p
 			<li class="border-b">
 				<div
 					class={`${
-						['one-punch', 'two-punch'][m.punchNum - 1]
+						['one-punch', 'two-punch'][Math.ceil(m.punchNum) - 1]
 					} p-1 px-2 leading-snug text-sm bg-gray-50 text-gray-700`}
 				>
 					<div class="flex items-center">
@@ -330,6 +386,9 @@ ${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${p
 							<div class="text-xs mt-1">
 								{m.dropStone.join(',')}
 							</div>
+							<div class="text-xs mt-1">
+								{m.dropEquipments.join(',')}
+							</div>
 						</div>
 						<div>
 							<div
@@ -339,6 +398,8 @@ ${raisedStatusLabel === 'physics' ? '攻撃力' : '魔法攻撃力'}があと${p
 								{m.damage}ダメ<br />
 								({m.punchNum}撃)
 							</div>
+							<!-- <div>{m.expScore}</div>
+							<div>{m.mRScore}</div> -->
 							{#if i >= onePunchLine && skills.length}
 								<div
 									class="text-blue-500 bg-gray-50 font-bold p-1 rounded mt-2 cursor-pointer border border-blue-500"

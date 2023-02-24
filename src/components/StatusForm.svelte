@@ -103,6 +103,12 @@
 				</div>
 			</td>
 		</tr>
+		<tr class="border border-well-read-900">
+			<th class="form-label tc">レベル</th>
+			<td>
+				<input type="number" bind:value={status.level} class="bg-gray-50" />
+			</td>
+		</tr>
 	</table>
 </div>
 
