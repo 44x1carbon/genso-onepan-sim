@@ -12,6 +12,7 @@
 	let cropper: Cropper | undefined = undefined;
 	let originalBackgroundImageUrl: string = '';
 	let isPreview = false;
+	let isPreviewStart = false;
 
 	let profileData: ProfileData = {
 		name: '',
@@ -63,6 +64,7 @@
 	};
 
 	function preview() {
+		isPreviewStart = true;
 		const img = document.getElementById('preview-img');
 		img.removeAttribute('src');
 		const canvas = new Canvas(
@@ -628,8 +630,10 @@
 
 <div class="md:w-[48rem] mx-auto mt-4 w-full relative">
 	<div id="container" class="opacity-0 " />
+
 	<img
 		id="preview-img"
+		class:hidden={!isPreviewStart}
 		class="w-full absolute top-0 bg-white"
 		style="background-image: url('https://www.benricho.org/loading_images/img-size/loading-l-5.gif'); aspect-ratio: 16 / 9; background-repeat: no-repeat; background-position: center;"
 	/>
