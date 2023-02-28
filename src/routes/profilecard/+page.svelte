@@ -628,13 +628,17 @@
 	</div>
 </div>
 
-<div class="md:w-[48rem] mx-auto mt-4 w-full relative">
-	<div id="container" class="opacity-0 " />
+<div class="md:w-[48rem] mx-auto mt-4 w-full">
+	<div
+		id="container"
+		class="opacity-0 absolute top-0 -z-10"
+		style="width: 1280px; height: 720px;"
+	/>
 
 	<img
 		id="preview-img"
 		class:hidden={!isPreviewStart}
-		class="w-full absolute top-0 bg-white"
+		class="w-full  bg-white"
 		style="background-image: url('https://www.benricho.org/loading_images/img-size/loading-l-5.gif'); aspect-ratio: 16 / 9; background-repeat: no-repeat; background-position: center;"
 	/>
 
