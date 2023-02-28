@@ -138,7 +138,7 @@
 		if (json) {
 			// console.log(json);
 			profileData = JSON.parse(json);
-			preview();
+			// preview();
 		}
 		isInit = true;
 
