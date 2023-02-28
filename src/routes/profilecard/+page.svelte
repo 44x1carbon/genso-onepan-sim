@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
 	import { Canvas } from '$lib/profilecard/Canvas';
 	import type { ProfileData } from '$lib/profilecard/ProfileData';
 	import Cropper from 'cropperjs';
