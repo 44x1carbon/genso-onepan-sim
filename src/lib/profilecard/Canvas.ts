@@ -2,6 +2,9 @@ import type Cropper from 'cropperjs';
 import Konva from 'konva';
 import type { Layer } from 'konva/lib/Layer';
 import type { Stage } from 'konva/lib/Stage';
+import SkillTreeData, { type Skill } from '../../SkillTreeData';
+
+const skills = ([] as Skill[]).concat(...Object.values(SkillTreeData).map(({ skills }) => Object.values(skills)));
 
 export class Canvas {
     stage: Stage
@@ -192,7 +195,7 @@ export class Canvas {
         const _text = new Konva.Text({
             x,
             y,
-            text: skillStructure.map(({ name, level }) => `・${name} Lv${level}`).join(" "),
+            text: skillStructure.map(({ name, level }) => level === 5 ?  `・${skills.find(s => s.name === name)?.maxSkillName}`  : `・${name} Lv${level}`).join(" "),
             fontSize: 16,
             fontStyle: "bold",
             fill: "#444444",
