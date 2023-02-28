@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { Canvas } from '$lib/profilecard/Canvas';
-	// import type { ProfileData } from '$lib/profilecard/ProfileData';
-	// import Cropper from 'cropperjs';
-	// import 'cropperjs/dist/cropper.css';
-	// import { onMount } from 'svelte';
-	// import JobData from '../../JobData';
-	// import SkillTreeData, { type Skill } from '../../SkillTreeData';
+	// import { Canvas } from '$lib/profilecard/Canvas';
+	import type { ProfileData } from '$lib/profilecard/ProfileData';
+	import Cropper from 'cropperjs';
+	import 'cropperjs/dist/cropper.css';
+	import { onMount } from 'svelte';
+	import JobData from '../../JobData';
+	import SkillTreeData, { type Skill } from '../../SkillTreeData';
 
 	// const SAVE_KEY = 'GENSO-PROFILECARD';
 
