@@ -127,14 +127,14 @@
 			originalBackgroundImageUrl = cards[searchParams.get('card') ?? ''];
 		}
 
-		const json = localStorage.getItem(SAVE_KEY);
-		if (json) {
-			profileData = JSON.parse(json);
-		}
+		// const json = localStorage.getItem(SAVE_KEY);
+		// if (json) {
+		// 	profileData = JSON.parse(json);
+		// }
 
-		setInterval(() => {
-			localStorage.setItem(SAVE_KEY, JSON.stringify(profileData));
-		}, 100);
+		// setInterval(() => {
+		// 	localStorage.setItem(SAVE_KEY, JSON.stringify(profileData));
+		// }, 100);
 	});
 </script>
 
