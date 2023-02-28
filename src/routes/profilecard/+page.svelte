@@ -1,141 +1,141 @@
 <script lang="ts">
-	import { Canvas } from '$lib/profilecard/Canvas';
-	import type { ProfileData } from '$lib/profilecard/ProfileData';
-	import Cropper from 'cropperjs';
-	import 'cropperjs/dist/cropper.css';
-	import { onMount } from 'svelte';
-	import JobData from '../../JobData';
-	import SkillTreeData, { type Skill } from '../../SkillTreeData';
+	// import { Canvas } from '$lib/profilecard/Canvas';
+	// import type { ProfileData } from '$lib/profilecard/ProfileData';
+	// import Cropper from 'cropperjs';
+	// import 'cropperjs/dist/cropper.css';
+	// import { onMount } from 'svelte';
+	// import JobData from '../../JobData';
+	// import SkillTreeData, { type Skill } from '../../SkillTreeData';
 
-	const SAVE_KEY = 'GENSO-PROFILECARD';
+	// const SAVE_KEY = 'GENSO-PROFILECARD';
 
-	let cropper: Cropper | undefined = undefined;
-	let originalBackgroundImageUrl: string = '';
-	let isPreview = false;
+	// let cropper: Cropper | undefined = undefined;
+	// let originalBackgroundImageUrl: string = '';
+	// let isPreview = false;
 
-	let profileData: ProfileData = {
-		name: '',
-		id: '',
-		job: {
-			name: '',
-			lv: 1
-		},
-		playstyle: '',
-		status: {
-			hp: undefined,
-			mp: undefined,
-			attack: undefined,
-			magicAttack: undefined,
-			strength: undefined,
-			brains: undefined,
-			skillful: undefined,
-			mind: undefined
-		},
-		freecomment: '',
-		playTime: {
-			dayOfWeek: [],
-			time: {
-				weekday: '',
-				holiday: ''
-			}
-		},
-		baseEquipment: {
-			右手: { name: '', rarity: '', level: 0 },
-			左手: { name: '', rarity: '', level: 0 },
-			胴: { name: '', rarity: '', level: 0 },
-			足: { name: '', rarity: '', level: 0 },
-			頭: { name: '', rarity: '', level: 0 },
-			背中: { name: '', rarity: '', level: 0 },
-			肩: { name: '', rarity: '', level: 0 },
-			指輪: { name: '', rarity: '', level: 0 }
-		},
-		cosplayEquipment: {
-			右手: { name: '', rarity: '', level: 0 },
-			左手: { name: '', rarity: '', level: 0 },
-			胴: { name: '', rarity: '', level: 0 },
-			足: { name: '', rarity: '', level: 0 },
-			頭: { name: '', rarity: '', level: 0 },
-			背中: { name: '', rarity: '', level: 0 },
-			肩: { name: '', rarity: '', level: 0 }
-		},
-		skillStructure: [{ name: '', level: 1 }]
-	};
+	// let profileData: ProfileData = {
+	// 	name: '',
+	// 	id: '',
+	// 	job: {
+	// 		name: '',
+	// 		lv: 1
+	// 	},
+	// 	playstyle: '',
+	// 	status: {
+	// 		hp: undefined,
+	// 		mp: undefined,
+	// 		attack: undefined,
+	// 		magicAttack: undefined,
+	// 		strength: undefined,
+	// 		brains: undefined,
+	// 		skillful: undefined,
+	// 		mind: undefined
+	// 	},
+	// 	freecomment: '',
+	// 	playTime: {
+	// 		dayOfWeek: [],
+	// 		time: {
+	// 			weekday: '',
+	// 			holiday: ''
+	// 		}
+	// 	},
+	// 	baseEquipment: {
+	// 		右手: { name: '', rarity: '', level: 0 },
+	// 		左手: { name: '', rarity: '', level: 0 },
+	// 		胴: { name: '', rarity: '', level: 0 },
+	// 		足: { name: '', rarity: '', level: 0 },
+	// 		頭: { name: '', rarity: '', level: 0 },
+	// 		背中: { name: '', rarity: '', level: 0 },
+	// 		肩: { name: '', rarity: '', level: 0 },
+	// 		指輪: { name: '', rarity: '', level: 0 }
+	// 	},
+	// 	cosplayEquipment: {
+	// 		右手: { name: '', rarity: '', level: 0 },
+	// 		左手: { name: '', rarity: '', level: 0 },
+	// 		胴: { name: '', rarity: '', level: 0 },
+	// 		足: { name: '', rarity: '', level: 0 },
+	// 		頭: { name: '', rarity: '', level: 0 },
+	// 		背中: { name: '', rarity: '', level: 0 },
+	// 		肩: { name: '', rarity: '', level: 0 }
+	// 	},
+	// 	skillStructure: [{ name: '', level: 1 }]
+	// };
 
-	function preview() {
-		const canvas = new Canvas(
-			'container',
-			originalBackgroundImageUrl ? originalBackgroundImageUrl : '/normal-card.png',
-			false
-		);
-		canvas.renderCharacterName(profileData.name);
-		canvas.renderId(profileData.id);
-		canvas.renderJob(profileData.job);
-		canvas.renderPlaystyle(profileData.playstyle);
-		canvas.renderStatus(profileData.status);
-		canvas.renderSkillStructure(profileData.skillStructure.filter((s) => s.name !== ''));
-		canvas.renderFreecomment(profileData.freecomment);
-		canvas.renderBaseEquipment(profileData.baseEquipment);
-		canvas.renderCosplayEquipment(profileData.cosplayEquipment);
-		canvas.renderDayOfWeek(profileData.playTime.dayOfWeek);
-		canvas.renderPlayTime(profileData.playTime.time);
-		if (cropper) {
-			canvas.renderImg(cropper);
-		}
-		isPreview = true;
-	}
+	// function preview() {
+	// 	const canvas = new Canvas(
+	// 		'container',
+	// 		originalBackgroundImageUrl ? originalBackgroundImageUrl : '/normal-card.png',
+	// 		false
+	// 	);
+	// 	canvas.renderCharacterName(profileData.name);
+	// 	canvas.renderId(profileData.id);
+	// 	canvas.renderJob(profileData.job);
+	// 	canvas.renderPlaystyle(profileData.playstyle);
+	// 	canvas.renderStatus(profileData.status);
+	// 	canvas.renderSkillStructure(profileData.skillStructure.filter((s) => s.name !== ''));
+	// 	canvas.renderFreecomment(profileData.freecomment);
+	// 	canvas.renderBaseEquipment(profileData.baseEquipment);
+	// 	canvas.renderCosplayEquipment(profileData.cosplayEquipment);
+	// 	canvas.renderDayOfWeek(profileData.playTime.dayOfWeek);
+	// 	canvas.renderPlayTime(profileData.playTime.time);
+	// 	if (cropper) {
+	// 		canvas.renderImg(cropper);
+	// 	}
+	// 	isPreview = true;
+	// }
 
-	function selectPhoto(e: Event) {
-		const target = e.target as HTMLInputElement;
-		const fReaderForURI = new FileReader();
-		fReaderForURI.readAsDataURL(target.files[0]);
-		fReaderForURI.onload = () => {
-			// 生成した DataURI を img 要素に渡し、それに対して Cropper を用意します
-			const imgEl = document.getElementById('cropper-tgt');
-			imgEl.src = String(fReaderForURI.result);
-			imgEl?.addEventListener('load', () => {
-				cropper = new Cropper(imgEl, {
-					aspectRatio: 396 / 215,
-					dragMode: 'move',
-					cropBoxResizable: false,
-					cropBoxMovable: false
-				});
-			});
-		};
-	}
+	// function selectPhoto(e: Event) {
+	// 	const target = e.target as HTMLInputElement;
+	// 	const fReaderForURI = new FileReader();
+	// 	fReaderForURI.readAsDataURL(target.files[0]);
+	// 	fReaderForURI.onload = () => {
+	// 		// 生成した DataURI を img 要素に渡し、それに対して Cropper を用意します
+	// 		const imgEl = document.getElementById('cropper-tgt');
+	// 		imgEl.src = String(fReaderForURI.result);
+	// 		imgEl?.addEventListener('load', () => {
+	// 			cropper = new Cropper(imgEl, {
+	// 				aspectRatio: 396 / 215,
+	// 				dragMode: 'move',
+	// 				cropBoxResizable: false,
+	// 				cropBoxMovable: false
+	// 			});
+	// 		});
+	// 	};
+	// }
 
-	function selectOriginalBackgroundImage(e: Event) {
-		const target = e.target as HTMLInputElement;
-		const fReaderForURI = new FileReader();
-		fReaderForURI.readAsDataURL(target.files[0]);
-		fReaderForURI.onload = () => {
-			// 生成した DataURI を img 要素に渡し、それに対して Cropper を用意します
-			originalBackgroundImageUrl = String(fReaderForURI.result);
-		};
-	}
+	// function selectOriginalBackgroundImage(e: Event) {
+	// 	const target = e.target as HTMLInputElement;
+	// 	const fReaderForURI = new FileReader();
+	// 	fReaderForURI.readAsDataURL(target.files[0]);
+	// 	fReaderForURI.onload = () => {
+	// 		// 生成した DataURI を img 要素に渡し、それに対して Cropper を用意します
+	// 		originalBackgroundImageUrl = String(fReaderForURI.result);
+	// 	};
+	// }
 
-	function deleteSelectSkill(i: number) {
-		profileData.skillStructure = profileData.skillStructure.filter((_, _i) => _i !== i);
-	}
+	// function deleteSelectSkill(i: number) {
+	// 	profileData.skillStructure = profileData.skillStructure.filter((_, _i) => _i !== i);
+	// }
 
-	onMount(() => {
-		// const searchParams = new URLSearchParams(window.location.search);
-		// if (searchParams.has('card')) {
-		// 	const cards: { [key: string]: string } = {
-		// 		ignis: '/ignis-card.png'
-		// 	};
-		// 	originalBackgroundImageUrl = cards[searchParams.get('card') ?? ''];
-		// }
-		// const json = localStorage.getItem(SAVE_KEY);
-		// if (json) {
-		// 	profileData = JSON.parse(json);
-		// }
-		// setInterval(() => {
-		// 	localStorage.setItem(SAVE_KEY, JSON.stringify(profileData));
-		// }, 100);
-	});
+	// onMount(() => {
+	// 	// const searchParams = new URLSearchParams(window.location.search);
+	// 	// if (searchParams.has('card')) {
+	// 	// 	const cards: { [key: string]: string } = {
+	// 	// 		ignis: '/ignis-card.png'
+	// 	// 	};
+	// 	// 	originalBackgroundImageUrl = cards[searchParams.get('card') ?? ''];
+	// 	// }
+	// 	// const json = localStorage.getItem(SAVE_KEY);
+	// 	// if (json) {
+	// 	// 	profileData = JSON.parse(json);
+	// 	// }
+	// 	// setInterval(() => {
+	// 	// 	localStorage.setItem(SAVE_KEY, JSON.stringify(profileData));
+	// 	// }, 100);
+	// });
 </script>
 
-<div class="flex gap-4 flex-wrap">
+<!-- <div class="flex gap-4 flex-wrap">
 	<div class="md:w-96 w-full">
 		<div class="heading">基本情報</div>
 		<div class="panel">
@@ -620,4 +620,4 @@
 	.weekday input:checked + label {
 		@apply bg-gray-500 text-gray-100;
 	}
-</style>
+</style> -->
