@@ -137,16 +137,18 @@ export class Canvas {
         brains: number | undefined
         skillful: number | undefined
         mind: number | undefined
+        difence: number | undefined
     }) {
         const pos = {
-            hp: { x: 148 + 15, y: 285 + 25 },
-            mp: { x: 518 + 40, y: 285 + 25 },
-            attack: { x: 148 + 15, y: 315 + 27 },
-            magicAttack: { x: 518 + 40, y: 315 + 27 },
-            strength: { x: 148 + 15, y: 345 + 28 },
-            brains: { x: 518 + 40, y: 345 + 28 },
-            skillful: { x: 148 + 15, y: 375 + 30 },
-            mind: { x: 518 + 40, y: 375 + 30 },
+            hp: { x: 148 + 15, y: 285 + 21.5 },
+            mp: { x: 518 + 40, y: 285 + 21.5 },
+            attack: { x: 148 + 15, y: 315 + 17.5 },
+            magicAttack: { x: 518 + 40, y: 315 + 17.5 },
+            strength: { x: 148 + 15, y: 345 + 13 },
+            brains: { x: 518 + 40, y: 345 + 13 },
+            skillful: { x: 148 + 15, y: 375 + 8 },
+            mind: { x: 518 + 40, y: 375 + 8 },
+            difence: { x: 148 + 15, y: 375 + 35 },
         }
 
         Object.entries(status).forEach(([key, value]) => {

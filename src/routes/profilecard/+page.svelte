@@ -22,14 +22,15 @@
 		},
 		playstyle: '',
 		status: {
-			hp: undefined,
-			mp: undefined,
-			attack: undefined,
-			magicAttack: undefined,
-			strength: undefined,
-			brains: undefined,
-			skillful: undefined,
-			mind: undefined
+			hp: 0,
+			mp: 0,
+			attack: 0,
+			magicAttack: 0,
+			strength: 0,
+			brains: 0,
+			skillful: 0,
+			mind: 0,
+			difence: 0
 		},
 		freecomment: '',
 		playTime: {
@@ -117,6 +118,7 @@
 		profileData.skillStructure = profileData.skillStructure.filter((_, _i) => _i !== i);
 	}
 
+	let isInit = false;
 	onMount(() => {
 		const searchParams = new URLSearchParams(window.location.search);
 		if (searchParams.has('card')) {
@@ -125,13 +127,21 @@
 			};
 			originalBackgroundImageUrl = cards[searchParams.get('card') ?? ''];
 		}
+
 		const json = localStorage.getItem(SAVE_KEY);
 		if (json) {
+			// console.log(json);
 			profileData = JSON.parse(json);
+			preview();
 		}
+		isInit = true;
+
 		setInterval(() => {
-			localStorage.setItem(SAVE_KEY, JSON.stringify(profileData));
-		}, 100);
+			if (isInit) {
+				localStorage.setItem(SAVE_KEY, JSON.stringify(profileData));
+				// console.log('SAVE', JSON.stringify(profileData));
+			}
+		}, 1000);
 	});
 </script>
 
@@ -251,6 +261,18 @@
 					<div class="form-label w-24">精神</div>
 					<div class="form-controll">
 						<input type="number" bind:value={profileData.status.mind} />
+					</div>
+				</div>
+				<div class="form-row w-1/2">
+					<div class="form-label w-24">防御力</div>
+					<div class="form-controll">
+						<input type="number" bind:value={profileData.status.difence} />
+					</div>
+				</div>
+				<div class="form-row w-1/2">
+					<div class="form-label w-24" />
+					<div class="form-controll">
+						<input type="number" class="opacity-0" />
 					</div>
 				</div>
 			</div>
