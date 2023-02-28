@@ -22,7 +22,15 @@
 		<div class="heading">ダメージ</div>
 		<div class="">
 			{#each skills as skill}
-				<div class="bg-mai-tai-700 px-2 font-bold text-sm">{skill.name} Lv{levels[skill.name]}</div>
+				<div class="bg-mai-tai-700 px-2 font-bold text-sm flex">
+					<span class="flex-1">{skill.name} Lv{levels[skill.name]}</span>
+					<span
+						>{skill.lv[levels[skill.name]].reduce(
+							(p, c) => p + calcDamage(c, status, {}),
+							0
+						)}ダメージ</span
+					>
+				</div>
 				<div class="p-2">
 					{#each skill.lv[levels[skill.name]] as attack, i}
 						<div class="leading-tight text-sm last:mb-0">

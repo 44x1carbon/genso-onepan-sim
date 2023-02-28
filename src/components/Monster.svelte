@@ -5,6 +5,8 @@
 	import type { Status } from '../Status';
 	import { elementLabel, typeLabel } from '../Label';
 	import BaseEquipmentData from '../BaseEquipmentData';
+	import RangeSlider from 'svelte-range-slider-pips';
+	import { browser } from '$app/environment';
 
 	export let skills: Skill[] = [];
 	export let levels: { [skillName: string]: SkillLevel } = {};
@@ -54,6 +56,7 @@
 	let level: number = 0;
 	let dropScore: number = 0;
 	let isOnlyTwoPunch: boolean = false;
+	let punchNumRange = [0.1, 10];
 
 	let areas = [
 		'旅立ちの草原',

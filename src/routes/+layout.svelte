@@ -14,7 +14,8 @@
 		{ label: 'ダメージ<br>計算', href: '/' },
 		{ label: '時給<br>計算', href: '/hourly' },
 		{ label: 'PT募集<br>掲示板', href: '/wantedparty' },
-		{ label: 'スキル<br>シミュ', href: '/skill' }
+		{ label: 'スキル<br>シミュ', href: '/skill' },
+		{ label: '自己紹介<br>カード', href: '/profilecard' }
 		// { label: 'フレンド<br>機能', href: '/friend' }
 	];
 
@@ -44,12 +45,12 @@
 		src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9799169908631652"
 		crossorigin="anonymous"
 	></script>
-	<script src="https://kit.fontawesome.com/6816b11656.js" crossorigin="anonymous"></script>
+	<!-- <script src="https://kit.fontawesome.com/6816b11656.js" crossorigin="anonymous"></script>
 	<link
 		rel="stylesheet"
 		href="https://kit.fontawesome.com/6816b11656.css"
 		crossorigin="anonymous"
-	/>
+	/> -->
 </svelte:head>
 
 <header class="block border-box text-white header">
@@ -95,7 +96,9 @@
 			<li>スキルシミュレーターを公開しました。</li>
 		</ul>
 	</div>
-	<slot />
+	<div class="md:w-[74rem] mx-auto">
+		<slot />
+	</div>
 	<div class="border-2 rounded mx-auto p-2 my-2 border-gray-900 bg-gray-700  md:w-[74rem]">
 		後々これらのツールを有料化する予定です。1ツール月額100円ぐらいで考えています。
 	</div>
@@ -227,6 +230,10 @@
 
 	:global(.btn) {
 		@apply border rounded p-1 bg-mai-tai-400 border-mai-tai-900 text-black font-bold block;
+	}
+
+	:global(.btn.normal) {
+		@apply bg-gray-300;
 	}
 
 	:global(.heading2) {
