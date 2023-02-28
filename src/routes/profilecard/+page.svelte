@@ -119,19 +119,17 @@
 	}
 
 	onMount(() => {
-		const searchParams = new URLSearchParams(window.location.search);
-		if (searchParams.has('card')) {
-			const cards: { [key: string]: string } = {
-				ignis: '/ignis-card.png'
-			};
-			originalBackgroundImageUrl = cards[searchParams.get('card') ?? ''];
-		}
-
+		// const searchParams = new URLSearchParams(window.location.search);
+		// if (searchParams.has('card')) {
+		// 	const cards: { [key: string]: string } = {
+		// 		ignis: '/ignis-card.png'
+		// 	};
+		// 	originalBackgroundImageUrl = cards[searchParams.get('card') ?? ''];
+		// }
 		// const json = localStorage.getItem(SAVE_KEY);
 		// if (json) {
 		// 	profileData = JSON.parse(json);
 		// }
-
 		// setInterval(() => {
 		// 	localStorage.setItem(SAVE_KEY, JSON.stringify(profileData));
 		// }, 100);
