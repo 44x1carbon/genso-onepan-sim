@@ -355,6 +355,12 @@ export class Canvas {
             this.layer.add(image);
         };
         imageObj.src = cropper.getCroppedCanvas().toDataURL();
+    }
 
+    toDataURL() {
+        return this.stage.toDataURL({
+            width: this.width,
+            height: this.height,
+        });
     }
 }

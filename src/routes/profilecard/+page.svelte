@@ -82,6 +82,11 @@
 		if (cropper) {
 			canvas.renderImg(cropper);
 		}
+
+		setTimeout(() => {
+			const img = document.getElementById('preview-img');
+			img.src = canvas.toDataURL();
+		}, 2000);
 		isPreview = true;
 	}
 
@@ -620,8 +625,10 @@
 	</div>
 </div>
 
-<div class="md:w-[48rem] mx-auto mt-4 w-full">
-	<div id="container" class="" />
+<div class="md:w-[48rem] mx-auto mt-4 w-full relative">
+	<div id="container" class="opacity-0 " />
+	<img id="preview-img" class="w-full absolute top-0" />
+
 	{#if isPreview}
 		<div class="bg-black text-center text-xs p-1">
 			画像を保存して<br />「#元素騎士自己紹介カード」をつけてツイートしよう！！
