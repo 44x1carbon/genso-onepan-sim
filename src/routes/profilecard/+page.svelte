@@ -1,5 +1,6 @@
 <script lang="ts">
 	// import { Canvas } from '$lib/profilecard/Canvas';
+	import Konva from 'konva';
 	import type { ProfileData } from '$lib/profilecard/ProfileData';
 	import Cropper from 'cropperjs';
 	import 'cropperjs/dist/cropper.css';
