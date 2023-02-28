@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { Canvas } from '$lib/profilecard/Canvas';
 	import type { ProfileData } from '$lib/profilecard/ProfileData';
 	import Cropper from 'cropperjs';
@@ -6,6 +7,8 @@
 	import { onMount } from 'svelte';
 	import JobData from '../../JobData';
 	import SkillTreeData, { type Skill } from '../../SkillTreeData';
+
+	const SAVE_KEY = 'GENSO-PROFILECARD';
 
 	let cropper: Cropper | undefined = undefined;
 	let originalBackgroundImageUrl: string = '';
@@ -122,6 +125,15 @@
 				ignis: '/ignis-card.png'
 			};
 			originalBackgroundImageUrl = cards[searchParams.get('card') ?? ''];
+		}
+
+		setInterval(() => {
+			localStorage.setItem(SAVE_KEY, JSON.stringify(profileData));
+		}, 100);
+
+		const json = localStorage.getItem(SAVE_KEY);
+		if (json) {
+			profileData = JSON.parse(json);
 		}
 	});
 </script>
