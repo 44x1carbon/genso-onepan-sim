@@ -63,6 +63,8 @@
 	};
 
 	function preview() {
+		const img = document.getElementById('preview-img');
+		img.removeAttribute('src');
 		const canvas = new Canvas(
 			'container',
 			originalBackgroundImageUrl ? originalBackgroundImageUrl : '/normal-card.png',
@@ -84,9 +86,8 @@
 		}
 
 		setTimeout(() => {
-			const img = document.getElementById('preview-img');
 			img.src = canvas.toDataURL();
-		}, 2000);
+		}, 3000);
 		isPreview = true;
 	}
 
@@ -137,7 +138,7 @@
 		if (json) {
 			// console.log(json);
 			profileData = JSON.parse(json);
-			// preview();
+			preview();
 		}
 		isInit = true;
 
@@ -627,7 +628,11 @@
 
 <div class="md:w-[48rem] mx-auto mt-4 w-full relative">
 	<div id="container" class="opacity-0 " />
-	<img id="preview-img" class="w-full absolute top-0" />
+	<img
+		id="preview-img"
+		class="w-full absolute top-0 bg-white"
+		style="background-image: url('https://www.benricho.org/loading_images/img-size/loading-l-5.gif'); aspect-ratio: 16 / 9; background-repeat: no-repeat; background-position: center;"
+	/>
 
 	{#if isPreview}
 		<div class="bg-black text-center text-xs p-1">

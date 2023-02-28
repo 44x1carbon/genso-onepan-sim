@@ -33,6 +33,22 @@ export class Canvas {
         this.setBackground("/template.png");
 
         this.layer = new Konva.Layer();
+        this.layer.add(new Konva.Rect({
+            x: 715,
+            y: 694,
+            width: 1280 - 715,
+            height: 26,
+            fill: "#333"
+        }));
+        this.layer.add(new Konva.Text({
+            x: 730,
+            y: 697,
+            text: "@IGNIS TOOLS：https://ignis-tools.vercel.app/",
+            fontSize: 24,
+            fontStyle: "bold",
+            fill: "#fff"
+        }));
+
         this.stage.add(this.layer);
 
         if (debug) {
