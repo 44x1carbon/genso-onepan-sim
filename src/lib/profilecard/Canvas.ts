@@ -165,11 +165,11 @@ export class Canvas {
             attack: { x: 148 + 15, y: 315 + 17.5 },
             magicAttack: { x: 518 + 40, y: 315 + 17.5 },
             strength: { x: 148 + 15, y: 345 + 13 },
-            brains: { x: 518 + 40, y: 345 + 13 },
-            skillful: { x: 148 + 15, y: 375 + 8 },
-            mind: { x: 518 + 40, y: 375 + 8 },
-            difence: { x: 148 + 15, y: 375 + 35 },
-            speed: { x: 518 + 40, y: 375 + 35 },
+            difence: { x: 518 + 40, y: 345 + 13 },
+            speed: { x: 148 + 15, y: 375 + 8 },
+            brains: { x: 518 + 40, y: 375 + 8 },
+            skillful: { x: 148 + 15, y: 375 + 35 },
+            mind: { x: 518 + 40, y: 375 + 35 },
         }
 
         Object.entries(status).forEach(([key, value]) => {

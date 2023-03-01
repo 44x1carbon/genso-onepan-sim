@@ -255,6 +255,18 @@
 					</div>
 				</div>
 				<div class="form-row w-1/2">
+					<div class="form-label w-24">防御力</div>
+					<div class="form-controll">
+						<input type="number" bind:value={profileData.status.difence} />
+					</div>
+				</div>
+				<div class="form-row w-1/2">
+					<div class="form-label w-24">速さ</div>
+					<div class="form-controll">
+						<input type="number" bind:value={profileData.status.speed} />
+					</div>
+				</div>
+				<div class="form-row w-1/2">
 					<div class="form-label w-24">知力</div>
 					<div class="form-controll">
 						<input type="number" bind:value={profileData.status.brains} />
@@ -270,18 +282,6 @@
 					<div class="form-label w-24">精神</div>
 					<div class="form-controll">
 						<input type="number" bind:value={profileData.status.mind} />
-					</div>
-				</div>
-				<div class="form-row w-1/2">
-					<div class="form-label w-24">防御力</div>
-					<div class="form-controll">
-						<input type="number" bind:value={profileData.status.difence} />
-					</div>
-				</div>
-				<div class="form-row w-1/2">
-					<div class="form-label w-24">速さ</div>
-					<div class="form-controll">
-						<input type="number" bind:value={profileData.status.speed} />
 					</div>
 				</div>
 			</div>
