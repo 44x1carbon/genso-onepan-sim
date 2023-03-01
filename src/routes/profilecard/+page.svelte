@@ -31,7 +31,8 @@
 			brains: 0,
 			skillful: 0,
 			mind: 0,
-			difence: 0
+			difence: 0,
+			speed: 0
 		},
 		freecomment: '',
 		playTime: {
@@ -278,9 +279,9 @@
 					</div>
 				</div>
 				<div class="form-row w-1/2">
-					<div class="form-label w-24" />
+					<div class="form-label w-24">速さ</div>
 					<div class="form-controll">
-						<input type="number" class="opacity-0" />
+						<input type="number" bind:value={profileData.status.speed} />
 					</div>
 				</div>
 			</div>

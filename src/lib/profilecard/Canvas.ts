@@ -157,6 +157,7 @@ export class Canvas {
         skillful: number | undefined
         mind: number | undefined
         difence: number | undefined
+        speed: number | undefined
     }) {
         const pos = {
             hp: { x: 148 + 15, y: 285 + 21.5 },
@@ -168,6 +169,7 @@ export class Canvas {
             skillful: { x: 148 + 15, y: 375 + 8 },
             mind: { x: 518 + 40, y: 375 + 8 },
             difence: { x: 148 + 15, y: 375 + 35 },
+            speed: { x: 518 + 40, y: 375 + 35 },
         }
 
         Object.entries(status).forEach(([key, value]) => {
@@ -195,7 +197,7 @@ export class Canvas {
         const _text = new Konva.Text({
             x,
             y,
-            text: skillStructure.map(({ name, level }) => level === 5 ?  `・${skills.find(s => s.name === name)?.maxSkillName}`  : `・${name} Lv${level}`).join(" "),
+            text: skillStructure.map(({ name, level }) => level === 5 ? `・${skills.find(s => s.name === name)?.maxSkillName}` : `・${name} Lv${level}`).join(" "),
             fontSize: 16,
             fontStyle: "bold",
             fill: "#444444",
@@ -344,14 +346,14 @@ export class Canvas {
         holiday: string
     }) {
 
-        const x = 146 + 20;
-        const y = 586 + 47;
+        const x = 146 + 10;
+        const y = 586 + 52;
 
         const _text = new Konva.Text({
             x,
             y,
             text: `平日：${time.weekday}\n休日：${time.holiday}`,
-            fontSize: 16,
+            fontSize: 13,
             fontStyle: "bold",
             fill: "#444",
             lineHeight: 1.2

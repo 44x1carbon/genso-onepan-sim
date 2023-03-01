@@ -16,6 +16,7 @@ export type ProfileData = {
         skillful: number | undefined
         mind: number | undefined
         difence: number | undefined
+        speed: number | undefined
     }
     freecomment: string
     playTime: {
