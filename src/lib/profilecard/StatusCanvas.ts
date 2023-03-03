@@ -6,7 +6,7 @@ import SkillTreeData, { type Skill } from '../../SkillTreeData';
 
 const skills = ([] as Skill[]).concat(...Object.values(SkillTreeData).map(({ skills }) => Object.values(skills)));
 
-export class Canvas {
+export class StatusCanvas {
     stage: Stage
     width: number
     height: number
@@ -33,7 +33,7 @@ export class Canvas {
         });
 
         this.setBackground(backgroundImgUrl);
-        this.setBackground("/template.png");
+        this.setBackground("/template1.png");
 
         this.layer = new Konva.Layer();
         this.layer.add(new Konva.Rect({

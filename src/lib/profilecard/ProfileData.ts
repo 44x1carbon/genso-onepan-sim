@@ -1,4 +1,4 @@
-export type ProfileData = {
+export type StatusProfileData = {
     name: string
     id: string
     job: {
@@ -57,5 +57,31 @@ export type ProfileData = {
             rarity: string
         }
     }
-    skillStructure: { name: string, level: number }[]
+    skillStructure: { name: string, level: number }[],
+    image1: Cropper | undefined
+}
+
+export type FriendProfileData = {
+    name: string
+    id: string
+    job: {
+        name: string
+        lv: number
+    }
+    playstyle: string
+    freecomment: string
+    togetherFriends: string[]
+    wantFriends: string[]
+    habitat: string[]
+    favouriteMonsters: string[]
+    dislikesMonsters: string[]
+    playTime: {
+        dayOfWeek: string[]
+        time: {
+            weekday: string
+            holiday: string
+        }
+    }
+    image1: Cropper | undefined
+    image2: Cropper | undefined
 }
