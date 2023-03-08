@@ -13,7 +13,7 @@
 
 	onMount(async () => {
 		core = new Core(setupFirebaseApp());
-		userInfo = getUserInfo();
+		userInfo = await core.getUserInfo(getUserInfo()?.id ?? "");
 
 		const md = new MobileDetect(window.navigator.userAgent);
 
@@ -94,6 +94,9 @@
 			{#if userInfo?.isLogin}
 				<button class="btn w-full" on:click={logout}>ログアウト</button>
 			{:else}
+				<div class="bg-well-read-700 p-1 rounded-sm font-bold mb-2">
+					※ログアウト忘れを防止する為、毎朝4時に自動的に全ユーザーログアウトされます。
+				</div>
 				<button class="btn text-center justify-center w-full" on:click={login}>ログイン</button>
 				<div class="p-1 text-xs">ログインすると通知が受け取れる様になります。</div>
 			{/if}

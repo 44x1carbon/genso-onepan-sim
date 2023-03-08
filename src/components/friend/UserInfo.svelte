@@ -1,14 +1,18 @@
 <script lang="ts">
 	import { updateModal } from '$lib/ModalStore';
-	import { type UserInfo } from '$lib/friend/Core';
+	import { type FriendRequest, type UserInfo } from '$lib/friend/Core';
 	import JobData from '../../JobData';
 	import FriendRequestModal from '$components/friend/FriendRequestModal.svelte';
 	import { getUserInfo } from '$lib/friend/UserInfoStore';
 
 	export let userInfo: UserInfo;
 	export let friendList: UserInfo[];
+	export let sendingFriendRequestList: FriendRequest[];
 
 	$: friendIdList = friendList.map((friend) => friend.id);
+	$: sendingFriendRequestIdList = sendingFriendRequestList
+		.filter((req) => !req.isApproved)
+		.map((req) => req.to.id);
 	let from: UserInfo = getUserInfo();
 
 	function jobShortName(jobName: string) {
@@ -48,7 +52,16 @@
 				{userInfo.message}
 			</div>
 		</div>
-		{#if !friendIdList.includes(userInfo.id)}
+		{#if sendingFriendRequestIdList.includes(userInfo.id)}
+			<div class="p-1">
+				<div
+					class="text-xs flex h-full w-full leading-none items-center bg-black bg-opacity-50 p-1 font-bold rounded-sm"
+				>
+					申請中
+				</div>
+			</div>
+		{/if}
+		{#if !friendIdList.includes(userInfo.id) && !sendingFriendRequestIdList.includes(userInfo.id)}
 			<div class="p-1">
 				<button
 					class="btn w-full text-xs flex h-full w-full leading-none"

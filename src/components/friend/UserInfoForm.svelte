@@ -19,7 +19,9 @@
 		],
 		status: [],
 		isLogin: false,
-		message: ''
+		message: '',
+		twitterId: '',
+		discordId: ''
 	};
 
 	onMount(() => {
@@ -84,6 +86,27 @@
 						bind:value={userInfo.name}
 						placeholder="ゲーム内のキャラ名"
 					/>
+				</div>
+			</div>
+			<div class="form-row">
+				<div class="form-label w-28 ">連絡先</div>
+				<div class="form-controll space flex-1 flex-col gap-2">
+					<div>
+						Twitter ID: <input
+							type="text"
+							class="text-sm "
+							bind:value={userInfo.twitterId}
+							placeholder="@xxxxxxxxx"
+						/>
+					</div>
+					<div>
+						Discord ID: <input
+							type="text"
+							class="text-sm "
+							bind:value={userInfo.discordId}
+							placeholder="#9999"
+						/>
+					</div>
 				</div>
 			</div>
 			<div class="form-row">

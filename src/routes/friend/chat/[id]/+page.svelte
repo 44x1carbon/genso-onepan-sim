@@ -80,6 +80,19 @@
 </script>
 
 {#if toUserInfo && fromUserInfo}
+	<div class="bg-mai-tai-200 text-gray-900 p-2 rounded-sm font-bold text-sm mb-4">
+		※こちらのチャットでは通知が相手に届かない場合があります。<br />
+		確実にやりとりをしたい場合は別の連絡手段で連絡をお願いします。
+		{#if toUserInfo.twitterId}
+			<br />Twitter:
+			<a href={`https://twitter.com/${toUserInfo.twitterId.replace('@', '')}/`}
+				>{toUserInfo.twitterId}</a
+			>
+		{/if}
+		{#if toUserInfo.discordId}
+			<br />Discord: {toUserInfo.discordId}
+		{/if}
+	</div>
 	<div class="bg-white rounded-sm border border-gray-700">
 		<div class="bg-well-read-900 p-2 font-bold border-b border-gray-700">
 			{toUserInfo.name}さんとのチャット

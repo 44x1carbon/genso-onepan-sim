@@ -1,6 +1,6 @@
 <script lang="ts">
 	import setupFirebaseApp from '$lib/Firebase';
-	import { Core, type UserInfo } from '$lib/friend/Core';
+	import { Core, type FriendRequest, type UserInfo } from '$lib/friend/Core';
 	import UserInfoComponent from '$components/friend/UserInfo.svelte';
 	import UserInfoSearchForm from '$components/friend/UserInfoSearchForm.svelte';
 	import { onMount } from 'svelte';
@@ -12,6 +12,7 @@
 	let core: Core | undefined = undefined;
 	let userInfo: UserInfo | undefined = undefined;
 	let friendList: UserInfo[] = [];
+	let sendingFriendRequestList: FriendRequest[] = [];
 
 	async function search(condition: SearchCondition) {
 		userInfoList = (await core?.getUserInfoList()) ?? [];
@@ -29,6 +30,16 @@
 						}) && (condition.status ? userInfo.status.includes(condition.status) : true)
 					);
 				})
+				.sort((a, b) => {
+					const aIsSendingRequest = sendingFriendRequestList.some((req) => req.to.id === a.id);
+					const bIsSendingRequest = sendingFriendRequestList.some((req) => req.to.id === b.id);
+
+					if (aIsSendingRequest === bIsSendingRequest) {
+						return 1;
+					} else {
+						return (aIsSendingRequest ? 1 : -1) - (bIsSendingRequest ? 1 : -1);
+					}
+				})
 		];
 	}
 
@@ -36,11 +47,22 @@
 		core = new Core(setupFirebaseApp());
 		userInfo = getUserInfo();
 
-		userInfoList = await core.getUserInfoList();
-		_userInfoList = [...userInfoList].filter(({ id }) => id !== userInfo?.id);
-
 		if (userInfo) {
 			friendList = await core.getFriendList(userInfo);
+			sendingFriendRequestList = await core.getSendingFriendRequestList(userInfo.id);
+
+			userInfoList = await core.getUserInfoList();
+			_userInfoList = [...userInfoList]
+				.filter(({ id }) => id !== userInfo?.id)
+				.sort((a, b) => {
+					const aSendingRequest = sendingFriendRequestList.find((req) => req.to.id === a.id);
+					const bSendingRequest = sendingFriendRequestList.find((req) => req.to.id === b.id);
+
+					const aNum = aSendingRequest === undefined ? 3 : !aSendingRequest.isApproved ? 2 : 1;
+					const bNum = bSendingRequest === undefined ? 3 : !bSendingRequest.isApproved ? 2 : 1;
+
+					return bNum - aNum;
+				});
 		}
 	});
 
@@ -62,6 +84,6 @@
 
 <div class="flex flex-wrap gap-2 md:w-[74rem] md:mx-auto">
 	{#each _userInfoList as userInfo}
-		<UserInfoComponent {userInfo} {friendList}/>
+		<UserInfoComponent {userInfo} {friendList} {sendingFriendRequestList} />
 	{/each}
 </div>

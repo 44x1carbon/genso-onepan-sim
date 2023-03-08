@@ -527,6 +527,8 @@ export type UserInfo = {
     status: string[];
     isLogin: boolean;
     message: string;
+    twitterId: string;
+    discordId: string;
 };
 
 export type Job = {
