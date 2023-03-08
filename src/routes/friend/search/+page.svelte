@@ -31,15 +31,14 @@
 					);
 				})
 				.sort((a, b) => {
-					const aIsSendingRequest = sendingFriendRequestList.some((req) => req.to.id === a.id);
-					const bIsSendingRequest = sendingFriendRequestList.some((req) => req.to.id === b.id);
+					const aSendingRequest = sendingFriendRequestList.find((req) => req.to.id === a.id);
+					const bSendingRequest = sendingFriendRequestList.find((req) => req.to.id === b.id);
 
-					if (aIsSendingRequest === bIsSendingRequest) {
-						return 1;
-					} else {
-						return (aIsSendingRequest ? 1 : -1) - (bIsSendingRequest ? 1 : -1);
-					}
-				})
+					const aNum = aSendingRequest === undefined ? 3 : !aSendingRequest.isApproved ? 2 : 1;
+					const bNum = bSendingRequest === undefined ? 3 : !bSendingRequest.isApproved ? 2 : 1;
+
+					return bNum - aNum;
+				});
 		];
 	}
 
