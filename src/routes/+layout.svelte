@@ -15,8 +15,8 @@
 		{ label: '時給<br>計算', href: '/hourly' },
 		{ label: 'PT募集<br>掲示板', href: '/wantedparty' },
 		{ label: 'スキル<br>シミュ', href: '/skill' },
-		{ label: '自己紹介<br>カード', href: '/profilecard' }
-		// { label: 'フレンド<br>機能', href: '/friend' }
+		{ label: '自己紹介<br>カード', href: '/profilecard' },
+		{ label: 'フレンド<br>機能', href: '/friend' }
 	];
 
 	onMount(() => {
@@ -232,8 +232,12 @@
 		@apply border rounded p-1 bg-mai-tai-400 border-mai-tai-900 text-black font-bold block;
 	}
 
+	:global(a.btn) {
+		@apply flex;
+	}
+
 	:global(.btn.normal) {
-		@apply bg-gray-300;
+		@apply bg-gray-400 border-gray-900 text-gray-900;
 	}
 
 	:global(.heading2) {
