@@ -38,7 +38,7 @@
 					const bNum = bSendingRequest === undefined ? 3 : !bSendingRequest.isApproved ? 2 : 1;
 
 					return bNum - aNum;
-				});
+				})
 		];
 	}
 
