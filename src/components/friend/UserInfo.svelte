@@ -28,7 +28,7 @@
 </script>
 
 <div class="md:w-[24rem] w-full flex flex-col">
-	<div class="heading text-sm p-1">
+	<div class="bg-well-read-700 text-sm p-1">
 		<span class="mr-4">ID:{userInfo.id}</span><span class="">{userInfo.name}</span>
 	</div>
 	<div class="panel flex flex-1">
@@ -54,9 +54,7 @@
 		</div>
 		{#if sendingFriendRequestIdList.includes(userInfo.id)}
 			<div class="p-1">
-				<div
-					class="text-xs flex h-full w-full leading-none items-center bg-black bg-opacity-50 p-1 font-bold rounded-sm"
-				>
+				<div class="text-xs flex h-full w-full leading-none items-center bg-gray-700 font-bold p-1">
 					申請中
 				</div>
 			</div>

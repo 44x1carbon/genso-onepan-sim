@@ -53,12 +53,12 @@
 {#if browser}
 	{#if userInfo}
 		<div class="w-full flex flex-col">
-			<div class="heading text-sm p-1">
+			<div class="bg-well-read-700 text-sm p-1">
 				<div class="bg-black inline-block bg-opacity-50 text-xs rounded-sm px-1">
 					<span class={(userInfo.isLogin ? 'text-green-500' : 'text-red-500') + ' mr-1'}>●</span
 					>{userInfo.isLogin ? 'ログイン' : '未ログイン'}
 				</div>
-				<div>
+				<div class="font-bold">
 					<span class="mr-4">ID:{userInfo.id}</span><span class="">{userInfo.name}</span>
 				</div>
 			</div>

@@ -44,7 +44,7 @@
 	class="md:w-[24rem] w-full flex flex-col"
 	class:opacity-50={!userInfo.isLogin || muteList.includes(userInfo.id)}
 >
-	<div class="heading text-sm p-1">
+	<div class="bg-well-read-700 text-sm p-1">
 		<div>
 			<div class="bg-black inline-block bg-opacity-50 text-xs rounded-sm px-1">
 				<span class={(userInfo.isLogin ? 'text-green-500' : 'text-red-500') + ' mr-1'}>●</span
@@ -55,7 +55,7 @@
 			</div>
 		</div>
 
-		<div>
+		<div class="font-bold">
 			<span class="mr-4">ID:{userInfo.id}</span><span class="">{userInfo.name}</span>
 		</div>
 	</div>
