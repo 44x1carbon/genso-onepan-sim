@@ -19,6 +19,7 @@
 		_userInfoList = [
 			...userInfoList
 				.filter(({ id }) => id !== userInfo?.id)
+				.filter(({ id }) => id !== undefined)
 				.filter((userInfo) => {
 					if (condition.id !== '') {
 						return condition.id === userInfo.id;
@@ -53,6 +54,7 @@
 			userInfoList = await core.getUserInfoList();
 			_userInfoList = [...userInfoList]
 				.filter(({ id }) => id !== userInfo?.id)
+				.filter(({ id }) => id !== undefined)
 				.sort((a, b) => {
 					const aSendingRequest = sendingFriendRequestList.find((req) => req.to.id === a.id);
 					const bSendingRequest = sendingFriendRequestList.find((req) => req.to.id === b.id);
