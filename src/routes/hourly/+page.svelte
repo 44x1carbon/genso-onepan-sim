@@ -8,6 +8,16 @@
 	import tourSetup from '../../lib/houly/Tour';
 	import ExpTableData from '../../ExpTableData';
 	import ShareFab from '../../components/ShareFAB.svelte';
+	import dayjs from 'dayjs';
+	import utc from 'dayjs/plugin/utc';
+	import timezone from 'dayjs/plugin/timezone';
+	import customParseFormat from 'dayjs/plugin/customParseFormat';
+	import 'dayjs/locale/ja';
+	dayjs.extend(utc);
+	dayjs.extend(timezone);
+	dayjs.extend(customParseFormat);
+	dayjs.tz.setDefault('Asia/Tokyo');
+	dayjs.locale('ja');
 
 	const SAVE_KEY = 'GENSO-HOULY-DATA';
 
@@ -15,14 +25,13 @@
 	let maxStep: number = 0;
 	let step2: number = 0;
 	let maxStep2: number = 0;
-	let step3: number = 0;
-	let maxStep3: number = 0;
 	let funClubCardList = {
 		なし: 1,
 		レベル1: 0.97,
 		レベル2: 0.94,
 		レベル3: 0.9
 	};
+	let startTime: dayjs.Dayjs | undefined = undefined;
 
 	let initialState = {
 		baseEquipment: {
@@ -242,34 +251,6 @@
 				return [pos, cost];
 			})
 		);
-		return Object.fromEntries(
-			Object.entries({
-				右手: Math.floor(
-					otherInfo.baseEquipment.右手.cost / (100 - currentState.baseEquipment.右手.condition)
-				),
-				左手: Math.floor(
-					otherInfo.baseEquipment.左手.cost / (100 - currentState.baseEquipment.左手.condition)
-				),
-				胴: Math.floor(
-					otherInfo.baseEquipment.胴.cost / (100 - currentState.baseEquipment.胴.condition)
-				),
-				足: Math.floor(
-					otherInfo.baseEquipment.足.cost / (100 - currentState.baseEquipment.足.condition)
-				),
-				頭: Math.floor(
-					otherInfo.baseEquipment.頭.cost / (100 - currentState.baseEquipment.頭.condition)
-				),
-				背中: Math.floor(
-					otherInfo.baseEquipment.背中.cost / (100 - currentState.baseEquipment.背中.condition)
-				),
-				肩: Math.floor(
-					otherInfo.baseEquipment.肩.cost / (100 - currentState.baseEquipment.肩.condition)
-				),
-				指輪: Math.floor(
-					otherInfo.baseEquipment.指輪.cost / (100 - currentState.baseEquipment.指輪.condition)
-				)
-			}).map(([k, v]) => [k, Number.isNaN(v) || v === Infinity ? 0 : v])
-		);
 	}
 
 	function cosplayEquipmentRepairCosts() {
@@ -293,37 +274,6 @@
 				return [pos, cost];
 			})
 		);
-
-		// return Object.fromEntries(
-		// 	Object.entries({
-		// 		右手: Math.floor(
-		// 			100 - currentState.cosplayEquipment.右手.condition === 0
-		// 				? otherInfo.cosplayEquipment.右手.cost
-		// 				: otherInfo.cosplayEquipment.右手.cost /
-		// 						(100 - currentState.cosplayEquipment.右手.condition)
-		// 		),
-		// 		左手: Math.floor(
-		// 			otherInfo.cosplayEquipment.左手.cost /
-		// 				(100 - currentState.cosplayEquipment.左手.condition)
-		// 		),
-		// 		胴: Math.floor(
-		// 			otherInfo.cosplayEquipment.胴.cost / (100 - currentState.cosplayEquipment.胴.condition)
-		// 		),
-		// 		足: Math.floor(
-		// 			otherInfo.cosplayEquipment.足.cost / (100 - currentState.cosplayEquipment.足.condition)
-		// 		),
-		// 		頭: Math.floor(
-		// 			otherInfo.cosplayEquipment.頭.cost / (100 - currentState.cosplayEquipment.頭.condition)
-		// 		),
-		// 		背中: Math.floor(
-		// 			otherInfo.cosplayEquipment.背中.cost /
-		// 				(100 - currentState.cosplayEquipment.背中.condition)
-		// 		),
-		// 		肩: Math.floor(
-		// 			otherInfo.cosplayEquipment.肩.cost / (100 - currentState.cosplayEquipment.肩.condition)
-		// 		)
-		// 	}).map(([k, v]) => [k, Number.isNaN(v) || v === Infinity ? 0 : v])
-		// );
 	}
 
 	function baseEquipmentRepairCost() {
@@ -799,20 +749,28 @@
 				</Step>
 			</div>
 			<div class="flex justify-between p-2">
-				<div class="btn w-20 text-center cursor-pointer" on:click={() => (step -= 1)}>戻る</div>
+				<div class="btn normal w-20 text-center cursor-pointer" on:click={() => (step -= 1)}>
+					戻る
+				</div>
 				<div>
 					{step + 1}/{maxStep}
 				</div>
-				<div class="btn w-20 text-center  cursor-pointer" on:click={() => (step += 1)}>次へ</div>
+				<div class="btn normal w-20 text-center  cursor-pointer" on:click={() => (step += 1)}>
+					次へ
+				</div>
 			</div>
 		</div>
 
-		<div class="mt-2">
-			<button class="btn w-full block" on:click={copyCurrentToInitial}
+		<div class="mt-2 flex flex-col gap-2">
+			<button class="btn w-full block" on:click={() => (startTime = dayjs())}
+				>狩り開始時間を記録</button
+			>
+
+			<button class="btn normal w-full block" on:click={copyCurrentToInitial}
 				>狩り後のデータをコピー</button
 			>
 
-			<button class="btn w-full block mt-2" on:click={repairEquipment}
+			<button class="btn normal w-full block" on:click={repairEquipment}
 				>ベース・おしゃれをCND100に設定</button
 			>
 		</div>
@@ -998,12 +956,18 @@
 						<div class="heading2">現在の所持金・経験値を入力してください</div>
 						<div class="form-row">
 							<div class="form-label w-36">働いた時間</div>
-							<div class="form-controll flex items-center">
-								<input
-									type="number"
-									class="border w-24"
-									bind:value={currentState.workingMinute}
-								/><span class="bg-gray-900 px-1 border border-gray-900">分</span>
+							<div class="form-controll flex flex-col">
+								<div class="flex">
+									<input
+										type="number"
+										class="border flex-1"
+										bind:value={currentState.workingMinute}
+									/><span class="bg-gray-900 px-1 border border-gray-900">分</span>
+								</div>
+
+								{#if startTime}
+									<div class="text-sm">開始時間：{startTime.format('MM/DD HH:mm')}</div>
+								{/if}
 							</div>
 						</div>
 
@@ -1047,127 +1011,22 @@
 				</Step>
 			</div>
 			<div class="flex justify-between p-2">
-				<div class="btn w-20 text-center cursor-pointer" on:click={() => (step2 -= 1)}>戻る</div>
+				<div class="btn normal w-20 text-center cursor-pointer" on:click={() => (step2 -= 1)}>
+					戻る
+				</div>
 				<div>
 					{step2 + 1}/{maxStep2}
 				</div>
-				<div class="btn w-20 text-center cursor-pointer" on:click={() => (step2 += 1)}>次へ</div>
+				<div class="btn normal w-20 text-center cursor-pointer" on:click={() => (step2 += 1)}>
+					次へ
+				</div>
 			</div>
 		</div>
 
-		<button class="btn w-full block mt-2" on:click={reset}>入力をリセット</button>
+		<button class="btn normal w-full block mt-2" on:click={reset}>入力をリセット</button>
 		<div class="text-xs mt-1">結果がおかしい場合は一度入力をリセットして再度試して下さい。</div>
 	</div>
 
-	<!-- <div class="md:w-96">
-		<div class="heading mt-4 md:mt-0">装備の修理費やレートを入力。</div>
-		<div class="border shadow border-well-read-700 bg-chocolate-900 panel">
-			<div class="h-[22rem]">
-				<Step step={step3} bind:maxStep={maxStep3}>
-					<section>
-						<div class="heading2">
-							ベース装備の修理費を入力してください<br /><span class="text-xs"
-								>狩り後に修理屋で表示されている金額を入力してください</span
-							>
-						</div>
-						<div>
-							{#each ['右手', '左手', '胴', '足', '頭', '背中', '肩', '指輪'] as pos}
-								<div class="form-row">
-									<div class="form-label w-12">{pos}</div>
-									<div class="form-controll flex flex-1 gap-4">
-										<div class="flex  items-center">
-											<div class="text-xs flex-1">CND:</div>
-											<span class="ml-1">{currentState.baseEquipment[pos].condition}</span>
-										</div>
-
-										<div class="flex  items-center">
-											<div class="text-xs flex-1">修理費:</div>
-											<input
-												type="number"
-												class="border w-20 ml-2"
-												bind:value={otherInfo.baseEquipment[pos].cost}
-											/><span class="bg-gray-900 px-1 border border-gray-900">mR</span>
-										</div>
-									</div>
-								</div>
-							{/each}
-						</div>
-					</section>
-
-					<section>
-						<div class="heading2">
-							おしゃれ装備の修理費を入力してください<br /><span class="text-xs"
-								>狩り後に修理屋で表示されている金額を入力してください</span
-							>
-						</div>
-						<div>
-							{#each ['右手', '左手', '胴', '足', '頭', '背中', '肩'] as pos}
-								<div class="form-row">
-									<div class="form-label w-12">{pos}</div>
-									<div class="form-controll flex flex-1 gap-4">
-										<div class="flex  items-center">
-											<div class="text-xs flex-1">CND:</div>
-											<span class="ml-1">{currentState.cosplayEquipment[pos].condition}</span>
-										</div>
-
-										<div class="flex  items-center">
-											<div class="text-xs flex-1">修理費:</div>
-											<input
-												type="number"
-												class="border w-20 ml-2"
-												bind:value={otherInfo.cosplayEquipment[pos].cost}
-											/><span class="bg-gray-900 px-1 border border-gray-900">mMV</span>
-										</div>
-									</div>
-								</div>
-							{/each}
-						</div>
-					</section>
-					<section>
-						<div class="heading2">レートを入力してください。</div>
-						<div>
-							<div class="form-row">
-								<div class="form-label w-24">1ROND</div>
-								<div class="form-controll flex flex-1">
-									<span class="bg-gray-900 px-1 border border-gray-900">$</span>
-									<input
-										type="number"
-										class="border w-20"
-										bind:value={otherInfo.rate['ROND-mRond']}
-									/>
-								</div>
-							</div>
-							<div class="form-row">
-								<div class="form-label w-24">1MV</div>
-								<div class="form-controll flex flex-1">
-									<span class="bg-gray-900 px-1 border border-gray-900">$</span>
-									<input type="number" class="border w-20 " bind:value={otherInfo.rate['MV-mMV']} />
-								</div>
-							</div>
-							<div class="form-row">
-								<div class="form-label w-24">1USD</div>
-								<div class="form-controll flex flex-1">
-									<input
-										type="number"
-										class="border w-20 "
-										bind:value={otherInfo.rate['USD-JPY']}
-									/>
-									<span class="bg-gray-900 px-1 border border-gray-900">円</span>
-								</div>
-							</div>
-						</div>
-					</section>
-				</Step>
-			</div>
-			<div class="flex justify-between p-2">
-				<button class="btn w-20" on:click={() => (step3 -= 1)}>戻る</button>
-				<div>
-					{step3 + 1}/{maxStep3}
-				</div>
-				<button class="btn w-20" on:click={() => (step3 += 1)}>次へ</button>
-			</div>
-		</div>
-	</div> -->
 	<div class="md:w-96 md:mx-auto panel mt-4 md:mt-0 border border-well-read-700">
 		<div class="heading">収支</div>
 		<div class="p-4">
@@ -1212,7 +1071,6 @@
 >
 	<div class="flex justify-between">
 		<div>労働時間</div>
-		<div class="">{currentState.workingMinute}分</div>
 	</div>
 	<div class="flex justify-between mt-2">
 		<div>収入</div>

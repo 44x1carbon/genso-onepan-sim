@@ -93,7 +93,7 @@
 				<a href="https://fanclove.jp/club/IGNIS-TOOLS" class="underline text-blue-400"
 					>https://fanclove.jp/club/IGNIS-TOOLS</a
 				>
-			</li>			
+			</li>
 		</ul>
 	</div>
 	<div class="md:w-[74rem] mx-auto">
@@ -237,7 +237,7 @@
 	}
 
 	:global(.btn.normal) {
-		@apply bg-gray-400 border-gray-900 text-gray-900;
+		@apply bg-gray-200 border-gray-900 text-gray-900 border;
 	}
 
 	:global(.heading2) {
