@@ -86,15 +86,16 @@
 </header>
 
 <main class="bg-gray-900 min-h-screen border-box p-4 pb-24">
-	<ins
-		class="adsbygoogle"
-		style="display:block"
-		data-ad-client="ca-pub-9799169908631652"
-		data-ad-slot="2878476408"
-		data-ad-format="auto"
-		data-full-width-responsive="true"
-	/>
-	<div class="md:w-[74rem] mx-auto">
+	<div class="md:w-[74rem] mx-auto md:block hidden">
+		<ins
+			class="adsbygoogle"
+			style="display:inline-block;width:728px;height:90px"
+			data-ad-client="ca-pub-9799169908631652"
+			data-ad-slot="2878476408"
+		/>
+	</div>
+
+	<div>
 		<slot />
 	</div>
 	<div class="border-2 rounded mx-auto p-2 my-2 border-gray-900 bg-gray-700  md:w-[74rem]">
