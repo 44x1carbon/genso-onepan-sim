@@ -37,8 +37,11 @@
 			});
 		} catch {}
 
-		// @ts-ignore
-		(adsbygoogle = window.adsbygoogle || []).push({});
+		setTimeout(() => {
+			console.log('ads');
+			// @ts-ignore
+			(window.adsbygoogle = window.adsbygoogle || []).push({});
+		}, 1000);
 	});
 </script>
 

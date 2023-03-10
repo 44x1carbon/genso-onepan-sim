@@ -1062,7 +1062,7 @@
 			{/if}
 			<button class="btn w-full block" on:click={showResult}>時給を計算する</button>
 		</div>
-		<div class="md:w-[74rem] md:block hidden md:mb-4 text-center">
+		<div class="md:w-96 md:block hidden md:mb-4 text-center">
 			<ins
 				class="adsbygoogle"
 				style="display:block"
