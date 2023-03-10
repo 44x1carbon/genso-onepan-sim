@@ -103,7 +103,7 @@
 	</Ad>
 
 	<div class="flex max-w-screen">
-		<div class="md:block hidden mb:px-2">
+		<div class="3xl:block hidden 3xl:px-2 flex-1">
 			<Ad device="pc">
 				<ins
 					class="adsbygoogle"
@@ -115,12 +115,10 @@
 				/>
 			</Ad>
 		</div>
-		<div class="w-fit flex-1">
-			<div class="md:w-[74rem]">
-				<slot />
-			</div>
+		<div class="md:w-[74rem] flex-1">
+			<slot />
 		</div>
-		<div class="md:block hidden mb:px-2">
+		<div class="3xl:block hidden 3xl:px-2 flex-1">
 			<Ad device="pc">
 				<ins
 					class="adsbygoogle"

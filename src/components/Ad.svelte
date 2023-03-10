@@ -5,8 +5,12 @@
 	export let _class: string = '';
 
 	onMount(() => {
-		// @ts-ignore
-		(window.adsbygoogle = window.adsbygoogle || []).push({});
+		try {
+			// @ts-ignore
+			(window.adsbygoogle = window.adsbygoogle || []).push({});
+		} catch (e) {
+			console.error(e);
+		}
 	});
 </script>
 
