@@ -458,8 +458,6 @@
 				if (otherInfo.isCalcExp === undefined) otherInfo.isCalcExp = false;
 			}
 		}
-		// @ts-ignore
-		(window.adsbygoogle = window.adsbygoogle || []).push({});
 	});
 
 	function copyCurrentToInitial() {
@@ -1071,7 +1069,7 @@
 				data-ad-format="auto"
 				data-full-width-responsive="true"
 			/>
-		</Ad>		
+		</Ad>
 	</div>
 </div>
 

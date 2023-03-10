@@ -92,7 +92,7 @@
 			data-ad-client="ca-pub-9799169908631652"
 			data-ad-slot="2878476408"
 		/>
-	</Ad>	
+	</Ad>
 	<Ad device="sp">
 		<ins
 			class="adsbygoogle"
@@ -100,24 +100,35 @@
 			data-ad-client="ca-pub-9799169908631652"
 			data-ad-slot="9873197961"
 		/>
-	</Ad>		
+	</Ad>
 
 	<div class="flex">
 		<div class="md:block hidden flex-1">
-			<!--  -->
+			<Ad device="pc">
+				<ins
+					class="adsbygoogle"
+					style="display:block"
+					data-ad-client="ca-pub-9799169908631652"
+					data-ad-slot="8374082339"
+					data-ad-format="auto"
+					data-full-width-responsive="true"
+				/>
+			</Ad>
 		</div>
 		<div class="md:w-[74rem] mx-auto flex-1">
 			<slot />
 		</div>
 		<div class="md:block hidden flex-1">
-			<ins
-				class="adsbygoogle"
-				style="display:block"
-				data-ad-client="ca-pub-9799169908631652"
-				data-ad-slot="3298112953"
-				data-ad-format="auto"
-				data-full-width-responsive="true"
-			/>
+			<Ad device="pc">
+				<ins
+					class="adsbygoogle"
+					style="display:block"
+					data-ad-client="ca-pub-9799169908631652"
+					data-ad-slot="3298112953"
+					data-ad-format="auto"
+					data-full-width-responsive="true"
+				/>
+			</Ad>
 		</div>
 	</div>
 
