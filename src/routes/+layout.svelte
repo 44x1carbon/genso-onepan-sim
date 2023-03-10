@@ -46,11 +46,6 @@
 </script>
 
 <svelte:head>
-	<script
-		async
-		src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9799169908631652"
-		crossorigin="anonymous"
-	></script>
 	<!-- <script src="https://kit.fontawesome.com/6816b11656.js" crossorigin="anonymous"></script>
 	<link
 		rel="stylesheet"
