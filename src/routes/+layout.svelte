@@ -9,6 +9,7 @@
 	import 'shepherd.js/dist/css/shepherd.css';
 	import setupFirebaseApp from '$lib/Firebase';
 	import { modalStore, modalDataStore, updateModal } from '$lib/ModalStore';
+	import Ad from '$components/Ad.svelte';
 
 	let nav: { label: string; href: string }[] = [
 		{ label: 'ダメージ<br>計算', href: '/' },
@@ -84,22 +85,22 @@
 </header>
 
 <main class="bg-gray-900 min-h-screen border-box p-4 pb-96">
-	<div class="md:w-[74rem] mx-auto md:block hidden md:mb-4 text-center">
+	<Ad device="pc">
 		<ins
 			class="adsbygoogle mx-auto"
 			style="display:inline-block;width:728px;height:90px"
 			data-ad-client="ca-pub-9799169908631652"
 			data-ad-slot="2878476408"
 		/>
-	</div>
-	<div class="md:hidden">
+	</Ad>	
+	<Ad device="sp">
 		<ins
 			class="adsbygoogle"
 			style="display:inline-block;width:390px;height:90px"
 			data-ad-client="ca-pub-9799169908631652"
 			data-ad-slot="9873197961"
 		/>
-	</div>
+	</Ad>		
 
 	<div class="flex">
 		<div class="md:block hidden flex-1">
@@ -120,7 +121,7 @@
 		</div>
 	</div>
 
-	<div class="md:w-[74rem] mx-auto md:block hidden md:mb-4 text-center">
+	<Ad device="pc">
 		<ins
 			class="adsbygoogle"
 			style="display:block"
@@ -128,8 +129,8 @@
 			data-ad-client="ca-pub-9799169908631652"
 			data-ad-slot="6560638916"
 		/>
-	</div>
-	<div class="md:hidden">
+	</Ad>
+	<Ad device="sp">
 		<ins
 			class="adsbygoogle"
 			style="display:block"
@@ -138,7 +139,7 @@
 			data-ad-format="auto"
 			data-full-width-responsive="true"
 		/>
-	</div>
+	</Ad>
 </main>
 
 <footer

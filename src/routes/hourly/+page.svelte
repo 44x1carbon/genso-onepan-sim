@@ -13,6 +13,7 @@
 	import timezone from 'dayjs/plugin/timezone';
 	import customParseFormat from 'dayjs/plugin/customParseFormat';
 	import 'dayjs/locale/ja';
+	import Ad from '$components/Ad.svelte';
 	dayjs.extend(utc);
 	dayjs.extend(timezone);
 	dayjs.extend(customParseFormat);
@@ -1061,7 +1062,7 @@
 				<button class="btn w-full block" on:click={showResult}>時給を計算する</button>
 			</div>
 		</div>
-		<div class="md:w-96 md:block hidden md:mt-4 text-center">
+		<Ad device="pc" _class="md:w-96">
 			<ins
 				class="adsbygoogle"
 				style="display:block"
@@ -1070,7 +1071,7 @@
 				data-ad-format="auto"
 				data-full-width-responsive="true"
 			/>
-		</div>
+		</Ad>		
 	</div>
 </div>
 

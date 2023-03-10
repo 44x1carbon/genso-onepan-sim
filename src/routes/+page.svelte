@@ -8,6 +8,7 @@
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import ShareFab from '../components/ShareFAB.svelte';
+	import Ad from '$components/Ad.svelte';
 
 	let skills: Skill[] = [];
 	let levels: { [skillName: string]: SkillLevel } = {};
@@ -97,7 +98,7 @@
 <div class="flex mx-auto w-fit gap-4 flex-col md:flex-row">
 	<div>
 		<SkillSelector bind:skills bind:levels bind:isIncludeNomalAttack />
-		<div class="md:w-96 md:block hidden md:mt-4 text-center">
+		<Ad device="pc" _class="md:w-96">
 			<ins
 				class="adsbygoogle"
 				style="display:block"
@@ -106,7 +107,7 @@
 				data-ad-format="auto"
 				data-full-width-responsive="true"
 			/>
-		</div>
+		</Ad>
 	</div>
 	<div>
 		<StatusForm bind:status bind:addStatus />
@@ -122,7 +123,7 @@
 	</div>
 	<div>
 		<Monster status={_status} skills={_skills} {levels} />
-		<div class="md:w-96 md:block hidden md:mt-4 text-center">
+		<Ad device="pc" _class="md:w-96">
 			<ins
 				class="adsbygoogle"
 				style="display:block"
@@ -131,7 +132,7 @@
 				data-ad-format="auto"
 				data-full-width-responsive="true"
 			/>
-		</div>
+		</Ad>
 	</div>
 </div>
 
