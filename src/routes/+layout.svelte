@@ -102,7 +102,7 @@
 		/>
 	</Ad>
 
-	<div class="flex">
+	<div class="flex max-w-screen">
 		<div class="md:block hidden flex-1 mb:px-2">
 			<Ad device="pc">
 				<ins
