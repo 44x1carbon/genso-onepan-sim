@@ -103,11 +103,8 @@
 		/>
 	</div>
 
-	<div class="md:w-[74rem]">
+	<div class="md:w-[74rem] mx-auto">
 		<slot />
-	</div>
-	<div class="border-2 rounded mx-auto p-2 my-2 border-gray-900 bg-gray-700  md:w-[74rem]">
-		後々これらのツールを有料化する予定です。1ツール月額100円ぐらいで考えています。
 	</div>
 	<div class="md:w-[74rem] mx-auto md:block hidden md:mb-4 text-center">
 		<ins
