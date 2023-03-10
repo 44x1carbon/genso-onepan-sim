@@ -95,7 +95,7 @@
 		/>
 	</div>
 
-	<div>
+	<div class="md:w-[74rem]">
 		<slot />
 	</div>
 	<div class="border-2 rounded mx-auto p-2 my-2 border-gray-900 bg-gray-700  md:w-[74rem]">
