@@ -55,14 +55,18 @@
 			</div>
 		</div>
 
-		<div class="font-bold">
-			<span><span class="mr-4">ID:{userInfo.id}</span><span class="">{userInfo.name}</span></span>
-			<span>
+		<div class="font-bold flex justify-between items-center">
+			<div><span class="mr-4">ID:{userInfo.id}</span><span class="">{userInfo.name}</span></div>
+			<div>
 				{#if userInfo.twitterId}
-					<a>Twitter</a>		
+					<a
+						href={`https://twitter.com/${userInfo.twitterId.replace('@', '')}`}
+						target="_blank"
+						class="p-1 rounded font-bold inline-block h-full text-xs"
+						style="background-color: #1D9BF0;">Twitter</a
+					>
 				{/if}
-							
-			</span>
+			</div>
 		</div>
 	</div>
 	<div class="panel flex flex-1">
