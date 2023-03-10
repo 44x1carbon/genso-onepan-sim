@@ -93,7 +93,7 @@
 			data-ad-slot="2878476408"
 		/>
 	</Ad>
-	<Ad device="sp">
+	<Ad device="sp" _class="mb-4">
 		<ins
 			class="adsbygoogle"
 			style="display:inline-block;width:390px;height:90px"
@@ -141,7 +141,7 @@
 			data-ad-slot="6560638916"
 		/>
 	</Ad>
-	<Ad device="sp">
+	<Ad device="sp" _class="mt-4">
 		<ins
 			class="adsbygoogle"
 			style="display:block"
