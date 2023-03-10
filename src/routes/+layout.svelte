@@ -86,9 +86,9 @@
 </header>
 
 <main class="bg-gray-900 min-h-screen border-box p-4 pb-24">
-	<div class="md:w-[74rem] mx-auto md:block hidden">
+	<div class="md:w-[74rem] mx-auto md:block hidden md:mb-4">
 		<ins
-			class="adsbygoogle"
+			class="adsbygoogle mx-auto"
 			style="display:inline-block;width:728px;height:90px"
 			data-ad-client="ca-pub-9799169908631652"
 			data-ad-slot="2878476408"
