@@ -115,8 +115,10 @@
 				/>
 			</Ad>
 		</div>
-		<div class="md:w-[74rem] mx-auto flex-1">
-			<slot />
+		<div class="w-fit flex-1">
+			<div class="md:w-[74rem]">
+				<slot />
+			</div>
 		</div>
 		<div class="md:block hidden mb:px-2">
 			<Ad device="pc">
