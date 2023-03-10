@@ -36,6 +36,9 @@
 				});
 			});
 		} catch {}
+
+		// @ts-ignore
+		(adsbygoogle = window.adsbygoogle || []).push({});
 	});
 </script>
 
@@ -83,19 +86,14 @@
 </header>
 
 <main class="bg-gray-900 min-h-screen border-box p-4 pb-24">
-	<div class="border-2 border-gray-700 rounded mx-auto p-2 bg-gray-700 md:w-[74rem] mb-4">
-		<div class="font-bold">お知らせ</div>
-		<ul class="flex flex-col gap-1  text-sm leading-tight list-[square] pl-6">
-			<li>フレンド機能を公開しました。</li>
-			<li>
-				ファンクラブを開設しました、応援していただける方は加入していただけると開発のモチベーションがUPします！<br
-				/>
-				<a href="https://fanclove.jp/club/IGNIS-TOOLS" class="underline text-blue-400"
-					>https://fanclove.jp/club/IGNIS-TOOLS</a
-				>
-			</li>
-		</ul>
-	</div>
+	<ins
+		class="adsbygoogle"
+		style="display:block"
+		data-ad-client="ca-pub-9799169908631652"
+		data-ad-slot="2878476408"
+		data-ad-format="auto"
+		data-full-width-responsive="true"
+	/>
 	<div class="md:w-[74rem] mx-auto">
 		<slot />
 	</div>
