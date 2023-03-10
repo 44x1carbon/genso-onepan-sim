@@ -1061,16 +1061,16 @@
 				</a>
 			{/if}
 			<button class="btn w-full block" on:click={showResult}>時給を計算する</button>
-			<div class="md:w-[74rem] mx-auto md:block hidden md:mb-4 text-center">
-				<ins
-					class="adsbygoogle"
-					style="display:block"
-					data-ad-client="ca-pub-9799169908631652"
-					data-ad-slot="1970657218"
-					data-ad-format="auto"
-					data-full-width-responsive="true"
-				/>
-			</div>
+		</div>
+		<div class="md:w-[74rem] md:block hidden md:mb-4 text-center">
+			<ins
+				class="adsbygoogle"
+				style="display:block"
+				data-ad-client="ca-pub-9799169908631652"
+				data-ad-slot="1970657218"
+				data-ad-format="auto"
+				data-full-width-responsive="true"
+			/>
 		</div>
 	</div>
 </div>
