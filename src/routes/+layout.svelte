@@ -86,12 +86,20 @@
 </header>
 
 <main class="bg-gray-900 min-h-screen border-box p-4 pb-24">
-	<div class="md:w-[74rem] mx-auto md:block hidden md:mb-4">
+	<div class="md:w-[74rem] mx-auto md:block hidden md:mb-4 text-center">
 		<ins
 			class="adsbygoogle mx-auto"
 			style="display:inline-block;width:728px;height:90px"
 			data-ad-client="ca-pub-9799169908631652"
 			data-ad-slot="2878476408"
+		/>
+	</div>
+	<div class="md:hidden">
+		<ins
+			class="adsbygoogle"
+			style="display:inline-block;width:390px;height:90px"
+			data-ad-client="ca-pub-9799169908631652"
+			data-ad-slot="9873197961"
 		/>
 	</div>
 
@@ -100,6 +108,15 @@
 	</div>
 	<div class="border-2 rounded mx-auto p-2 my-2 border-gray-900 bg-gray-700  md:w-[74rem]">
 		後々これらのツールを有料化する予定です。1ツール月額100円ぐらいで考えています。
+	</div>
+	<div class="md:w-[74rem] mx-auto md:block hidden md:mb-4 text-center">
+		<ins
+			class="adsbygoogle"
+			style="display:block"
+			data-ad-format="autorelaxed"
+			data-ad-client="ca-pub-9799169908631652"
+			data-ad-slot="6560638916"
+		/>
 	</div>
 </main>
 
