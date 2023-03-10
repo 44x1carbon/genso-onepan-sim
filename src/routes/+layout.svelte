@@ -103,7 +103,7 @@
 	</Ad>
 
 	<div class="flex">
-		<div class="md:block hidden flex-1">
+		<div class="md:block hidden flex-1 mb:px-2">
 			<Ad device="pc">
 				<ins
 					class="adsbygoogle"
@@ -118,7 +118,7 @@
 		<div class="md:w-[74rem] mx-auto flex-1">
 			<slot />
 		</div>
-		<div class="md:block hidden flex-1">
+		<div class="md:block hidden flex-1 mb:px-2">
 			<Ad device="pc">
 				<ins
 					class="adsbygoogle"
