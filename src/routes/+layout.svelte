@@ -103,9 +103,25 @@
 		/>
 	</div>
 
-	<div class="md:w-[74rem] mx-auto">
-		<slot />
+	<div class="flex">
+		<div class="md:block hidden flex-1">
+			<!--  -->
+		</div>
+		<div class="md:w-[74rem] mx-auto flex-1">
+			<slot />
+		</div>
+		<div class="md:block hidden flex-1">
+			<ins
+				class="adsbygoogle"
+				style="display:block"
+				data-ad-client="ca-pub-9799169908631652"
+				data-ad-slot="3298112953"
+				data-ad-format="auto"
+				data-full-width-responsive="true"
+			/>
+		</div>
 	</div>
+
 	<div class="md:w-[74rem] mx-auto md:block hidden md:mb-4 text-center">
 		<ins
 			class="adsbygoogle"
@@ -113,6 +129,16 @@
 			data-ad-format="autorelaxed"
 			data-ad-client="ca-pub-9799169908631652"
 			data-ad-slot="6560638916"
+		/>
+	</div>
+	<div class="md:hidden">
+		<ins
+			class="adsbygoogle"
+			style="display:block"
+			data-ad-client="ca-pub-9799169908631652"
+			data-ad-slot="2176602974"
+			data-ad-format="auto"
+			data-full-width-responsive="true"
 		/>
 	</div>
 </main>
