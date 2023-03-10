@@ -73,6 +73,9 @@
 			levels = _levels;
 		}
 		isInit = true;
+
+		// @ts-ignore
+		(window.adsbygoogle = window.adsbygoogle || []).push({});
 	});
 </script>
 

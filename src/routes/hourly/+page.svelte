@@ -423,11 +423,6 @@
 
 	setInterval(() => {
 		if (browser) {
-			console.log('SAVE', {
-				initialState,
-				currentState,
-				otherInfo
-			});
 			localStorage.setItem(
 				SAVE_KEY,
 				JSON.stringify({
@@ -462,6 +457,8 @@
 				if (otherInfo.isCalcExp === undefined) otherInfo.isCalcExp = false;
 			}
 		}
+		// @ts-ignore
+		(window.adsbygoogle = window.adsbygoogle || []).push({});
 	});
 
 	function copyCurrentToInitial() {
