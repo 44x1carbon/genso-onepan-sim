@@ -109,7 +109,7 @@
 					class="adsbygoogle"
 					style="display:block"
 					data-ad-client="ca-pub-9799169908631652"
-					data-ad-slot="8374082339"
+					data-ad-slot="4060266953"
 					data-ad-format="auto"
 					data-full-width-responsive="true"
 				/>
@@ -124,7 +124,7 @@
 					class="adsbygoogle"
 					style="display:block"
 					data-ad-client="ca-pub-9799169908631652"
-					data-ad-slot="3298112953"
+					data-ad-slot="7607795570"
 					data-ad-format="auto"
 					data-full-width-responsive="true"
 				/>
