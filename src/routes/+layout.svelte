@@ -85,7 +85,7 @@
 	</div>
 </header>
 
-<main class="bg-gray-900 min-h-screen border-box p-4 pb-24">
+<main class="bg-gray-900 min-h-screen border-box p-4 pb-96">
 	<div class="md:w-[74rem] mx-auto md:block hidden md:mb-4 text-center">
 		<ins
 			class="adsbygoogle mx-auto"
