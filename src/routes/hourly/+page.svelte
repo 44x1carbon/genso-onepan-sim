@@ -1024,40 +1024,42 @@
 		<div class="text-xs mt-1">結果がおかしい場合は一度入力をリセットして再度試して下さい。</div>
 	</div>
 
-	<div class="md:w-96 md:mx-auto panel mt-4 md:mt-0 border border-well-read-700">
-		<div class="heading">収支</div>
-		<div class="p-4">
-			{#if isShowResult}
-				<img src="" id="result-img" class="mt-1 md:mx-auto md:w-96" />
-				<div class="text-center leading-tight p-1 bg-mai-tai-900 text-white w-full text-sm">
-					画像をダウンロードしてツイートしよう！<br />
-					<span class="text-xs leading-tight"
-						>スマホは画像長押し<br />PCは右クリックでダウンロードできます</span
-					>
-				</div>
+	<div class="md:w-96 md:mx-auto mt-4 md:mt-0 ">
+		<div class="panel border border-well-read-700">
+			<div class="heading">収支</div>
+			<div class="p-4">
+				{#if isShowResult}
+					<img src="" id="result-img" class="mt-1 md:mx-auto md:w-96" />
+					<div class="text-center leading-tight p-1 bg-mai-tai-900 text-white w-full text-sm">
+						画像をダウンロードしてツイートしよう！<br />
+						<span class="text-xs leading-tight"
+							>スマホは画像長押し<br />PCは右クリックでダウンロードできます</span
+						>
+					</div>
 
-				<div class="px-2 text-xs">
-					※USD-JPYのレートや装備修理費など正確に計算できない部分がある為、この数値は参考程度にお使いください。
-				</div>
+					<div class="px-2 text-xs">
+						※USD-JPYのレートや装備修理費など正確に計算できない部分がある為、この数値は参考程度にお使いください。
+					</div>
 
-				<!-- <button class="btn mt-4 mb-4  md:mx-auto w-full" on:click={exportData}
+					<!-- <button class="btn mt-4 mb-4  md:mx-auto w-full" on:click={exportData}
 					>入力内容をダウンロード</button
 				> -->
-				<a
-					class="bg-blue-400 text-white font-bold w-full text-center rounded p-2 mt-2 mb-2 block"
-					target="_blunk"
-					href={`https://twitter.com/intent/tweet?text=${encodeURI(
-						`
+					<a
+						class="bg-blue-400 text-white font-bold w-full text-center rounded p-2 mt-2 mb-2 block"
+						target="_blunk"
+						href={`https://twitter.com/intent/tweet?text=${encodeURI(
+							`
 元素騎士オンライン 今日の時給は${USD2JPY(result.hourlyPay)}円！!
 {時給の画像を貼り付けて、ここにコメントを入れよう！}
 
 ↓時給計算はこちらから\n`.trimStart()
-					)}&url=https://ignis-tools.vercel.app/hourly&hashtags=元素騎士,元素騎士ファミチキチャレンジ`}
-				>
-					ツイートする
-				</a>
-			{/if}
-			<button class="btn w-full block" on:click={showResult}>時給を計算する</button>
+						)}&url=https://ignis-tools.vercel.app/hourly&hashtags=元素騎士,元素騎士ファミチキチャレンジ`}
+					>
+						ツイートする
+					</a>
+				{/if}
+				<button class="btn w-full block" on:click={showResult}>時給を計算する</button>
+			</div>
 		</div>
 		<div class="md:w-96 md:block hidden md:mb-4 text-center">
 			<ins
