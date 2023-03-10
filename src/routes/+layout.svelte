@@ -41,7 +41,7 @@
 			console.log('ads');
 			// @ts-ignore
 			(window.adsbygoogle = window.adsbygoogle || []).push({});
-		}, 1000);
+		}, 100);
 	});
 </script>
 
