@@ -97,7 +97,7 @@
 <div class="flex mx-auto w-fit gap-4 flex-col md:flex-row">
 	<div>
 		<SkillSelector bind:skills bind:levels bind:isIncludeNomalAttack />
-		<div class="md:w-96 md:block hidden md:mb-4 text-center">
+		<div class="md:w-96 md:block hidden md:mt-4 text-center">
 			<ins
 				class="adsbygoogle"
 				style="display:block"
@@ -122,12 +122,12 @@
 	</div>
 	<div>
 		<Monster status={_status} skills={_skills} {levels} />
-		<div class="md:w-96 md:block hidden md:mb-4 text-center">
+		<div class="md:w-96 md:block hidden md:mt-4 text-center">
 			<ins
 				class="adsbygoogle"
 				style="display:block"
 				data-ad-client="ca-pub-9799169908631652"
-				data-ad-slot="1970657218"
+				data-ad-slot="7211375602"
 				data-ad-format="auto"
 				data-full-width-responsive="true"
 			/>
