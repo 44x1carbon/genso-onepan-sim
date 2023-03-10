@@ -56,7 +56,13 @@
 		</div>
 
 		<div class="font-bold">
-			<span class="mr-4">ID:{userInfo.id}</span><span class="">{userInfo.name}</span>
+			<span><span class="mr-4">ID:{userInfo.id}</span><span class="">{userInfo.name}</span></span>
+			<span>
+				{#if userInfo.twitterId}
+					<a>Twitter</a>		
+				{/if}
+							
+			</span>
 		</div>
 	</div>
 	<div class="panel flex flex-1">

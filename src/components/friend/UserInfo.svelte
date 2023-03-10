@@ -28,8 +28,18 @@
 </script>
 
 <div class="md:w-[24rem] w-full flex flex-col">
-	<div class="bg-well-read-700 text-sm p-1">
-		<span class="mr-4">ID:{userInfo.id}</span><span class="">{userInfo.name}</span>
+	<div class="bg-well-read-700 text-sm p-1 flex justify-between items-center">
+		<div><span class="mr-4">ID:{userInfo.id}</span><span class="">{userInfo.name}</span></div>
+		<div>
+			{#if userInfo.twitterId}
+				<a
+					href={`https://twitter.com/${userInfo.twitterId.replace('@', '')}`}
+					target="_blank"
+					class="p-1 rounded font-bold inline-block h-full text-xs"
+					style="background-color: #1D9BF0;">Twitter</a
+				>
+			{/if}
+		</div>
 	</div>
 	<div class="panel flex flex-1">
 		<div class="flex-1">
