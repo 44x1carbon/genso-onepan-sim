@@ -73,7 +73,7 @@ ${
 	});
 </script>
 
-<div class="w-[37rem] mx-auto">
+<div class="md:w-[37rem] w-full mx-auto">
 	<div class="heading">今日の自分の運勢を占ってみよう！</div>
 	<div class="panel p-2">
 		<div class="flex flex-row gap-2">
@@ -87,7 +87,7 @@ ${
 </div>
 
 {#if result}
-	<div class=" w-[37rem] mx-auto">
+	<div class="md:w-[37rem] w-full mx-auto">
 		<div class="border border-slate-800 rounded-sm overflow-hidden mt-4">
 			<div class=" bg-well-read-700 font-bold flex items-center">
 				<div class="p-1 px-2">{dayjs().format('YYYY年MM月DD日')}の{playerName}の運勢</div>
