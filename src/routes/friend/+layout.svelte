@@ -6,6 +6,7 @@
 	import { goto } from '$app/navigation';
 	import { Core, N, type UserInfo } from '$lib/friend/Core';
 	import setupFirebaseApp from '$lib/Firebase';
+	import ShareFab from '$components/ShareFAB.svelte';
 
 	let nav: { label: string; href: string; badge?: number }[] = [
 		{ label: 'ログ<br>イン', href: '/friend/login' },
@@ -122,3 +123,7 @@
 		<slot />
 	</div>
 </div>
+
+<ShareFab
+	tweetBody={`【元素騎士 フレンド機能】\n友達をいっぱい作ろう！\n友達のログイン状態が知れるよ！`}
+/>

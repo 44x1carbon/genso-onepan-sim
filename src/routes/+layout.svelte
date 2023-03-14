@@ -17,7 +17,8 @@
 		{ label: 'PT募集<br>掲示板', href: '/wantedparty' },
 		{ label: 'スキル<br>シミュ', href: '/skill' },
 		{ label: '自己紹介<br>カード', href: '/profilecard' },
-		{ label: 'フレンド<br>機能', href: '/friend' }
+		{ label: 'フレンド<br>機能', href: '/friend' },
+		{ label: '元素騎士<br>占い', href: '/fortune' }
 	];
 
 	onMount(() => {
@@ -103,7 +104,7 @@
 	</Ad>
 
 	<div class="flex max-w-screen">
-		<div class="min-[1919px]:block min-[1919px]:px-2 hidden flex-1">
+		<div class="min-[1919px]:block min-[1919px]:px-2 hidden min-[1919px]:w-96">
 			<Ad device="pc">
 				<ins
 					class="adsbygoogle"
@@ -115,10 +116,10 @@
 				/>
 			</Ad>
 		</div>
-		<div class="md:w-[74rem] flex-1">
+		<div class="md:w-[74rem] mx-auto">
 			<slot />
 		</div>
-		<div class="min-[1919px]:block min-[1919px]:px-2 hidden flex-1">
+		<div class="min-[1919px]:block min-[1919px]:px-2 hidden min-[1919px]:w-96">
 			<Ad device="pc">
 				<ins
 					class="adsbygoogle"
