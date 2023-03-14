@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { getPersonalFortuneResult, resultTypes, type Result } from '$lib/fortune/Fortune';
 	import { onMount } from 'svelte';
-    import dayjs from 'dayjs';
+	import dayjs from 'dayjs';
 	import utc from 'dayjs/plugin/utc';
 	import timezone from 'dayjs/plugin/timezone';
 	import customParseFormat from 'dayjs/plugin/customParseFormat';
@@ -19,8 +19,7 @@
 	let id: string = '';
 	let playerName: string = '';
 
-	$: tweetBody = `
-【元素騎士占い】
+	$: tweetBody = `【元素騎士占い】
 ${dayjs().format('YYYY年MM月DD日')}の${playerName}の運勢は！！
 
 ドロップ運 ${new Array(4)
