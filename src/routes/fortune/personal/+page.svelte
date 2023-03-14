@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { getPersonalFortuneResult, resultTypes, type Result } from '$lib/fortune/Fortune';
 	import { onMount } from 'svelte';
+	import { v4 } from 'uuid';
 	import dayjs from 'dayjs';
 	import utc from 'dayjs/plugin/utc';
 	import timezone from 'dayjs/plugin/timezone';
@@ -55,7 +56,6 @@ ${
 	function getResult() {
 		if (id !== '' && playerName !== '') {
 			result = getPersonalFortuneResult(id + playerName);
-			console.log(result);
 			localStorage.setItem(
 				SAVE_KEY,
 				JSON.stringify({
@@ -75,6 +75,8 @@ ${
 			const data = JSON.parse(json);
 			id = data.id;
 			playerName = data.playerName;
+		} else {
+			id = v4();
 		}
 	});
 </script>
@@ -84,7 +86,6 @@ ${
 	<div class="panel p-2">
 		<div class="flex flex-row gap-2">
 			<input type="text" bind:value={playerName} placeholder="キャラ名" />
-			<input type="text" bind:value={id} placeholder="ゲーム内のIDを入力しよう！！ 例)ABCD" />
 		</div>
 		<div class="mt-4">
 			<button class="btn w-full" on:click={getResult}>今日の運勢を占う！</button>
