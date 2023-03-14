@@ -123,12 +123,16 @@ ${
 			</div>
 		</div>
 		<a
-			class="bg-blue-400 text-white font-bold w-full text-center rounded p-2 mt-2 mb-2 block"
+			class="bg-blue-400 text-white font-bold w-full text-center rounded p-2 mt-4 mb-2 block"
 			target="_blunk"
 			href={`https://twitter.com/intent/tweet?text=${encodeURI(
 				tweetBody
 			)}&url=https://ignis-tools.vercel.app/fortune/personal&hashtags=元素騎士`}
 			>占いの結果をツイートする</a
 		>
+		<div class="text-sm p-2 bg-gray-200 text-gray-900 rounded-sm">
+			皆さん是非ツイートしてください、皆さんのツイートが開発のモチベーションにつながります！<br />
+			ツイートされると開発者が飛び跳ねて喜びます！
+		</div>
 	</div>
 {/if}
