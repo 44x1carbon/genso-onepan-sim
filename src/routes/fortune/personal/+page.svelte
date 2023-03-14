@@ -19,32 +19,38 @@
 	let id: string = '';
 	let playerName: string = '';
 
-	$: tweetBody = `【元素騎士占い】
+	$: tweetBody =
+		result !== undefined
+			? `【元素騎士占い】
 ${dayjs().format('YYYY年MM月DD日')}の${playerName}の運勢は！！
 
 ドロップ運 ${new Array(4)
-		.fill(null)
-		.map((_, i) => (i + 1 <= (result?.ドロップ運.rank ?? 0) ? '★' : '☆'))
-		.join('')}
+					.fill(null)
+					.map((_, i) => (i + 1 <= result.ドロップ運.rank ? '★' : '☆'))
+					.join('')}
 クリティカル運 ${new Array(4)
-		.fill(null)
-		.map((_, i) => (i + 1 <= (result?.クリティカル運.rank ?? 0) ? '★' : '☆'))
-		.join('')}
+					.fill(null)
+					.map((_, i) => (i + 1 <= result.クリティカル運.rank ? '★' : '☆'))
+					.join('')}
 狩場運 ${new Array(4)
-		.fill(null)
-		.map((_, i) => (i + 1 <= (result?.狩場運.rank ?? 0) ? '★' : '☆'))
-		.join('')}
+					.fill(null)
+					.map((_, i) => (i + 1 <= result.狩場運.rank ? '★' : '☆'))
+					.join('')}
 
 ${
-	[
-		'今日はあまりついてないみたい、友達と楽しく遊ぼう',
-		'今日の運勢は並、いつも通り楽しもう！',
-		'今日は少しついてるみたい、いつもより稼げるかも？',
-		'今日はとってもラッキー、SR武器や太陽石が落ちるかも？知らんけど'
-	][Math.round((result?.totalScore ?? 1) / 4)]
+	0 <= result.totalScore && result.totalScore <= 5
+		? '今日はあまりついてないみたい、友達と楽しく遊ぼう'
+		: 6 <= result.totalScore && result.totalScore <= 7
+		? '今日の運勢は悪くない、いつも通り楽しもう！'
+		: 8 <= result.totalScore && result.totalScore <= 9
+		? '今日は少しついてるみたい、いつもより稼げるかも？'
+		: 10 <= result.totalScore && result.totalScore <= 12
+		? '今日はとってもラッキー、SR武器や太陽石が落ちるかも？知らんけど'
+		: ''
 }
 
-↓あなたも今日の運勢を占ってみよう！\n`;
+↓あなたも今日の運勢を占ってみよう！\n`
+			: '';
 
 	function getResult() {
 		if (id !== '' && playerName !== '') {
