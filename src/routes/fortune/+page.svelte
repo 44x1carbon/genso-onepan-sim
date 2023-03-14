@@ -1,11 +1,24 @@
 <script lang="ts">
 	import { getJobsFortuneResults, resultTypes } from '$lib/fortune/Fortune';
+	import dayjs from 'dayjs';
+	import utc from 'dayjs/plugin/utc';
+	import timezone from 'dayjs/plugin/timezone';
+	import customParseFormat from 'dayjs/plugin/customParseFormat';
+	import 'dayjs/locale/ja';
+
+	dayjs.extend(utc);
+	dayjs.extend(timezone);
+	dayjs.extend(customParseFormat);
+	dayjs.tz.setDefault('Asia/Tokyo');
+	dayjs.locale('ja');
 
 	const results = getJobsFortuneResults().sort((a, b) => b.totalScore - a.totalScore);
 </script>
 
 <div>
-	<div class="p-2 text-xl font-bold">今日の元素騎士占い（職業別）</div>
+	<div class="p-2 text-xl font-bold">
+		{dayjs().format('YYYY年MM月DD日')}の元素騎士占い（職業別）
+	</div>
 	<div class="bg-white bg-opacity-50  p-2 ">
 		{#each results as result, i}
 			{#if i !== 0 && i % 3 === 0}

@@ -1,6 +1,17 @@
 <script lang="ts">
 	import { getPersonalFortuneResult, resultTypes, type Result } from '$lib/fortune/Fortune';
 	import { onMount } from 'svelte';
+    import dayjs from 'dayjs';
+	import utc from 'dayjs/plugin/utc';
+	import timezone from 'dayjs/plugin/timezone';
+	import customParseFormat from 'dayjs/plugin/customParseFormat';
+	import 'dayjs/locale/ja';
+
+	dayjs.extend(utc);
+	dayjs.extend(timezone);
+	dayjs.extend(customParseFormat);
+	dayjs.tz.setDefault('Asia/Tokyo');
+	dayjs.locale('ja');
 
 	const SAVE_KEY = 'GENSO-FORTUNE-PERSONAL';
 
@@ -10,7 +21,7 @@
 
 	$: tweetBody = `
 【元素騎士占い】
-今日の${playerName}の運勢は！！
+${dayjs().format('YYYY年MM月DD日')}の${playerName}の運勢は！！
 
 ドロップ運 ${new Array(4)
 		.fill(null)
@@ -80,7 +91,7 @@ ${
 	<div class=" w-[37rem] mx-auto">
 		<div class="border border-slate-800 rounded-sm overflow-hidden mt-4">
 			<div class=" bg-well-read-700 font-bold flex items-center">
-				<div class="p-1 px-2">{playerName}の今日の運勢</div>
+				<div class="p-1 px-2">{dayjs().format('YYYY年MM月DD日')}の{playerName}の運勢</div>
 			</div>
 			<div class="bg-white">
 				{#each resultTypes as type}
